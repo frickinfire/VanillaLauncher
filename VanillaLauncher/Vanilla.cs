@@ -63,16 +63,8 @@ namespace VanillaLauncher
         public Vanilla()
         {
             InitializeComponent();
-            string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
-            if (File.Exists("files\\webserver\\conf\\nginx.conf.original"))
-            {
-                File.Replace("files\\webserver\\conf\\nginx.conf.original", "files\\webserver\\conf\\nginx.conf", "files\\webserver\\conf\\nginx.conf.original");
-            }
-            if (httpdconf.Contains(@"C:\Vanilla\files\webroot"))
-            {
-                string fixedconf = httpdconf.Replace(@"C:\Vanilla\files\webroot", Directory.GetCurrentDirectory() + @"\files\webroot");
-                File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
-            }
+
+           
             Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
 
         
@@ -80,7 +72,30 @@ namespace VanillaLauncher
 
             WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             bool administrativeMode = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            // this sucks but it doesnt launch if we don't do this
+            bool administrativeMode2 = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            if (!administrativeMode2)
+            {
+                Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
+                Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
 
+                string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
+                if (File.Exists("files\\webserver\\conf\\nginx.conf.original"))
+                {
+
+                    File.Replace("files\\webserver\\conf\\nginx.conf.original", "files\\webserver\\conf\\nginx.conf", null);
+                }
+                if (!File.Exists("files\\webserver\\conf\\nginx.conf.original"))
+                {
+                    File.Copy("files\\webserver\\conf\\nginx.conf", "files\\webserver\\conf\\nginx.conf.original");
+                }
+                if (httpdconf.Contains(@"C:/Vanilla/files/webroot"))
+                {
+                    string CurrentDirFixed = Directory.GetCurrentDirectory().Replace(@"\", @"/");
+                    string fixedconf = httpdconf.Replace(@"C:/Vanilla/files/webroot", CurrentDirFixed + @"/files/webroot");
+                    File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
+                }
+            }
             if (!administrativeMode)
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -88,6 +103,8 @@ namespace VanillaLauncher
                 startInfo.FileName = Application.ExecutablePath;
                 try
                 {
+
+                    System.Threading.Thread.Sleep(700);
                     Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + "\\files\\webserver\\");
                     Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
                     Directory.SetCurrentDirectory("..\\..");
@@ -153,8 +170,15 @@ namespace VanillaLauncher
                 File.WriteAllText(hostsFile, result);
             }
 
-            if (File.Exists(hostsFile + ".bak")) {   File.Replace(hostsFile + ".bak", hostsFile, hostsFile + ".bak");   }
-
+            //if (File.Exists(hostsFile + ".bak")) {   File.Replace(hostsFile + ".bak", hostsFile, hostsFile + ".bak");   }
+            //                                         throws an error, don't use this even if it looks better
+            if (File.Exists(hostsFile + ".bak"))
+            {
+                File.Delete(hostsFile);
+                File.Copy(hostsFile + ".bak", hostsFile);
+                File.Delete(hostsFile + ".bak");
+            }
+            File.Copy(hostsFile, hostsFile + ".bak");
             using (StreamWriter w = File.AppendText(hostsFile))
             {
                 w.WriteLine("");
