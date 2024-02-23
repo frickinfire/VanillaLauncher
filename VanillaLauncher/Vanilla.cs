@@ -66,14 +66,11 @@ namespace VanillaLauncher
             string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
             if (File.Exists("files\\webserver\\conf\\nginx.conf.original"))
             {
-                File.Delete("files\\webserver\\conf\\nginx.conf");
-                File.Copy("files\\webserver\\conf\\nginx.conf.original", "files\\webserver\\conf\\nginx.conf");
-                File.Delete("files\\webserver\\conf\\nginx.conf.original");
+                File.Replace("files\\webserver\\conf\\nginx.conf.original", "files\\webserver\\conf\\nginx.conf", "files\\webserver\\conf\\nginx.conf.original");
             }
-            if (httpdconf.Contains("C:\\Vanilla\\files\\webroot"))
+            if (httpdconf.Contains(@"C:\Vanilla\files\webroot"))
             {
-                File.Copy("files\\webserver\\conf\\nginx.conf", "files\\webserver\\conf\\nginx.conf.original");
-                string fixedconf = httpdconf.Replace("C:\\Vanilla\\files\\webroot", Directory.GetCurrentDirectory() + "\\files\\webroot");
+                string fixedconf = httpdconf.Replace(@"C:\Vanilla\files\webroot", Directory.GetCurrentDirectory() + @"\files\webroot");
                 File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
             }
             Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
@@ -156,13 +153,7 @@ namespace VanillaLauncher
                 File.WriteAllText(hostsFile, result);
             }
 
-            if (File.Exists(hostsFile + ".bak"))
-            {
-                File.Delete(hostsFile);
-                File.Copy(hostsFile + ".bak", hostsFile);
-                File.Delete(hostsFile + ".bak");
-            }
-            File.Copy(hostsFile, hostsFile + ".bak");
+            if (File.Exists(hostsFile + ".bak")) {   File.Replace(hostsFile + ".bak", hostsFile, hostsFile + ".bak");   }
 
             using (StreamWriter w = File.AppendText(hostsFile))
             {
@@ -342,6 +333,7 @@ namespace VanillaLauncher
                 serializer.Serialize(file, jsonfile);
             }
             string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
+            // don't use file.replace here or it'll cause issues
             File.Delete(hostsFile);
             File.Copy(hostsFile + ".bak", hostsFile);
             Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", "taskkill /F /IM nginx.exe");
@@ -468,10 +460,8 @@ namespace VanillaLauncher
             System.IO.Compression.ZipFile.ExtractToDirectory("files\\filesets\\" + curItem + ".zip", "files\\webroot");
             if (assetCache.Checked)
             {
-                    File.Copy("files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
-                    File.Delete("files\\webroot\\asset\\index.php");
-                    File.Copy("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php");
-                
+                File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
+
             }
             ClientInfo.Text = "selected client: " + curItem;
             if (File.Exists("clients\\" + curItem + "\\client.json"))
@@ -592,18 +582,14 @@ namespace VanillaLauncher
                 if (File.Exists("files\\webroot\\asset\\cacher.php"))
                 {
 
-                    File.Copy("files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
-                    File.Delete("files\\webroot\\asset\\index.php");
-                    File.Copy("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php");
+                    File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
                 }
             }
             else
             {
                 if (File.Exists("files\\webroot\\asset\\nocache.php"))
                 {
-                    File.Delete("files\\webroot\\asset\\index.php");
-                    File.Copy("files\\webroot\\asset\\nocache.php", "files\\webroot\\asset\\index.php");
-                    File.Delete("files\\webroot\\asset\\nocache.php");
+                    File.Replace("files\\webroot\\asset\\nocache.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\cacher.php");
                 }
             }
         }
@@ -615,10 +601,7 @@ namespace VanillaLauncher
                 {
                     if (File.Exists("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json"))
                     {
-                        File.Copy("clients\\2015M\\Player\\ClientSettings\\ClientAppSettings.json", "clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsMid.json");
-                        File.Delete("clients\\2015M\\Player\\ClientSettings\\ClientAppSettings.json");
-                        File.Copy("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json", "clients\\2015M\\Player\\ClientSettings\\ClientAppSettings.json");
-                        File.Delete("clients\\2015M\\player\\clientsettings\\clientappsettingsearly.json");
+                        File.Replace("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettings.json", "ClientAppSettingsMid.json");
                     }
                 }
             }
@@ -628,10 +611,7 @@ namespace VanillaLauncher
                 {
                     if (File.Exists("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsMid.json"))
                     {
-                        File.Copy("clients\\2015M\\Player\\ClientSettings\\ClientAppSettings.json", "clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json");
-                        File.Delete("clients\\2015M\\Player\\ClientSettings\\ClientAppSettings.json");
-                        File.Copy("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsMid.json", "clients\\2015M\\Player\\ClientSettings\\ClientAppSettings.json");
-                        File.Delete("clients\\2015M\\player\\clientsettings\\clientappsettingsmid.json");
+                        File.Replace("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsMid.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettings.json", "ClientAppSettingsEarly.json");
                     }
                 }
             }
