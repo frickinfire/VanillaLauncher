@@ -65,7 +65,7 @@ namespace VanillaLauncher
             InitializeComponent();
 
            
-            Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
+            Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", "/r " + Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
 
         
             string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
@@ -506,10 +506,12 @@ namespace VanillaLauncher
                 Process.Start("RobloxApp.exe", "-no3d -script \"loadfile('http://www.roblox.com/game/gameserver.ashx?port="+ hostPortstring + "')()\"");
                 Directory.SetCurrentDirectory("..\\..\\..");
             }
-            if (isRobloxPlayerBeta)
+            if (isRobloxPlayerBeta && !isRCCService)
             {
+                string debugargs = "-j \"http://www.roblox.com/game/gameserver.ashx\" t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"";
+                File.WriteAllText("ohio.txt", debugargs);
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/gameserver.ashx?port=" + hostPortstring + "\" t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
+                Process.Start("RobloxPlayerBeta.exe", debugargs);
                 Directory.SetCurrentDirectory("..\\..\\..");
             }
             if (is2007)
@@ -682,8 +684,10 @@ namespace VanillaLauncher
 
         }
 
-         
+        private void button1_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
 

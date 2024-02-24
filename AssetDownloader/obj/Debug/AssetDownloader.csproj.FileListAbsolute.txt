@@ -1,0 +1,7 @@
+C:\Users\fire\source\repos\VanillaLauncher\AssetDownloader\bin\Debug\AssetDownloader.exe.config
+C:\Users\fire\source\repos\VanillaLauncher\AssetDownloader\bin\Debug\AssetDownloader.exe
+C:\Users\fire\source\repos\VanillaLauncher\AssetDownloader\bin\Debug\AssetDownloader.pdb
+C:\Users\fire\source\repos\VanillaLauncher\AssetDownloader\obj\Debug\AssetDownloader.csproj.AssemblyReference.cache
+C:\Users\fire\source\repos\VanillaLauncher\AssetDownloader\obj\Debug\AssetDownloader.csproj.CoreCompileInputs.cache
+C:\Users\fire\source\repos\VanillaLauncher\AssetDownloader\obj\Debug\AssetDownloader.exe
+C:\Users\fire\source\repos\VanillaLauncher\AssetDownloader\obj\Debug\AssetDownloader.pdb

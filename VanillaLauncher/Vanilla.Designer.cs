@@ -29,11 +29,13 @@ namespace VanillaLauncher
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Vanilla));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
             this.hostPort = new System.Windows.Forms.TextBox();
             this.ClientInfo = new System.Windows.Forms.Label();
+            this.ScreenShot = new System.Windows.Forms.PictureBox();
             this.EditButton = new System.Windows.Forms.Button();
             this.HostButton = new System.Windows.Forms.Button();
             this.JoinButton = new System.Windows.Forms.Button();
@@ -41,6 +43,7 @@ namespace VanillaLauncher
             this.label1 = new System.Windows.Forms.Label();
             this.IPBox = new System.Windows.Forms.TextBox();
             this.PortBox = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.clientBox = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -49,21 +52,27 @@ namespace VanillaLauncher
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.hatName = new System.Windows.Forms.TextBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.hatList = new System.Windows.Forms.ListBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.textBox4 = new System.Windows.Forms.TextBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.textBox5 = new System.Windows.Forms.TextBox();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.listBox4 = new System.Windows.Forms.ListBox();
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.textBox6 = new System.Windows.Forms.TextBox();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.listBox5 = new System.Windows.Forms.ListBox();
             this.tabPage12 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
@@ -85,38 +94,37 @@ namespace VanillaLauncher
             this.label3 = new System.Windows.Forms.Label();
             this.userNameBox = new System.Windows.Forms.TextBox();
             this.Settings = new System.Windows.Forms.TabPage();
-            this.assetCache = new System.Windows.Forms.CheckBox();
             this.early2015 = new System.Windows.Forms.CheckBox();
-            this.ScreenShot = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.assetCache = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.tabPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.tabPage8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.tabPage10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.tabPage11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            this.tabPage12.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.Settings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -187,6 +195,16 @@ namespace VanillaLauncher
             this.ClientInfo.Size = new System.Drawing.Size(147, 20);
             this.ClientInfo.TabIndex = 30;
             this.ClientInfo.Text = "selected client: None";
+            // 
+            // ScreenShot
+            // 
+            this.ScreenShot.Image = global::VanillaLauncher.Properties.Resources.RobloxScreenShot08062023_104225802;
+            this.ScreenShot.Location = new System.Drawing.Point(21, 211);
+            this.ScreenShot.Name = "ScreenShot";
+            this.ScreenShot.Size = new System.Drawing.Size(422, 235);
+            this.ScreenShot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ScreenShot.TabIndex = 28;
+            this.ScreenShot.TabStop = false;
             // 
             // EditButton
             // 
@@ -268,6 +286,16 @@ namespace VanillaLauncher
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(181, 20);
             this.PortBox.TabIndex = 21;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::VanillaLauncher.Properties.Resources.vanillaFixed;
+            this.pictureBox1.Location = new System.Drawing.Point(231, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(220, 99);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 20;
+            this.pictureBox1.TabStop = false;
             // 
             // tabPage4
             // 
@@ -362,6 +390,15 @@ namespace VanillaLauncher
             this.hatName.Size = new System.Drawing.Size(212, 20);
             this.hatName.TabIndex = 2;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(218, 0);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(216, 201);
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.charRemove);
+            // 
             // hatList
             // 
             this.hatList.FormattingEnabled = true;
@@ -389,6 +426,15 @@ namespace VanillaLauncher
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(212, 20);
             this.textBox2.TabIndex = 5;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Location = new System.Drawing.Point(216, -1);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(216, 201);
+            this.pictureBox3.TabIndex = 4;
+            this.pictureBox3.TabStop = false;
+            this.pictureBox3.Click += new System.EventHandler(this.charRemove);
             // 
             // listBox1
             // 
@@ -418,6 +464,15 @@ namespace VanillaLauncher
             this.textBox3.Size = new System.Drawing.Size(212, 20);
             this.textBox3.TabIndex = 5;
             // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Location = new System.Drawing.Point(216, -1);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(216, 201);
+            this.pictureBox4.TabIndex = 4;
+            this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.charRemove);
+            // 
             // listBox2
             // 
             this.listBox2.FormattingEnabled = true;
@@ -445,6 +500,15 @@ namespace VanillaLauncher
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(212, 20);
             this.textBox4.TabIndex = 5;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Location = new System.Drawing.Point(216, -1);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(216, 201);
+            this.pictureBox5.TabIndex = 4;
+            this.pictureBox5.TabStop = false;
+            this.pictureBox5.Click += new System.EventHandler(this.charRemove);
             // 
             // listBox3
             // 
@@ -474,6 +538,15 @@ namespace VanillaLauncher
             this.textBox5.Size = new System.Drawing.Size(212, 20);
             this.textBox5.TabIndex = 5;
             // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Location = new System.Drawing.Point(216, -1);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(216, 201);
+            this.pictureBox6.TabIndex = 4;
+            this.pictureBox6.TabStop = false;
+            this.pictureBox6.Click += new System.EventHandler(this.charRemove);
+            // 
             // listBox4
             // 
             this.listBox4.FormattingEnabled = true;
@@ -502,6 +575,15 @@ namespace VanillaLauncher
             this.textBox6.Size = new System.Drawing.Size(212, 20);
             this.textBox6.TabIndex = 5;
             // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Location = new System.Drawing.Point(216, -1);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(216, 201);
+            this.pictureBox7.TabIndex = 4;
+            this.pictureBox7.TabStop = false;
+            this.pictureBox7.Click += new System.EventHandler(this.charRemove);
+            // 
             // listBox5
             // 
             this.listBox5.FormattingEnabled = true;
@@ -513,6 +595,12 @@ namespace VanillaLauncher
             // 
             // tabPage12
             // 
+            this.tabPage12.Controls.Add(this.button6);
+            this.tabPage12.Controls.Add(this.button5);
+            this.tabPage12.Controls.Add(this.button4);
+            this.tabPage12.Controls.Add(this.button3);
+            this.tabPage12.Controls.Add(this.button2);
+            this.tabPage12.Controls.Add(this.button1);
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Size = new System.Drawing.Size(430, 274);
@@ -737,17 +825,6 @@ namespace VanillaLauncher
             this.Settings.Text = "Settings";
             this.Settings.UseVisualStyleBackColor = true;
             // 
-            // assetCache
-            // 
-            this.assetCache.AutoSize = true;
-            this.assetCache.Location = new System.Drawing.Point(32, 42);
-            this.assetCache.Name = "assetCache";
-            this.assetCache.Size = new System.Drawing.Size(94, 17);
-            this.assetCache.TabIndex = 0;
-            this.assetCache.Text = "Asset Caching";
-            this.assetCache.UseVisualStyleBackColor = true;
-            this.assetCache.CheckedChanged += new System.EventHandler(this.cacheEnabled);
-            // 
             // early2015
             // 
             this.early2015.AutoSize = true;
@@ -759,79 +836,65 @@ namespace VanillaLauncher
             this.early2015.UseVisualStyleBackColor = true;
             this.early2015.CheckedChanged += new System.EventHandler(this.earlyCorescripts);
             // 
-            // ScreenShot
+            // assetCache
             // 
-            this.ScreenShot.Image = global::VanillaLauncher.Properties.Resources.RobloxScreenShot08062023_104225802;
-            this.ScreenShot.Location = new System.Drawing.Point(21, 211);
-            this.ScreenShot.Name = "ScreenShot";
-            this.ScreenShot.Size = new System.Drawing.Size(422, 235);
-            this.ScreenShot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ScreenShot.TabIndex = 28;
-            this.ScreenShot.TabStop = false;
+            this.assetCache.AutoSize = true;
+            this.assetCache.Location = new System.Drawing.Point(32, 42);
+            this.assetCache.Name = "assetCache";
+            this.assetCache.Size = new System.Drawing.Size(94, 17);
+            this.assetCache.TabIndex = 0;
+            this.assetCache.Text = "Asset Caching";
+            this.assetCache.UseVisualStyleBackColor = true;
+            this.assetCache.CheckedChanged += new System.EventHandler(this.cacheEnabled);
             // 
-            // pictureBox1
+            // button1
             // 
-            this.pictureBox1.Image = global::VanillaLauncher.Properties.Resources.vanillaFixed;
-            this.pictureBox1.Location = new System.Drawing.Point(231, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(220, 99);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 20;
-            this.pictureBox1.TabStop = false;
+            this.button1.Location = new System.Drawing.Point(41, 45);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(38, 39);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // pictureBox2
+            // button2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(218, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.charRemove);
+            this.button2.Location = new System.Drawing.Point(41, 79);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(38, 62);
+            this.button2.TabIndex = 1;
+            this.button2.UseVisualStyleBackColor = true;
             // 
-            // pictureBox3
+            // button3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox3.TabIndex = 4;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.charRemove);
+            this.button3.Location = new System.Drawing.Point(76, 79);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(24, 62);
+            this.button3.TabIndex = 2;
+            this.button3.UseVisualStyleBackColor = true;
             // 
-            // pictureBox4
+            // button4
             // 
-            this.pictureBox4.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox4.TabIndex = 4;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.charRemove);
+            this.button4.Location = new System.Drawing.Point(21, 79);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(24, 62);
+            this.button4.TabIndex = 3;
+            this.button4.UseVisualStyleBackColor = true;
             // 
-            // pictureBox5
+            // button5
             // 
-            this.pictureBox5.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox5.TabIndex = 4;
-            this.pictureBox5.TabStop = false;
-            this.pictureBox5.Click += new System.EventHandler(this.charRemove);
+            this.button5.Location = new System.Drawing.Point(41, 136);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(20, 62);
+            this.button5.TabIndex = 4;
+            this.button5.UseVisualStyleBackColor = true;
             // 
-            // pictureBox6
+            // button6
             // 
-            this.pictureBox6.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox6.TabIndex = 4;
-            this.pictureBox6.TabStop = false;
-            this.pictureBox6.Click += new System.EventHandler(this.charRemove);
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox7.TabIndex = 4;
-            this.pictureBox7.TabStop = false;
-            this.pictureBox7.Click += new System.EventHandler(this.charRemove);
+            this.button6.Location = new System.Drawing.Point(59, 136);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(20, 62);
+            this.button6.TabIndex = 5;
+            this.button6.UseVisualStyleBackColor = true;
             // 
             // Vanilla
             // 
@@ -841,12 +904,15 @@ namespace VanillaLauncher
             this.ClientSize = new System.Drawing.Size(463, 542);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Vanilla";
             this.Text = "Vanilla";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
@@ -854,28 +920,27 @@ namespace VanillaLauncher
             this.tabControl2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             this.tabPage11.ResumeLayout(false);
             this.tabPage11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            this.tabPage12.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             this.Settings.ResumeLayout(false);
             this.Settings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -947,6 +1012,12 @@ namespace VanillaLauncher
         private System.Windows.Forms.TabPage Settings;
         private System.Windows.Forms.CheckBox assetCache;
         private System.Windows.Forms.CheckBox early2015;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
     }
 }
 
