@@ -80,15 +80,6 @@ namespace VanillaLauncher
                 Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
 
                 string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
-                if (File.Exists("files\\webserver\\conf\\nginx.conf.original"))
-                {
-
-                    File.Replace("files\\webserver\\conf\\nginx.conf.original", "files\\webserver\\conf\\nginx.conf", null);
-                }
-                if (!File.Exists("files\\webserver\\conf\\nginx.conf.original"))
-                {
-                    File.Copy("files\\webserver\\conf\\nginx.conf", "files\\webserver\\conf\\nginx.conf.original");
-                }
                 if (httpdconf.Contains(@"C:/Vanilla/files/webroot"))
                 {
                     string CurrentDirFixed = Directory.GetCurrentDirectory().Replace(@"\", @"/");
