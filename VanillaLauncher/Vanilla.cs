@@ -65,7 +65,7 @@ namespace VanillaLauncher
             InitializeComponent();
 
            
-            Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", "/r " + Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
+            
 
         
             string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
@@ -78,6 +78,7 @@ namespace VanillaLauncher
             {
                 Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
                 Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
+                Process.Start("CMD.exe", "/C taskkill /F /IM RunHiddenConsole.exe");
 
                 string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
                 if (httpdconf.Contains(@"C:/Vanilla/files/webroot"))
@@ -95,7 +96,8 @@ namespace VanillaLauncher
                 try
                 {
 
-                    System.Threading.Thread.Sleep(700);
+                    System.Threading.Thread.Sleep(3000);
+                    Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", "/r " + Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
                     Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + "\\files\\webserver\\");
                     Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
                     Directory.SetCurrentDirectory("..\\..");
@@ -178,6 +180,9 @@ namespace VanillaLauncher
                 w.WriteLine("127.0.0.1 roblox.com");
                 w.WriteLine("127.0.0.1 api.roblox.com");
                 w.WriteLine("127.0.0.1 assetgame.roblox.com");
+                w.WriteLine("127.0.0.1 clientsettings.api.roblox.com");
+                w.WriteLine("127.0.0.1 versioncompatibility.api.roblox.com");
+                w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
             }
             if (File.Exists("files\\settings.json"))
             {
@@ -253,7 +258,6 @@ namespace VanillaLauncher
                 mapBox.Items.Add(file);
             }
 
-
         }
         public static void Execute(string Client)
         {
@@ -295,30 +299,6 @@ namespace VanillaLauncher
             if (sender == idBox)
             {
                 GlobalID = idBox.Text;
-            }
-            if (sender == Hat1)
-            {
-                GlobalHat1 = Hat1.Text;
-            }
-            if (sender == textBox1)
-            {
-                GlobalHat2 = textBox1.Text;
-            }
-            if (sender == hat3)
-            {
-                GlobalHat3 = hat3.Text;
-            }
-            if (sender == shirt)
-            {
-                GlobalShirt = shirt.Text;
-            }
-            if (sender == pant)
-            {
-                GlobalPants = pant.Text;
-            }
-            if (sender == tshirt)
-            {
-                GlobalTshirt = tshirt.Text;
             }
         }
         public void onshutdown(object sender, EventArgs e)
@@ -452,12 +432,6 @@ namespace VanillaLauncher
                 pictureBox7.Visible = true;
                 GlobalTshirt = listBox4.SelectedItem.ToString();
             }
-            if (sender == Hat1) { GlobalHat1 = Hat1.Text; }
-            if (sender == textBox1) { GlobalHat2 = textBox1.Text; }
-            if (sender == hat3) { GlobalHat3 = hat3.Text; }
-            if (sender == shirt) { GlobalShirt = shirt.Text; }
-            if (sender == pant) { GlobalPants = pant.Text; }
-            if (sender == tshirt) { GlobalTshirt = tshirt.Text; }
         }
 
         private void clientChanged(object Sender, System.EventArgs e)
@@ -508,8 +482,7 @@ namespace VanillaLauncher
             }
             if (isRobloxPlayerBeta && !isRCCService)
             {
-                string debugargs = "-j \"http://www.roblox.com/game/gameserver.ashx\" t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"";
-                File.WriteAllText("ohio.txt", debugargs);
+                string debugargs = "-j \"http://www.roblox.com/game/gameserver.ashx?port=53640&PlaceId=1818\" t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"";
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
                 Process.Start("RobloxPlayerBeta.exe", debugargs);
                 Directory.SetCurrentDirectory("..\\..\\..");
@@ -556,7 +529,7 @@ namespace VanillaLauncher
             if (isRobloxPlayerBeta)
             {
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
+                Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
                 Directory.SetCurrentDirectory("..\\..\\..");
             }
             if (is2007)
@@ -612,13 +585,13 @@ namespace VanillaLauncher
         }
         private void earlyCorescripts(object sender, EventArgs e)
         {
-            if (early2015.Checked)
+            if (File.Exists("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json"))
             {
                 if (Directory.Exists("clients\\2015M"))
                 {
                     if (File.Exists("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json"))
                     {
-                        File.Replace("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettings.json", "ClientAppSettingsMid.json");
+                        File.Replace("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettings.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettingsMid.json");
                     }
                 }
             }
@@ -628,7 +601,7 @@ namespace VanillaLauncher
                 {
                     if (File.Exists("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsMid.json"))
                     {
-                        File.Replace("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsMid.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettings.json", "ClientAppSettingsEarly.json");
+                        File.Replace("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsMid.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettings.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettingsEarly.json");
                     }
                 }
             }
