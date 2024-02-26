@@ -252,7 +252,7 @@ namespace VanillaLauncher
                 clientBox.Items.Add(ohio);
                 
             }
-            var files = from file in Directory.EnumerateFiles("files\\maps") select file;
+            var files = from file in Directory.EnumerateFiles("files\\maps", "*", SearchOption.AllDirectories) select file;
             foreach (var file in files)
             {
                 mapBox.Items.Add(file);
