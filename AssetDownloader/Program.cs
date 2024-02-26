@@ -7,7 +7,8 @@ using System.Net;
 using System.IO;
 using System.Web.Script.Serialization;
 using System.Net.Http;
-
+using System.Security.Policy;
+using System.IO.Compression;
 
 namespace AssetDownloader
 {
@@ -16,6 +17,7 @@ namespace AssetDownloader
     {
         public string Name { get; set; }
         public string imageUrl { get; set; }
+        public string location { get; set; }
     }
 
        
@@ -28,7 +30,7 @@ namespace AssetDownloader
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            if (args[0] == null)
+            if (args.Length <= 0)
             {
                 Console.WriteLine("run with asset id. example: AssetDownloader.exe 1804739");
             }
@@ -60,9 +62,21 @@ namespace AssetDownloader
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 AssetInfo assetthumb = js.Deserialize<AssetInfo>("{ " + result.Split(",".ToCharArray())[2] + " }");
                 downloadThumbnail(assetthumb.imageUrl);
-                downloadAssetUrl("https://assetdelivery.roblox.com/v1/asset/?id=" + args[0] + "&version=1");
 
             }
+
+            using (var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate }))
+            {
+                client.BaseAddress = new Uri("https://assetdelivery.roblox.com/v2/asset/?id=" + args[0] + "&version=1");
+                HttpResponseMessage response = client.GetAsync("").Result;
+                response.EnsureSuccessStatusCode();
+                string result = response.Content.ReadAsStringAsync().Result;
+                // File.WriteAllText("debug.txt", result);
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                AssetInfo asset = js.Deserialize<AssetInfo>("{ " + result.Split(",".ToCharArray())[1].Replace(']', ' ')); //Not how this should be done, but it's ok for now
+                downloadAssetUrl(asset.location);
+            }
+
             void downloadThumbnail(string thumburl)
             {
                 WebClient webClient = new WebClient();
@@ -72,7 +86,11 @@ namespace AssetDownloader
             {
                 WebClient webClient = new WebClient();
                 webClient.Headers.Add("Accept-Encoding", "");
-                webClient.DownloadFile(assetUrl, args[0]);
+                var responseStream = new GZipStream(webClient.OpenRead(assetUrl), CompressionMode.Decompress);
+                StreamWriter asset = new StreamWriter($"{Directory.GetCurrentDirectory()}\\{args[0]}");
+                MemoryStream stream = new MemoryStream();
+                responseStream.CopyTo(stream);
+                asset.BaseStream.Write(stream.ToArray(), 0, stream.ToArray().Length);
             }
         }
     }
