@@ -18,6 +18,7 @@ using System.Web;
 using System.Security.Principal;
 using System.IO.Compression;
 using Newtonsoft.Json;
+using System.Security;
 
 namespace VanillaLauncher
 {
@@ -262,17 +263,23 @@ namespace VanillaLauncher
         public static void Execute(string Client)
         {
             HttpWebRequest httpWebRequest = CreateWebRequest();
+            httpWebRequest.Timeout = 1000;
             XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(File.ReadAllText("clients\\" + Client + "\\RCC\\SOAP.txt"));
+            xmlDocument.LoadXml(File.ReadAllText("clients\\" + Client + "\\RCC\\SOAP.xml"));
             using (Stream outStream = httpWebRequest.GetRequestStream())
             {
                 xmlDocument.Save(outStream);
             }
-            using (WebResponse webResponse = httpWebRequest.GetResponse())
+            // have to get response for some reason, but it errors or times out so we do this
+            try
             {
-                using StreamReader streamReader = new StreamReader(webResponse.GetResponseStream());
-                string value = streamReader.ReadToEnd();
-                Console.WriteLine(value);
+                using (WebResponse webResponse = httpWebRequest.GetResponse())
+                {
+                }
+            }
+            catch
+            {
+                return;
             }
            
         }
@@ -470,11 +477,23 @@ namespace VanillaLauncher
             string hostPortstring = hostPort.Text;
             if (isRCCService)
             {
-                Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\RCC\\");
-                Process.Start("CMD.exe", "/C RCCService.exe -console -start -placeid:1818");
-                Directory.SetCurrentDirectory("..\\..\\..");
+                if (selectedClient == "2015M")
+                {
+                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\RCC\\");
+                    Process.Start("CMD.exe", "/C RCCService.exe -console -start -placeid:1818");
+                    Directory.SetCurrentDirectory("..\\..\\..");
+                }
+                else
+                {
+                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\RCC\\");
+                    Process.Start("CMD.exe", "/C RCCService.exe -console -start");
+                    Directory.SetCurrentDirectory("..\\..\\..");
+                    System.Threading.Thread.Sleep(9000);
+                    Execute(selectedClient);
+                }
+
             }
-            if (isRobloxApp)
+            if (isRobloxApp && !isRCCService)
             {
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
                 Process.Start("RobloxApp.exe", "-no3d -script \"loadfile('http://www.roblox.com/game/gameserver.ashx?port="+ hostPortstring + "')()\"");
