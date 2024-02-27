@@ -65,10 +65,7 @@ namespace VanillaLauncher
         {
             InitializeComponent();
 
-           
-            
 
-        
             string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
 
             WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
@@ -349,9 +346,17 @@ namespace VanillaLauncher
 
         private void mapChanged(object sender, System.EventArgs e)
         {
-            GlobalMap = mapBox.SelectedItem.ToString();
-            File.Delete("files\\web\\1818");
-            File.Copy(GlobalMap, "files\\web\\1818");
+            if (mapBox.SelectedItem == null)
+            {
+                return;
+            }
+            else
+            {
+                GlobalMap = mapBox.SelectedItem.ToString();
+                File.Delete("files\\web\\1818");
+                File.Copy(GlobalMap, "files\\web\\1818");
+            }
+
         }
 
         private void charChanged(object sender, System.EventArgs e)
@@ -443,31 +448,39 @@ namespace VanillaLauncher
 
         private void clientChanged(object Sender, System.EventArgs e)
         {
-            System.IO.DirectoryInfo di = new DirectoryInfo("files\\webroot\\");
-            foreach (FileInfo file in di.GetFiles())
+            if (clientBox.SelectedItem == null)
             {
-                file.Delete();
+                return;
             }
-            foreach (DirectoryInfo dir in di.GetDirectories())
+            else
             {
-                dir.Delete(true);
-            }
-            curItem = clientBox.SelectedItem.ToString();
-            System.IO.Compression.ZipFile.ExtractToDirectory("files\\filesets\\" + curItem + ".zip", "files\\webroot");
-            if (assetCache.Checked)
-            {
-                File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
+                System.IO.DirectoryInfo di = new DirectoryInfo("files\\webroot\\");
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+                curItem = clientBox.SelectedItem.ToString();
+                System.IO.Compression.ZipFile.ExtractToDirectory("files\\filesets\\" + curItem + ".zip", "files\\webroot");
+                if (assetCache.Checked)
+                {
+                    File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
 
+                }
+                ClientInfo.Text = "selected client: " + curItem;
+                if (File.Exists("clients\\" + curItem + "\\client.json"))
+                {
+                    dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("clients\\" + curItem + "\\client.json"));
+                    isRobloxApp = val["isRobloxApp"] == "true";
+                    isRobloxPlayerBeta = val["isRobloxPlayerBeta"] == "true";
+                    isRCCService = val["isRCCService"] == "true";
+                    is2007 = val["is2007"] == "true";
+                }
             }
-            ClientInfo.Text = "selected client: " + curItem;
-            if (File.Exists("clients\\" + curItem + "\\client.json"))
-            {
-                dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("clients\\" + curItem + "\\client.json"));
-                isRobloxApp = val["isRobloxApp"] == "true";
-                isRobloxPlayerBeta = val["isRobloxPlayerBeta"] == "true";
-                isRCCService = val["isRCCService"] == "true";
-                is2007 = val["is2007"] == "true";
-            }
+            
         }
 
       
@@ -520,59 +533,67 @@ namespace VanillaLauncher
 
         private void JoinButton_Click_1(object sender, EventArgs e)
         {
-            string selectedClient = clientBox.SelectedItem.ToString();
-            string ipaddr = IPBox.Text;
-            string port = PortBox.Text;
-            string userName = userNameBox.Text;
-            string ID = idBox.Text;
-            string hat1 = GlobalHat1;
-            string hat2s = GlobalHat2;
-            string hat3s = GlobalHat3;
-            string shirts = GlobalShirt;
-            string pants = GlobalPants;
-            string tshirts = GlobalTshirt;
-            if (isRobloxApp)
+            if (clientBox.SelectedItem == null)
             {
-                string[] values = { shirts, pants, hat1, hat2s, hat3s, tshirts };
-                for (int i = 0; i < values.Length; i++)
+                return;
+            }
+            else
+            {
+                string selectedClient = clientBox.SelectedItem.ToString();
+                string ipaddr = IPBox.Text;
+                string port = PortBox.Text;
+                string userName = userNameBox.Text;
+                string ID = idBox.Text;
+                string hat1 = GlobalHat1;
+                string hat2s = GlobalHat2;
+                string hat3s = GlobalHat3;
+                string shirts = GlobalShirt;
+                string pants = GlobalPants;
+                string tshirts = GlobalTshirt;
+                if (isRobloxApp)
                 {
-                    if (String.IsNullOrEmpty(values[i]))
+                    string[] values = { shirts, pants, hat1, hat2s, hat3s, tshirts };
+                    for (int i = 0; i < values.Length; i++)
                     {
-                        values[i] = "0";
+                        if (String.IsNullOrEmpty(values[i]))
+                        {
+                            values[i] = "0";
+                        }
                     }
+                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                    Process.Start("RobloxApp.exe", "-script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "')()\"");
+                    Directory.SetCurrentDirectory("..\\..\\..");
                 }
-                Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("RobloxApp.exe", "-script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "')()\"");
-                Directory.SetCurrentDirectory("..\\..\\..");
-            }
-            if (isRobloxPlayerBeta)
-            {
-                Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
-                Directory.SetCurrentDirectory("..\\..\\..");
-            }
-            if (is2007)
-            {
-                string[] values = { "GlobalHat1", "GlobalHat2", "GlobalHat3", "GlobalShirt", "GlobalPants", "GlobalTshirt" };
-                for (int i = 0; i < values.Length; i++)
+                if (isRobloxPlayerBeta)
                 {
-                    if (String.IsNullOrEmpty(values[i]))
-                    {
-                        values[i] = "0";
-                    }
+                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                    Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
+                    Directory.SetCurrentDirectory("..\\..\\..");
                 }
-                string someText = "loadfile(\"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\")()";
-                File.WriteAllText(@"clients\\" + selectedClient + "\\Player\\content\\join.lua", someText);
-                Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("Roblox.exe", "-script \"" + Directory.GetCurrentDirectory() + "\\content\\join.lua\"");
-                Directory.SetCurrentDirectory("..\\..\\..");
+                if (is2007)
+                {
+                    string[] values = { "GlobalHat1", "GlobalHat2", "GlobalHat3", "GlobalShirt", "GlobalPants", "GlobalTshirt" };
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        if (String.IsNullOrEmpty(values[i]))
+                        {
+                            values[i] = "0";
+                        }
+                    }
+                    string someText = "loadfile(\"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\")()";
+                    File.WriteAllText(@"clients\\" + selectedClient + "\\Player\\content\\join.lua", someText);
+                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                    Process.Start("Roblox.exe", "-script \"" + Directory.GetCurrentDirectory() + "\\content\\join.lua\"");
+                    Directory.SetCurrentDirectory("..\\..\\..");
+                }
+                if (isRCCService)
+                {
+                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                    Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
+                    Directory.SetCurrentDirectory("..\\..\\..");
+                }
             }
-            if (isRCCService)
-            {
-                Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
-                Directory.SetCurrentDirectory("..\\..\\..");
-            }
+            
         }
 
         private void EditButton_Click(object sender, EventArgs e)

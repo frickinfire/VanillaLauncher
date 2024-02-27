@@ -32,6 +32,7 @@ namespace VanillaLauncher
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Vanilla));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.splash = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.hostPort = new System.Windows.Forms.TextBox();
             this.ClientInfo = new System.Windows.Forms.Label();
@@ -86,9 +87,8 @@ namespace VanillaLauncher
             this.label3 = new System.Windows.Forms.Label();
             this.userNameBox = new System.Windows.Forms.TextBox();
             this.Settings = new System.Windows.Forms.TabPage();
-            this.assetCache = new System.Windows.Forms.CheckBox();
             this.button7 = new System.Windows.Forms.Button();
-            this.splash = new System.Windows.Forms.Label();
+            this.assetCache = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).BeginInit();
@@ -149,6 +149,16 @@ namespace VanillaLauncher
             this.tabPage1.Size = new System.Drawing.Size(463, 515);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Play";
+            // 
+            // splash
+            // 
+            this.splash.AutoSize = true;
+            this.splash.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.splash.Location = new System.Drawing.Point(311, 467);
+            this.splash.Name = "splash";
+            this.splash.Size = new System.Drawing.Size(132, 21);
+            this.splash.TabIndex = 36;
+            this.splash.Text = "\"I LOVE JELQING\"";
             // 
             // label5
             // 
@@ -705,17 +715,6 @@ namespace VanillaLauncher
             this.Settings.Text = "Settings";
             this.Settings.UseVisualStyleBackColor = true;
             // 
-            // assetCache
-            // 
-            this.assetCache.AutoSize = true;
-            this.assetCache.Location = new System.Drawing.Point(32, 42);
-            this.assetCache.Name = "assetCache";
-            this.assetCache.Size = new System.Drawing.Size(101, 19);
-            this.assetCache.TabIndex = 0;
-            this.assetCache.Text = "Asset Caching";
-            this.assetCache.UseVisualStyleBackColor = true;
-            this.assetCache.CheckedChanged += new System.EventHandler(this.cacheEnabled);
-            // 
             // button7
             // 
             this.button7.Location = new System.Drawing.Point(32, 67);
@@ -726,15 +725,16 @@ namespace VanillaLauncher
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.earlyCorescripts);
             // 
-            // splash
+            // assetCache
             // 
-            this.splash.AutoSize = true;
-            this.splash.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.splash.Location = new System.Drawing.Point(311, 467);
-            this.splash.Name = "splash";
-            this.splash.Size = new System.Drawing.Size(132, 21);
-            this.splash.TabIndex = 36;
-            this.splash.Text = "\"I LOVE JELQING\"";
+            this.assetCache.AutoSize = true;
+            this.assetCache.Location = new System.Drawing.Point(32, 42);
+            this.assetCache.Name = "assetCache";
+            this.assetCache.Size = new System.Drawing.Size(101, 19);
+            this.assetCache.TabIndex = 0;
+            this.assetCache.Text = "Asset Caching";
+            this.assetCache.UseVisualStyleBackColor = true;
+            this.assetCache.CheckedChanged += new System.EventHandler(this.cacheEnabled);
             // 
             // Vanilla
             // 
