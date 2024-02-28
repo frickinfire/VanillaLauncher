@@ -411,7 +411,7 @@ namespace VanillaLauncher
                 pictureBox7.Image = Image.FromFile("files\\char\\t-shirts\\" + listBox5.SelectedItem.ToString() + ".thumb.png");
                 pictureBox7.Refresh();
                 pictureBox7.Visible = true;
-                GlobalTshirt = listBox4.SelectedItem.ToString();
+                GlobalTshirt = listBox5.SelectedItem.ToString();
             }
         }
 
