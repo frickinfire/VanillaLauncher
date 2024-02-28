@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using System.Net.Http;
+//using System.Net.Http;
 using System.Net;
 using System.Xml;
 using System.Data;
 using System.IO;
-namespace VanillaLauncher
+namespace VanillaLauncher.Classes
 {
     class SOAP
     {

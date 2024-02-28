@@ -471,7 +471,7 @@ namespace VanillaLauncher
                     Process.Start("CMD.exe", "/C RCCService.exe -console -start");
                     Directory.SetCurrentDirectory("..\\..\\..");
                     System.Threading.Thread.Sleep(9000);
-                    SOAP.Execute(selectedClient);
+                    Classes.SOAP.Execute(selectedClient);
                 }
 
             }
