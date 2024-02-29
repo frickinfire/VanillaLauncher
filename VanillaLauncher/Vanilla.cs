@@ -19,6 +19,7 @@ using System.Security.Principal;
 using System.IO.Compression;
 using Newtonsoft.Json;
 using System.Security;
+using System.Data.SQLite;
 
 namespace VanillaLauncher
 {
@@ -107,6 +108,24 @@ namespace VanillaLauncher
                     return;
                 }
                 return;
+            }
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite"))
+            {
+                SQLiteConnection.CreateFile(Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite");
+
+                using (var sqlite2 = new SQLiteConnection(@"Data Source=" + Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite"))
+                {
+                    sqlite2.Open();
+                    string sql = "create table characterappearance (torsocolor text, leftlegcolor text, leftarmcolor text, rightlegcolor text, rightarmcolor text, headcolor text, asset1 text, asset2 text, asset3 text, asset4 text, asset5 text, asset6 text, asset7 text, asset8 text, asset9 text, asset10 text, asset11 text, asset12 text, asset13 text, userid text)";
+                    SQLiteCommand command = new SQLiteCommand(sql, sqlite2);
+                    command.ExecuteNonQuery();
+                    string sql2 = "create table badges (badgeId text, obtainedBy text)";
+                    SQLiteCommand command2 = new SQLiteCommand(sql2, sqlite2);
+                    command2.ExecuteNonQuery();
+                    string sql3 = "create table gamepasses (passId text, boughtBy text)";
+                    SQLiteCommand command3 = new SQLiteCommand(sql3, sqlite2);
+                    command3.ExecuteNonQuery();
+                }
             }
             Application.ApplicationExit += new EventHandler(onshutdown);
             string pathfile = Environment.GetEnvironmentVariable("PATH");
