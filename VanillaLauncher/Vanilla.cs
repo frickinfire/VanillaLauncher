@@ -51,6 +51,7 @@ namespace VanillaLauncher
         bool isRobloxPlayerBeta { get; set; }
         bool isRCCService { get; set; }
         bool avatarFetchRequired { get; set; }
+        bool isRobloxPlayer { get; set; }
         string GlobalMap { get; set; }
         string GlobalUsername { get; set; }
         string GlobalID { get; set; }
@@ -482,9 +483,7 @@ namespace VanillaLauncher
             {
                 if (selectedClient == "2015M")
                 {
-                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\RCC\\");
-                    Process.Start("CMD.exe", "/C RCCService.exe -console -start -placeid:1818");
-                    Directory.SetCurrentDirectory("..\\..\\..");
+
                 }
                 else
                 {
@@ -550,19 +549,18 @@ namespace VanillaLauncher
                             values[i] = "0";
                         }
                     }
-                    if (selectedClient == "2012M")
-                    {
-                        Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                        Process.Start("RobloxApp.exe", "-joinScriptUrl \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\"");
-                        Directory.SetCurrentDirectory("..\\..\\..");
-                    }
-                    else
-                    {
-                        Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                        Process.Start("RobloxApp.exe", "-script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "')()\"");
-                        Directory.SetCurrentDirectory("..\\..\\..");
-                    }
 
+                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                    Process.Start("RobloxApp.exe", "-script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "')()\"");
+                    Directory.SetCurrentDirectory("..\\..\\..");
+
+                }
+
+                if (isRobloxPlayer)
+                {
+                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                    Process.Start("RobloxApp.exe", "-joinScriptUrl \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\"");
+                    Directory.SetCurrentDirectory("..\\..\\..");
                 }
                 if (isRobloxPlayerBeta)
                 {
