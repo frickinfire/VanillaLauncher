@@ -469,6 +469,7 @@ namespace VanillaLauncher
                     isRCCService = val["isRCCService"] == "true";
                     is2007 = val["is2007"] == "true";
                     avatarFetchRequired = val["avatarFetchRequired"] == "true";
+                    isRobloxPlayer = val["isRobloxPlayer"] == "true";
                 }
             }
             
