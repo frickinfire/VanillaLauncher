@@ -202,6 +202,7 @@ namespace VanillaLauncher
                 w.WriteLine("127.0.0.1 clientsettings.api.roblox.com");
                 w.WriteLine("127.0.0.1 versioncompatibility.api.roblox.com");
                 w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
+                w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
             }
             if (File.Exists("files\\settings.json"))
             {
