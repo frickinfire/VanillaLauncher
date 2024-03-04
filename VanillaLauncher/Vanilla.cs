@@ -539,7 +539,7 @@ namespace VanillaLauncher
                 string shirts = GlobalShirt;
                 string pants = GlobalPants;
                 string tshirts = GlobalTshirt;
-                if (isRobloxApp)
+                if (isRobloxApp && !isRobloxPlayer)
                 {
                     string[] values = { shirts, pants, hat1, hat2s, hat3s, tshirts };
                     for (int i = 0; i < values.Length; i++)
