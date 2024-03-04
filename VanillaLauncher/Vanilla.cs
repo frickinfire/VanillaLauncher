@@ -550,9 +550,19 @@ namespace VanillaLauncher
                             values[i] = "0";
                         }
                     }
-                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                    Process.Start("RobloxApp.exe", "-script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "')()\"");
-                    Directory.SetCurrentDirectory("..\\..\\..");
+                    if (selectedClient == "2012M")
+                    {
+                        Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                        Process.Start("RobloxApp.exe", "-joinScriptUrl \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\"");
+                        Directory.SetCurrentDirectory("..\\..\\..");
+                    }
+                    else
+                    {
+                        Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                        Process.Start("RobloxApp.exe", "-script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "')()\"");
+                        Directory.SetCurrentDirectory("..\\..\\..");
+                    }
+
                 }
                 if (isRobloxPlayerBeta)
                 {
