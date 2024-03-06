@@ -485,7 +485,9 @@ namespace VanillaLauncher
             {
                 if (selectedClient == "2015M")
                 {
-
+                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\RCC\\");
+                    Process.Start("CMD.exe", "/C RCCService.exe -console -start -placeid:1818");
+                    Directory.SetCurrentDirectory("..\\..\\..");
                 }
                 else
                 {
