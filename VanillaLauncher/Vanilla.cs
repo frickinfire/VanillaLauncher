@@ -223,6 +223,14 @@ namespace VanillaLauncher
                 GlobalPants = val["Pants"];
                 GlobalTshirt = val["TShirt"];
                 ClientInfo.Text = "selected client: " + val["Client"];
+                clientBox.SelectedItem = val["Client"];
+                hatList.SelectedItem = GlobalHat1;
+                listBox1.SelectedItem = GlobalHat2;
+                listBox2.SelectedItem = GlobalHat3;
+                listBox3.SelectedItem = GlobalShirt;
+                listBox4.SelectedItem = GlobalPants;
+                listBox5.SelectedItem = GlobalTshirt;
+
             }
             var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
             foreach (var file in files3)
