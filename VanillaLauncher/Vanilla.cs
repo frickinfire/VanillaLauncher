@@ -177,6 +177,10 @@ namespace VanillaLauncher
             }
             else
             {
+                if (!File.Exists(hostsFile))
+                {
+                    File.Create(hostsFile);
+                }
                 if (File.ReadAllText(hostsFile).Contains("# BEGIN VANILLA HOSTS"))
                 {
                     string str = File.ReadAllText(hostsFile);
@@ -207,6 +211,7 @@ namespace VanillaLauncher
                     w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
                     w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
                 }
+
             }
  
             if (File.Exists("files\\settings.json"))
@@ -339,8 +344,6 @@ namespace VanillaLauncher
             // don't use file.replace here or it'll cause issues
             File.Delete(hostsFile);
             File.Copy(hostsFile + ".bak", hostsFile);
-            Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
-            Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
             if (File.ReadAllText(hostsFile).Contains("# BEGIN VANILLA HOSTS"))
             {
                 string str = File.ReadAllText(hostsFile);
@@ -348,6 +351,9 @@ namespace VanillaLauncher
                 string result = str.Substring(0, index);
                 File.WriteAllText(hostsFile, result);
             }
+            Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
+            Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
+
 
         }
         private void Form1_Load(object sender, EventArgs e)
