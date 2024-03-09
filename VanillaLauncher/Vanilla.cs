@@ -610,9 +610,10 @@ namespace VanillaLauncher
                         {
                             if (String.IsNullOrEmpty(values[i]))
                             {
-                                values[i] = "0";
+                                values[i] = "86487700";
                             }
                         }
+
                         string someText = "loadfile(\"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\")()";
                         File.WriteAllText(@"clients\\" + selectedClient + "\\Player\\content\\join.lua", someText);
                         Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
