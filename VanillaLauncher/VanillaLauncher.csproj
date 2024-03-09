@@ -160,28 +160,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bg.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\bg2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\vanilla.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\RobloxScreenShot08062023_104225802.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\sidebar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\sidebar1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\vanillaFixed.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -197,6 +179,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MobileProxy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vanillablu2x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
