@@ -473,7 +473,14 @@ namespace VanillaLauncher
                     avatarFetchRequired = val["avatarFetchRequired"] == "true";
                     isRobloxPlayer = val["isRobloxPlayer"] == "true";
                 }
-                ScreenShot.Image = Image.FromFile("clients\\" + curItem + "\\photo.png");
+                try
+                {
+                    ScreenShot.Image = Image.FromFile("clients\\" + curItem + "\\photo.png");
+                }
+                catch
+                {
+                    ScreenShot.Image = null;
+                }
             }
 
         }
