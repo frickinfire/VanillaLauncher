@@ -530,7 +530,8 @@ namespace VanillaLauncher
             if (is2007)
             {
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("Roblox.exe", "-no3d -script \"" + Directory.GetCurrentDirectory() + "\\content\\gameserver.lua\"");
+                Process.Start("Roblox.exe", "-no3d -script \"" + Directory.GetCurrentDirectory() + "\\content\\gameserver.lua\" \"" + Directory.GetCurrentDirectory() +"..\\..\\..\\files\\maps" + GlobalMap);
+
                 Directory.SetCurrentDirectory("..\\..\\..");
             }
        
