@@ -34,7 +34,6 @@ namespace VanillaLauncher
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splash = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.hostPort = new System.Windows.Forms.TextBox();
             this.ClientInfo = new System.Windows.Forms.Label();
             this.ScreenShot = new System.Windows.Forms.PictureBox();
             this.EditButton = new System.Windows.Forms.Button();
@@ -42,8 +41,6 @@ namespace VanillaLauncher
             this.JoinButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.IPBox = new System.Windows.Forms.TextBox();
-            this.PortBox = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.clientBox = new System.Windows.Forms.ListBox();
@@ -76,26 +73,29 @@ namespace VanillaLauncher
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.listBox5 = new System.Windows.Forms.ListBox();
             this.tabPage12 = new System.Windows.Forms.TabPage();
-            this.label4 = new System.Windows.Forms.Label();
-            this.idBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.userNameBox = new System.Windows.Forms.TextBox();
-            this.Settings = new System.Windows.Forms.TabPage();
-            this.button7 = new System.Windows.Forms.Button();
-            this.assetCache = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.headColor = new System.Windows.Forms.TextBox();
-            this.torsoColor = new System.Windows.Forms.TextBox();
-            this.leftArmColor = new System.Windows.Forms.TextBox();
-            this.leftLegColor = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.rightLeg = new System.Windows.Forms.TextBox();
             this.rightArm = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.leftLegColor = new System.Windows.Forms.TextBox();
+            this.leftArmColor = new System.Windows.Forms.TextBox();
+            this.torsoColor = new System.Windows.Forms.TextBox();
+            this.headColor = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.Settings = new System.Windows.Forms.TabPage();
+            this.button7 = new System.Windows.Forms.Button();
+            this.assetCache = new System.Windows.Forms.CheckBox();
+            this.IPBox = new System.Windows.Forms.TextBox();
+            this.PortBox = new System.Windows.Forms.TextBox();
+            this.hostPort = new System.Windows.Forms.TextBox();
+            this.userNameBox = new System.Windows.Forms.TextBox();
+            this.idBox = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).BeginInit();
@@ -137,9 +137,11 @@ namespace VanillaLauncher
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.hostPort);
+            this.tabPage1.Controls.Add(this.PortBox);
+            this.tabPage1.Controls.Add(this.IPBox);
             this.tabPage1.Controls.Add(this.splash);
             this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.hostPort);
             this.tabPage1.Controls.Add(this.ClientInfo);
             this.tabPage1.Controls.Add(this.ScreenShot);
             this.tabPage1.Controls.Add(this.EditButton);
@@ -147,8 +149,6 @@ namespace VanillaLauncher
             this.tabPage1.Controls.Add(this.JoinButton);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.IPBox);
-            this.tabPage1.Controls.Add(this.PortBox);
             this.tabPage1.Controls.Add(this.pictureBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
@@ -179,16 +179,6 @@ namespace VanillaLauncher
             this.label5.TabIndex = 35;
             this.label5.Text = "Host Port";
             // 
-            // hostPort
-            // 
-            this.hostPort.BackColor = System.Drawing.Color.Black;
-            this.hostPort.ForeColor = System.Drawing.SystemColors.Window;
-            this.hostPort.Location = new System.Drawing.Point(21, 465);
-            this.hostPort.Name = "hostPort";
-            this.hostPort.Size = new System.Drawing.Size(181, 23);
-            this.hostPort.TabIndex = 34;
-            this.hostPort.TextChanged += new System.EventHandler(this.setglobal);
-            // 
             // ClientInfo
             // 
             this.ClientInfo.AutoSize = true;
@@ -214,7 +204,7 @@ namespace VanillaLauncher
             // EditButton
             // 
             this.EditButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.EditButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.EditButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.EditButton.ForeColor = System.Drawing.Color.White;
             this.EditButton.Location = new System.Drawing.Point(355, 139);
             this.EditButton.Name = "EditButton";
@@ -227,7 +217,7 @@ namespace VanillaLauncher
             // HostButton
             // 
             this.HostButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.HostButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.HostButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.HostButton.ForeColor = System.Drawing.SystemColors.Control;
             this.HostButton.Location = new System.Drawing.Point(127, 139);
             this.HostButton.Name = "HostButton";
@@ -240,7 +230,7 @@ namespace VanillaLauncher
             // JoinButton
             // 
             this.JoinButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.JoinButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.JoinButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.JoinButton.ForeColor = System.Drawing.SystemColors.Control;
             this.JoinButton.Location = new System.Drawing.Point(21, 139);
             this.JoinButton.Name = "JoinButton";
@@ -273,24 +263,6 @@ namespace VanillaLauncher
             this.label1.Size = new System.Drawing.Size(35, 20);
             this.label1.TabIndex = 23;
             this.label1.Text = "Port";
-            // 
-            // IPBox
-            // 
-            this.IPBox.BackColor = System.Drawing.Color.Black;
-            this.IPBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.IPBox.Location = new System.Drawing.Point(21, 52);
-            this.IPBox.Name = "IPBox";
-            this.IPBox.Size = new System.Drawing.Size(181, 23);
-            this.IPBox.TabIndex = 22;
-            // 
-            // PortBox
-            // 
-            this.PortBox.BackColor = System.Drawing.Color.Black;
-            this.PortBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.PortBox.Location = new System.Drawing.Point(21, 78);
-            this.PortBox.Name = "PortBox";
-            this.PortBox.Size = new System.Drawing.Size(181, 23);
-            this.PortBox.TabIndex = 21;
             // 
             // pictureBox1
             // 
@@ -347,11 +319,11 @@ namespace VanillaLauncher
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.idBox);
+            this.tabPage3.Controls.Add(this.userNameBox);
             this.tabPage3.Controls.Add(this.tabControl2);
             this.tabPage3.Controls.Add(this.label4);
-            this.tabPage3.Controls.Add(this.idBox);
             this.tabPage3.Controls.Add(this.label3);
-            this.tabPage3.Controls.Add(this.userNameBox);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(463, 515);
@@ -625,176 +597,6 @@ namespace VanillaLauncher
             this.tabPage12.Text = "BodyColors";
             this.tabPage12.UseVisualStyleBackColor = true;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Location = new System.Drawing.Point(420, 118);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 20);
-            this.label4.TabIndex = 28;
-            this.label4.Text = "ID";
-            // 
-            // idBox
-            // 
-            this.idBox.BackColor = System.Drawing.Color.Black;
-            this.idBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.idBox.Location = new System.Drawing.Point(266, 95);
-            this.idBox.Name = "idBox";
-            this.idBox.Size = new System.Drawing.Size(181, 23);
-            this.idBox.TabIndex = 27;
-            this.idBox.TextChanged += new System.EventHandler(this.setglobal);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(372, 46);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 20);
-            this.label3.TabIndex = 26;
-            this.label3.Text = "Username";
-            // 
-            // userNameBox
-            // 
-            this.userNameBox.BackColor = System.Drawing.Color.Black;
-            this.userNameBox.ForeColor = System.Drawing.SystemColors.Window;
-            this.userNameBox.Location = new System.Drawing.Point(266, 69);
-            this.userNameBox.Name = "userNameBox";
-            this.userNameBox.Size = new System.Drawing.Size(181, 23);
-            this.userNameBox.TabIndex = 25;
-            this.userNameBox.TextChanged += new System.EventHandler(this.setglobal);
-            // 
-            // Settings
-            // 
-            this.Settings.Controls.Add(this.button7);
-            this.Settings.Controls.Add(this.assetCache);
-            this.Settings.Location = new System.Drawing.Point(4, 24);
-            this.Settings.Name = "Settings";
-            this.Settings.Size = new System.Drawing.Size(463, 515);
-            this.Settings.TabIndex = 4;
-            this.Settings.Text = "Settings";
-            this.Settings.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(32, 67);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(156, 23);
-            this.button7.TabIndex = 1;
-            this.button7.Text = "Switch 2015 Corescripts";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.earlyCorescripts);
-            // 
-            // assetCache
-            // 
-            this.assetCache.AutoSize = true;
-            this.assetCache.Location = new System.Drawing.Point(32, 42);
-            this.assetCache.Name = "assetCache";
-            this.assetCache.Size = new System.Drawing.Size(101, 19);
-            this.assetCache.TabIndex = 0;
-            this.assetCache.Text = "Asset Caching";
-            this.assetCache.UseVisualStyleBackColor = true;
-            this.assetCache.CheckedChanged += new System.EventHandler(this.cacheEnabled);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.Red;
-            this.label6.Location = new System.Drawing.Point(81, 10);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(253, 30);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "TEMPORARY SYSTEM!\r\ni would prefer NOT to add 128 colors right now\r\n";
-            // 
-            // headColor
-            // 
-            this.headColor.BackColor = System.Drawing.Color.Black;
-            this.headColor.ForeColor = System.Drawing.SystemColors.Window;
-            this.headColor.Location = new System.Drawing.Point(21, 60);
-            this.headColor.Name = "headColor";
-            this.headColor.Size = new System.Drawing.Size(85, 23);
-            this.headColor.TabIndex = 26;
-            // 
-            // torsoColor
-            // 
-            this.torsoColor.BackColor = System.Drawing.Color.Black;
-            this.torsoColor.ForeColor = System.Drawing.SystemColors.Window;
-            this.torsoColor.Location = new System.Drawing.Point(21, 106);
-            this.torsoColor.Name = "torsoColor";
-            this.torsoColor.Size = new System.Drawing.Size(85, 23);
-            this.torsoColor.TabIndex = 27;
-            // 
-            // leftArmColor
-            // 
-            this.leftArmColor.BackColor = System.Drawing.Color.Black;
-            this.leftArmColor.ForeColor = System.Drawing.SystemColors.Window;
-            this.leftArmColor.Location = new System.Drawing.Point(21, 149);
-            this.leftArmColor.Name = "leftArmColor";
-            this.leftArmColor.Size = new System.Drawing.Size(85, 23);
-            this.leftArmColor.TabIndex = 28;
-            // 
-            // leftLegColor
-            // 
-            this.leftLegColor.BackColor = System.Drawing.Color.Black;
-            this.leftLegColor.ForeColor = System.Drawing.SystemColors.Window;
-            this.leftLegColor.Location = new System.Drawing.Point(21, 188);
-            this.leftLegColor.Name = "leftLegColor";
-            this.leftLegColor.Size = new System.Drawing.Size(85, 23);
-            this.leftLegColor.TabIndex = 29;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(112, 63);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(45, 20);
-            this.label7.TabIndex = 30;
-            this.label7.Text = "Head";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label8.Location = new System.Drawing.Point(112, 109);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 20);
-            this.label8.TabIndex = 31;
-            this.label8.Text = "Torso ";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label9.Location = new System.Drawing.Point(112, 152);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(66, 20);
-            this.label9.TabIndex = 32;
-            this.label9.Text = "Left Arm";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label10.Location = new System.Drawing.Point(112, 191);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(62, 20);
-            this.label10.TabIndex = 33;
-            this.label10.Text = "Left Leg";
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -836,6 +638,191 @@ namespace VanillaLauncher
             this.rightArm.Name = "rightArm";
             this.rightArm.Size = new System.Drawing.Size(85, 23);
             this.rightArm.TabIndex = 34;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label10.Location = new System.Drawing.Point(112, 191);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(62, 20);
+            this.label10.TabIndex = 33;
+            this.label10.Text = "Left Leg";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label9.Location = new System.Drawing.Point(112, 152);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(66, 20);
+            this.label9.TabIndex = 32;
+            this.label9.Text = "Left Arm";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label8.Location = new System.Drawing.Point(112, 109);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(49, 20);
+            this.label8.TabIndex = 31;
+            this.label8.Text = "Torso ";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label7.Location = new System.Drawing.Point(112, 63);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(45, 20);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "Head";
+            // 
+            // leftLegColor
+            // 
+            this.leftLegColor.BackColor = System.Drawing.Color.Black;
+            this.leftLegColor.ForeColor = System.Drawing.SystemColors.Window;
+            this.leftLegColor.Location = new System.Drawing.Point(21, 188);
+            this.leftLegColor.Name = "leftLegColor";
+            this.leftLegColor.Size = new System.Drawing.Size(85, 23);
+            this.leftLegColor.TabIndex = 29;
+            // 
+            // leftArmColor
+            // 
+            this.leftArmColor.BackColor = System.Drawing.Color.Black;
+            this.leftArmColor.ForeColor = System.Drawing.SystemColors.Window;
+            this.leftArmColor.Location = new System.Drawing.Point(21, 149);
+            this.leftArmColor.Name = "leftArmColor";
+            this.leftArmColor.Size = new System.Drawing.Size(85, 23);
+            this.leftArmColor.TabIndex = 28;
+            // 
+            // torsoColor
+            // 
+            this.torsoColor.BackColor = System.Drawing.Color.Black;
+            this.torsoColor.ForeColor = System.Drawing.SystemColors.Window;
+            this.torsoColor.Location = new System.Drawing.Point(21, 106);
+            this.torsoColor.Name = "torsoColor";
+            this.torsoColor.Size = new System.Drawing.Size(85, 23);
+            this.torsoColor.TabIndex = 27;
+            // 
+            // headColor
+            // 
+            this.headColor.BackColor = System.Drawing.Color.Black;
+            this.headColor.ForeColor = System.Drawing.SystemColors.Window;
+            this.headColor.Location = new System.Drawing.Point(21, 60);
+            this.headColor.Name = "headColor";
+            this.headColor.Size = new System.Drawing.Size(85, 23);
+            this.headColor.TabIndex = 26;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.Red;
+            this.label6.Location = new System.Drawing.Point(81, 10);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(253, 30);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "TEMPORARY SYSTEM!\r\ni would prefer NOT to add 128 colors right now\r\n";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label4.Location = new System.Drawing.Point(420, 121);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 20);
+            this.label4.TabIndex = 28;
+            this.label4.Text = "ID";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label3.Location = new System.Drawing.Point(372, 46);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 20);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "Username";
+            // 
+            // Settings
+            // 
+            this.Settings.Controls.Add(this.button7);
+            this.Settings.Controls.Add(this.assetCache);
+            this.Settings.Location = new System.Drawing.Point(4, 24);
+            this.Settings.Name = "Settings";
+            this.Settings.Size = new System.Drawing.Size(463, 515);
+            this.Settings.TabIndex = 4;
+            this.Settings.Text = "Settings";
+            this.Settings.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(32, 67);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(156, 23);
+            this.button7.TabIndex = 1;
+            this.button7.Text = "Switch 2015 Corescripts";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.earlyCorescripts);
+            // 
+            // assetCache
+            // 
+            this.assetCache.AutoSize = true;
+            this.assetCache.Location = new System.Drawing.Point(32, 42);
+            this.assetCache.Name = "assetCache";
+            this.assetCache.Size = new System.Drawing.Size(101, 19);
+            this.assetCache.TabIndex = 0;
+            this.assetCache.Text = "Asset Caching";
+            this.assetCache.UseVisualStyleBackColor = true;
+            this.assetCache.CheckedChanged += new System.EventHandler(this.cacheEnabled);
+            // 
+            // IPBox
+            // 
+            this.IPBox.Location = new System.Drawing.Point(22, 53);
+            this.IPBox.Name = "IPBox";
+            this.IPBox.Size = new System.Drawing.Size(180, 23);
+            this.IPBox.TabIndex = 37;
+            // 
+            // PortBox
+            // 
+            this.PortBox.Location = new System.Drawing.Point(22, 78);
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(180, 23);
+            this.PortBox.TabIndex = 38;
+            // 
+            // hostPort
+            // 
+            this.hostPort.Location = new System.Drawing.Point(22, 462);
+            this.hostPort.Name = "hostPort";
+            this.hostPort.Size = new System.Drawing.Size(180, 23);
+            this.hostPort.TabIndex = 39;
+            // 
+            // userNameBox
+            // 
+            this.userNameBox.Location = new System.Drawing.Point(266, 69);
+            this.userNameBox.Name = "userNameBox";
+            this.userNameBox.Size = new System.Drawing.Size(178, 23);
+            this.userNameBox.TabIndex = 30;
+            // 
+            // idBox
+            // 
+            this.idBox.Location = new System.Drawing.Point(266, 98);
+            this.idBox.Name = "idBox";
+            this.idBox.Size = new System.Drawing.Size(178, 23);
+            this.idBox.TabIndex = 31;
             // 
             // Vanilla
             // 
@@ -896,17 +883,12 @@ namespace VanillaLauncher
         private System.Windows.Forms.Button JoinButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox IPBox;
-        private System.Windows.Forms.TextBox PortBox;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListBox mapBox;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox userNameBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox hostPort;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox idBox;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.ListBox clientBox;
         private System.Windows.Forms.TabControl tabControl2;
@@ -952,6 +934,11 @@ namespace VanillaLauncher
         private System.Windows.Forms.TextBox torsoColor;
         private System.Windows.Forms.TextBox headColor;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox hostPort;
+        private System.Windows.Forms.TextBox PortBox;
+        private System.Windows.Forms.TextBox IPBox;
+        private System.Windows.Forms.TextBox idBox;
+        private System.Windows.Forms.TextBox userNameBox;
     }
 }
 

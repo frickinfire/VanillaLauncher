@@ -530,7 +530,7 @@ namespace VanillaLauncher
             if (is2007)
             {
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("Roblox.exe", "-no3d -script \"" + Directory.GetCurrentDirectory() + "\\content\\gameserver.lua\" \"" + Directory.GetCurrentDirectory() +"..\\..\\..\\files\\maps" + GlobalMap);
+                Process.Start("Roblox.exe", "-no3d -script \"" + Directory.GetCurrentDirectory() + "\\content\\gameserver.lua\" \"" + Directory.GetCurrentDirectory() +"..\\..\\..\\..\\" + GlobalMap);
 
                 Directory.SetCurrentDirectory("..\\..\\..");
             }
@@ -614,8 +614,10 @@ namespace VanillaLauncher
                             }
                         }
 
-                        string someText = "loadfile(\"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\")()";
+                        string someText = "loadfile(\"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + GlobalHat1 + "&hat2=" + GlobalHat2 + "&hat3=" + GlobalHat3 + "&tshirt=" + GlobalTshirt + "&port=" + port + "\")()";
+                        someText = someText.Replace("=0&", "=86487700&");
                         File.WriteAllText(@"clients\\" + selectedClient + "\\Player\\content\\join.lua", someText);
+                        
                         Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
                         Process.Start("Roblox.exe", "-script \"" + Directory.GetCurrentDirectory() + "\\content\\join.lua\"");
                         Directory.SetCurrentDirectory("..\\..\\..");
