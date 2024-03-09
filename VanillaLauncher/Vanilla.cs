@@ -165,55 +165,45 @@ namespace VanillaLauncher
                 Environment.SetEnvironmentVariable(name, newValue, scope);
             }
             FileInfo fileInfo = new FileInfo(hostsFile);
-            if (fileInfo.IsReadOnly)
+            if(fileInfo.IsReadOnly)
             {
                 MessageBox.Show(
                          "Vanilla will not work until you have disabled 'Read-Only' on your HOSTS file! Do this in C:\\Windows\\System32\\drivers\\etc.",
                          "Warning",
                           MessageBoxButtons.OK,
                           MessageBoxIcon.Warning);
-                Process.GetCurrentProcess().Kill();
 
             }
-            else
+            if (File.ReadAllText(hostsFile).Contains("# BEGIN VANILLA HOSTS"))
             {
-                if (!File.Exists(hostsFile))
-                {
-                    File.Create(hostsFile);
-                }
-                if (File.ReadAllText(hostsFile).Contains("# BEGIN VANILLA HOSTS"))
-                {
-                    string str = File.ReadAllText(hostsFile);
-                    int index = str.IndexOf("# BEGIN VANILLA HOSTS");
-                    string result = str.Substring(0, index);
-                    File.WriteAllText(hostsFile, result);
-                }
-
-                //if (File.Exists(hostsFile + ".bak")) {   File.Replace(hostsFile + ".bak", hostsFile, hostsFile + ".bak");   }
-                //                                         throws an error, don't use this even if it looks better
-                if (File.Exists(hostsFile + ".bak"))
-                {
-                    File.Delete(hostsFile);
-                    File.Copy(hostsFile + ".bak", hostsFile);
-                    File.Delete(hostsFile + ".bak");
-                }
-                File.Copy(hostsFile, hostsFile + ".bak");
-                using (StreamWriter w = File.AppendText(hostsFile))
-                {
-                    w.WriteLine("");
-                    w.WriteLine("# BEGIN VANILLA HOSTS");
-                    w.WriteLine("127.0.0.1 www.roblox.com");
-                    w.WriteLine("127.0.0.1 roblox.com");
-                    w.WriteLine("127.0.0.1 api.roblox.com");
-                    w.WriteLine("127.0.0.1 assetgame.roblox.com");
-                    w.WriteLine("127.0.0.1 clientsettings.api.roblox.com");
-                    w.WriteLine("127.0.0.1 versioncompatibility.api.roblox.com");
-                    w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
-                    w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
-                }
-
+                string str = File.ReadAllText(hostsFile);
+                int index = str.IndexOf("# BEGIN VANILLA HOSTS");
+                string result = str.Substring(0, index);
+                File.WriteAllText(hostsFile, result);
             }
- 
+
+            //if (File.Exists(hostsFile + ".bak")) {   File.Replace(hostsFile + ".bak", hostsFile, hostsFile + ".bak");   }
+            //                                         throws an error, don't use this even if it looks better
+            if (File.Exists(hostsFile + ".bak"))
+            {
+                File.Delete(hostsFile);
+                File.Copy(hostsFile + ".bak", hostsFile);
+                File.Delete(hostsFile + ".bak");
+            }
+            File.Copy(hostsFile, hostsFile + ".bak");
+            using (StreamWriter w = File.AppendText(hostsFile))
+            {
+                w.WriteLine("");
+                w.WriteLine("# BEGIN VANILLA HOSTS");
+                w.WriteLine("127.0.0.1 www.roblox.com");
+                w.WriteLine("127.0.0.1 roblox.com");
+                w.WriteLine("127.0.0.1 api.roblox.com");
+                w.WriteLine("127.0.0.1 assetgame.roblox.com");
+                w.WriteLine("127.0.0.1 clientsettings.api.roblox.com");
+                w.WriteLine("127.0.0.1 versioncompatibility.api.roblox.com");
+                w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
+                w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
+            }
             if (File.Exists("files\\settings.json"))
             {
                 dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\settings.json"));
@@ -228,14 +218,6 @@ namespace VanillaLauncher
                 GlobalPants = val["Pants"];
                 GlobalTshirt = val["TShirt"];
                 ClientInfo.Text = "selected client: " + val["Client"];
-                clientBox.SelectedItem = val["Client"];
-                hatList.SelectedItem = GlobalHat1;
-                listBox1.SelectedItem = GlobalHat2;
-                listBox2.SelectedItem = GlobalHat3;
-                listBox3.SelectedItem = GlobalShirt;
-                listBox4.SelectedItem = GlobalPants;
-                listBox5.SelectedItem = GlobalTshirt;
-
             }
             var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
             foreach (var file in files3)
@@ -344,16 +326,9 @@ namespace VanillaLauncher
             // don't use file.replace here or it'll cause issues
             File.Delete(hostsFile);
             File.Copy(hostsFile + ".bak", hostsFile);
-            if (File.ReadAllText(hostsFile).Contains("# BEGIN VANILLA HOSTS"))
-            {
-                string str = File.ReadAllText(hostsFile);
-                int index = str.IndexOf("# BEGIN VANILLA HOSTS");
-                string result = str.Substring(0, index);
-                File.WriteAllText(hostsFile, result);
-            }
+            Process.Start("CMD.exe", "/C taskkill /f /im RunHiddenConsole.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
-
 
         }
         private void Form1_Load(object sender, EventArgs e)
