@@ -473,8 +473,9 @@ namespace VanillaLauncher
                     avatarFetchRequired = val["avatarFetchRequired"] == "true";
                     isRobloxPlayer = val["isRobloxPlayer"] == "true";
                 }
+                ScreenShot.Image = Image.FromFile("clients\\" + curItem + "\\photo.png");
             }
-            
+
         }
 
       
@@ -539,86 +540,95 @@ namespace VanillaLauncher
             }
             else
             {
-                string selectedClient = clientBox.SelectedItem.ToString();
-                string ipaddr = IPBox.Text;
-                string port = PortBox.Text;
-                string userName = userNameBox.Text;
-                string ID = idBox.Text;
-                string hat1 = GlobalHat1;
-                string hat2s = GlobalHat2;
-                string hat3s = GlobalHat3;
-                string shirts = GlobalShirt;
-                string pants = GlobalPants;
-                string tshirts = GlobalTshirt;
-                if (isRobloxApp && !isRobloxPlayer)
+                try
                 {
-                    string[] values = { shirts, pants, hat1, hat2s, hat3s, tshirts };
-                    for (int i = 0; i < values.Length; i++)
+                    string selectedClient = clientBox.SelectedItem.ToString();
+                    string ipaddr = IPBox.Text;
+                    string port = PortBox.Text;
+                    string userName = userNameBox.Text;
+                    string ID = idBox.Text;
+                    string hat1 = GlobalHat1;
+                    string hat2s = GlobalHat2;
+                    string hat3s = GlobalHat3;
+                    string shirts = GlobalShirt;
+                    string pants = GlobalPants;
+                    string tshirts = GlobalTshirt;
+                    if (isRobloxApp && !isRobloxPlayer)
                     {
-                        if (String.IsNullOrEmpty(values[i]))
+                        string[] values = { shirts, pants, hat1, hat2s, hat3s, tshirts };
+                        for (int i = 0; i < values.Length; i++)
                         {
-                            values[i] = "0";
-                        }
-                    }
-
-                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                    Process.Start("RobloxApp.exe", "-script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "')()\"");
-                    Directory.SetCurrentDirectory("..\\..\\..");
-
-                }
-
-                if (isRobloxPlayer)
-                {
-                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                    Process.Start("RobloxPlayer.exe", "-joinScriptUrl \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\"");
-                    Directory.SetCurrentDirectory("..\\..\\..");
-                }
-                if (isRobloxPlayerBeta)
-                {
-                    if (avatarFetchRequired)
-                    {
-                        var request = (HttpWebRequest)WebRequest.Create("http://" + ipaddr + ":53642/v1.1/set-avatar/?userid=" + ID + "&headc=null&torsoc=null&rarmc=null&larmc=null&llegc=null&rlegc=null&shirt=" + shirts + "&tshirt=" + tshirts + "&pants=" + pants + "&face=0&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&torsop=0&lap=0&llp=0&rap=0&rlp=0&hp=0");
-                        var response = (HttpWebResponse)request.GetResponse();
-                        string responseString;
-                        using (var stream = response.GetResponseStream())
-                        {
-                            using (var reader = new StreamReader(stream))
+                            if (String.IsNullOrEmpty(values[i]))
                             {
-                                responseString = reader.ReadToEnd();
+                                values[i] = "0";
                             }
                         }
+
                         Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                    Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
-                    Directory.SetCurrentDirectory("..\\..\\..");
+                        Process.Start("RobloxApp.exe", "-build -script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "')()\"");
+                        Directory.SetCurrentDirectory("..\\..\\..");
+
                     }
-                }
-                if (is2007)
-                {
-                    string[] values = { "GlobalHat1", "GlobalHat2", "GlobalHat3", "GlobalShirt", "GlobalPants", "GlobalTshirt" };
-                    for (int i = 0; i < values.Length; i++)
+
+                    if (isRobloxPlayer)
                     {
-                        if (String.IsNullOrEmpty(values[i]))
+                        Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                        Process.Start("RobloxPlayer.exe", "-joinScriptUrl \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\"");
+                        Directory.SetCurrentDirectory("..\\..\\..");
+                    }
+                    if (isRobloxPlayerBeta)
+                    {
+                        if (avatarFetchRequired)
                         {
-                            values[i] = "0";
+                            var request = (HttpWebRequest)WebRequest.Create("http://" + ipaddr + ":53642/v1.1/set-avatar/?userid=" + ID + "&headc=null&torsoc=null&rarmc=null&larmc=null&llegc=null&rlegc=null&shirt=" + shirts + "&tshirt=" + tshirts + "&pants=" + pants + "&face=0&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&torsop=0&lap=0&llp=0&rap=0&rlp=0&hp=0");
+                            var response = (HttpWebResponse)request.GetResponse();
+                            string responseString;
+                            using (var stream = response.GetResponseStream())
+                            {
+                                using (var reader = new StreamReader(stream))
+                                {
+                                    responseString = reader.ReadToEnd();
+                                }
+                            }
+                            Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                            Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
+                            Directory.SetCurrentDirectory("..\\..\\..");
                         }
                     }
-                    string someText = "loadfile(\"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\")()";
-                    File.WriteAllText(@"clients\\" + selectedClient + "\\Player\\content\\join.lua", someText);
-                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                    Process.Start("Roblox.exe", "-script \"" + Directory.GetCurrentDirectory() + "\\content\\join.lua\"");
-                    Directory.SetCurrentDirectory("..\\..\\..");
+                    if (is2007)
+                    {
+                        string[] values = { "GlobalHat1", "GlobalHat2", "GlobalHat3", "GlobalShirt", "GlobalPants", "GlobalTshirt" };
+                        for (int i = 0; i < values.Length; i++)
+                        {
+                            if (String.IsNullOrEmpty(values[i]))
+                            {
+                                values[i] = "0";
+                            }
+                        }
+                        string someText = "loadfile(\"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\")()";
+                        File.WriteAllText(@"clients\\" + selectedClient + "\\Player\\content\\join.lua", someText);
+                        Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                        Process.Start("Roblox.exe", "-script \"" + Directory.GetCurrentDirectory() + "\\content\\join.lua\"");
+                        Directory.SetCurrentDirectory("..\\..\\..");
+                    }
+                    if (isRCCService)
+                    {
+                        Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                        Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
+                        Directory.SetCurrentDirectory("..\\..\\..");
+                    }
+
                 }
-                if (isRCCService)
+                catch
                 {
-                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                    Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
-                    Directory.SetCurrentDirectory("..\\..\\..");
+                    Directory.SetCurrentDirectory("..\\..\\.."); 
                 }
             }
-            
-        }
 
-        private void EditButton_Click(object sender, EventArgs e)
+
+            }
+
+            private void EditButton_Click(object sender, EventArgs e)
         {
             if (isRobloxApp)
             {
