@@ -1,8 +1,6 @@
-.vs
-.vs/VanillaLauncher/v16/.suo
-.vs/VanillaLauncher/v17/.suo
-AssetDownloader/bin
-AssetDownloader/obj
+.vs/
+AssetDownloader/bin/
+AssetDownloader/obj/
 packages/
-VanillaLauncher/bin
-VanillaLauncher/obj
+VanillaLauncher/bin/
+VanillaLauncher/obj/
