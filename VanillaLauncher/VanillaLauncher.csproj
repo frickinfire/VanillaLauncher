@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>VanillaLauncher</RootNamespace>
     <AssemblyName>VanillaLauncher</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -124,6 +124,11 @@
   <ItemGroup>
     <Compile Include="Classes\ColorLoader.cs" />
     <Compile Include="Classes\SOAP.cs" />
+    <Compile Include="MobileProxy\Helpers\ConsoleHelper.cs" />
+    <Compile Include="MobileProxy\Main.cs" />
+    <Compile Include="MobileProxy\ProxyEventArgsBaseExtensions.cs" />
+    <Compile Include="MobileProxy\ProxyTestController.cs" />
+    <Compile Include="MobileProxy\SampleClientState.cs" />
     <Compile Include="Vanilla.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,12 +165,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\RobloxScreenShot08062023_104225802.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
@@ -177,11 +176,15 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MobileProxy\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\vanillablu2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\atti.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\atti1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

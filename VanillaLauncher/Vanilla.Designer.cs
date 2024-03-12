@@ -32,6 +32,9 @@ namespace VanillaLauncher
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Vanilla));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.hostPortNew = new System.Windows.Forms.TextBox();
+            this.PortBox = new System.Windows.Forms.TextBox();
+            this.IPBox = new System.Windows.Forms.TextBox();
             this.splash = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ClientInfo = new System.Windows.Forms.Label();
@@ -45,6 +48,8 @@ namespace VanillaLauncher
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.mapBox = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.idBox = new System.Windows.Forms.TextBox();
+            this.userNameBox = new System.Windows.Forms.TextBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.hatName = new System.Windows.Forms.TextBox();
@@ -83,11 +88,6 @@ namespace VanillaLauncher
             this.Settings = new System.Windows.Forms.TabPage();
             this.button7 = new System.Windows.Forms.Button();
             this.assetCache = new System.Windows.Forms.CheckBox();
-            this.IPBox = new System.Windows.Forms.TextBox();
-            this.PortBox = new System.Windows.Forms.TextBox();
-            this.hostPort = new System.Windows.Forms.TextBox();
-            this.userNameBox = new System.Windows.Forms.TextBox();
-            this.idBox = new System.Windows.Forms.TextBox();
             this.ScreenShot = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -137,7 +137,7 @@ namespace VanillaLauncher
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.hostPort);
+            this.tabPage1.Controls.Add(this.hostPortNew);
             this.tabPage1.Controls.Add(this.PortBox);
             this.tabPage1.Controls.Add(this.IPBox);
             this.tabPage1.Controls.Add(this.splash);
@@ -156,6 +156,28 @@ namespace VanillaLauncher
             this.tabPage1.Size = new System.Drawing.Size(463, 515);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Play";
+            // 
+            // hostPortNew
+            // 
+            this.hostPortNew.Location = new System.Drawing.Point(22, 462);
+            this.hostPortNew.Name = "hostPortNew";
+            this.hostPortNew.Size = new System.Drawing.Size(180, 23);
+            this.hostPortNew.TabIndex = 39;
+            this.hostPortNew.TextChanged += new System.EventHandler(this.setglobal);
+            // 
+            // PortBox
+            // 
+            this.PortBox.Location = new System.Drawing.Point(22, 78);
+            this.PortBox.Name = "PortBox";
+            this.PortBox.Size = new System.Drawing.Size(180, 23);
+            this.PortBox.TabIndex = 38;
+            // 
+            // IPBox
+            // 
+            this.IPBox.Location = new System.Drawing.Point(22, 53);
+            this.IPBox.Name = "IPBox";
+            this.IPBox.Size = new System.Drawing.Size(180, 23);
+            this.IPBox.TabIndex = 37;
             // 
             // splash
             // 
@@ -310,6 +332,22 @@ namespace VanillaLauncher
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "User";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // idBox
+            // 
+            this.idBox.Location = new System.Drawing.Point(266, 98);
+            this.idBox.Name = "idBox";
+            this.idBox.Size = new System.Drawing.Size(178, 23);
+            this.idBox.TabIndex = 31;
+            this.idBox.TextChanged += new System.EventHandler(this.setglobal);
+            // 
+            // userNameBox
+            // 
+            this.userNameBox.Location = new System.Drawing.Point(266, 69);
+            this.userNameBox.Name = "userNameBox";
+            this.userNameBox.Size = new System.Drawing.Size(178, 23);
+            this.userNameBox.TabIndex = 30;
+            this.userNameBox.TextChanged += new System.EventHandler(this.setglobal);
             // 
             // tabControl2
             // 
@@ -715,43 +753,9 @@ namespace VanillaLauncher
             this.assetCache.UseVisualStyleBackColor = true;
             this.assetCache.CheckedChanged += new System.EventHandler(this.cacheEnabled);
             // 
-            // IPBox
-            // 
-            this.IPBox.Location = new System.Drawing.Point(22, 53);
-            this.IPBox.Name = "IPBox";
-            this.IPBox.Size = new System.Drawing.Size(180, 23);
-            this.IPBox.TabIndex = 37;
-            // 
-            // PortBox
-            // 
-            this.PortBox.Location = new System.Drawing.Point(22, 78);
-            this.PortBox.Name = "PortBox";
-            this.PortBox.Size = new System.Drawing.Size(180, 23);
-            this.PortBox.TabIndex = 38;
-            // 
-            // hostPort
-            // 
-            this.hostPort.Location = new System.Drawing.Point(22, 462);
-            this.hostPort.Name = "hostPort";
-            this.hostPort.Size = new System.Drawing.Size(180, 23);
-            this.hostPort.TabIndex = 39;
-            // 
-            // userNameBox
-            // 
-            this.userNameBox.Location = new System.Drawing.Point(266, 69);
-            this.userNameBox.Name = "userNameBox";
-            this.userNameBox.Size = new System.Drawing.Size(178, 23);
-            this.userNameBox.TabIndex = 30;
-            // 
-            // idBox
-            // 
-            this.idBox.Location = new System.Drawing.Point(266, 98);
-            this.idBox.Name = "idBox";
-            this.idBox.Size = new System.Drawing.Size(178, 23);
-            this.idBox.TabIndex = 31;
-            // 
             // ScreenShot
             // 
+            this.ScreenShot.Image = global::VanillaLauncher.Properties.Resources.atti1;
             this.ScreenShot.Location = new System.Drawing.Point(21, 211);
             this.ScreenShot.Name = "ScreenShot";
             this.ScreenShot.Size = new System.Drawing.Size(422, 235);
@@ -761,6 +765,7 @@ namespace VanillaLauncher
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(231, 6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(220, 99);
@@ -932,7 +937,7 @@ namespace VanillaLauncher
         private System.Windows.Forms.TextBox torsoColor;
         private System.Windows.Forms.TextBox headColor;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox hostPort;
+        private System.Windows.Forms.TextBox hostPortNew;
         private System.Windows.Forms.TextBox PortBox;
         private System.Windows.Forms.TextBox IPBox;
         private System.Windows.Forms.TextBox idBox;

@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Security.Policy;
 using System.IO.Compression;
 
-namespace AssetDownloader
+namespace Aphylla
 {
 
     class AssetInfo
@@ -32,7 +32,7 @@ namespace AssetDownloader
 
             if (args.Length <= 0)
             {
-                Console.WriteLine("run with asset id. example: AssetDownloader.exe 1804739");
+                Console.WriteLine("run with asset id. example: Aphylla.exe 1804739");
             }
             using (var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate }))
             {

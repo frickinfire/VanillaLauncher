@@ -20,6 +20,7 @@ using System.IO.Compression;
 using Newtonsoft.Json;
 using System.Security;
 using System.Data.SQLite;
+using Titanium.Web.Proxy.Examples.Basic;
 
 namespace VanillaLauncher
 {
@@ -131,7 +132,7 @@ namespace VanillaLauncher
             }
             Application.ApplicationExit += new EventHandler(onshutdown);
             string pathfile = Environment.GetEnvironmentVariable("PATH");
-            if (!pathfile.Contains( Directory.GetCurrentDirectory() + @"\files\webserver\php"))
+            if (!pathfile.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\php"))
             {
                 var name = "PATH";
                 var scope = EnvironmentVariableTarget.Machine;
@@ -151,10 +152,10 @@ namespace VanillaLauncher
             string pathfile3 = Environment.GetEnvironmentVariable("OPENSSL_CONF");
             if (pathfile3 != null)
             {
-                    var name = "OPENSSL_CONF";
-                    var scope = EnvironmentVariableTarget.Machine;
-                    var newValue = Directory.GetCurrentDirectory() + @"\files\webserver\php\extras\ssl\openssl.cnf";
-                    Environment.SetEnvironmentVariable(name, newValue, scope);
+                var name = "OPENSSL_CONF";
+                var scope = EnvironmentVariableTarget.Machine;
+                var newValue = Directory.GetCurrentDirectory() + @"\files\webserver\php\extras\ssl\openssl.cnf";
+                Environment.SetEnvironmentVariable(name, newValue, scope);
 
             }
             else
@@ -165,7 +166,7 @@ namespace VanillaLauncher
                 Environment.SetEnvironmentVariable(name, newValue, scope);
             }
             FileInfo fileInfo = new FileInfo(hostsFile);
-            if(fileInfo.IsReadOnly)
+            if (fileInfo.IsReadOnly)
             {
                 MessageBox.Show(
                          "Vanilla will not work until you have disabled 'Read-Only' on your HOSTS file! Do this in C:\\Windows\\System32\\drivers\\etc.",
@@ -207,7 +208,7 @@ namespace VanillaLauncher
             if (File.Exists("files\\settings.json"))
             {
                 dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\settings.json"));
-                hostPort.Text = val["HostPort"];
+                hostPortNew.Text = val["HostPort"];
                 idBox.Text = val["ID"];
                 userNameBox.Text = val["Username"];
                 curItem = val["Client"];
@@ -217,7 +218,7 @@ namespace VanillaLauncher
                 GlobalShirt = val["Shirt"];
                 GlobalPants = val["Pants"];
                 GlobalTshirt = val["TShirt"];
-                ClientInfo.Text = "selected client: " + val["Client"];
+                ClientInfo.Text = "selected client: None";
             }
             var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
             foreach (var file in files3)
@@ -278,14 +279,20 @@ namespace VanillaLauncher
                 mapBox.Items.Add(file);
             }
 
+            ProxyTestController controller = new ProxyTestController();
+
+            // Start proxy controller
+//controller.StartProxy();
+
+           
 
         }
        
         public void setglobal(object sender, EventArgs e)
         {
-            if (sender == hostPort)
+            if (sender == hostPortNew)
             {
-                GlobalHostPort = hostPort.Text;
+                GlobalHostPort = hostPortNew.Text;
             }
             if (sender == userNameBox)
             {
@@ -298,6 +305,7 @@ namespace VanillaLauncher
         }
         public void onshutdown(object sender, EventArgs e)
         {
+
             if (File.Exists("files\\settings.json"))
             {
                 File.Delete("files\\settings.json");
@@ -457,6 +465,7 @@ namespace VanillaLauncher
                 }
                 curItem = clientBox.SelectedItem.ToString();
                 System.IO.Compression.ZipFile.ExtractToDirectory("files\\filesets\\" + curItem + ".zip", "files\\webroot");
+                System.IO.Compression.ZipFile.ExtractToDirectory("files\\filesets\\common.zip", "files\\webroot");
                 if (assetCache.Checked)
                 {
                     File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
@@ -489,7 +498,7 @@ namespace VanillaLauncher
         private void HostButton_Click_1(object sender, EventArgs e)
         {
             string selectedClient = curItem;
-            string hostPortstring = hostPort.Text;
+            string hostPortstring = hostPortNew.Text;
             if (isRCCService)
             {
                 if (selectedClient == "2015M")
@@ -530,7 +539,7 @@ namespace VanillaLauncher
             if (is2007)
             {
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("Roblox.exe", "-no3d -script \"" + Directory.GetCurrentDirectory() + "\\content\\gameserver.lua\" \"" + Directory.GetCurrentDirectory() +"..\\..\\..\\..\\" + GlobalMap);
+                Process.Start("Roblox.exe", "-no3d -script \"" + Directory.GetCurrentDirectory() + "\\content\\gameserver.lua\" \"" + Directory.GetCurrentDirectory() +"\\..\\..\\..\\" + GlobalMap);
 
                 Directory.SetCurrentDirectory("..\\..\\..");
             }
@@ -610,7 +619,7 @@ namespace VanillaLauncher
                         {
                             if (String.IsNullOrEmpty(values[i]))
                             {
-                                values[i] = "86487700";
+                                values[i] = "0";
                             }
                         }
 
