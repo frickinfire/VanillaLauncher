@@ -393,8 +393,16 @@ namespace VanillaLauncher
             else
             {
                 GlobalMap = mapBox.SelectedItem.ToString();
-                File.Delete("files\\web\\1818");
-                File.Copy(GlobalMap, "files\\web\\1818");
+                if (GlobalMap.Contains(".gz"))
+                {
+                    Decompress(new FileInfo(GlobalMap));
+                }    
+                else
+                {
+                    File.Delete("files\\web\\1818");
+                    File.Copy(GlobalMap, "files\\web\\1818");
+                }
+               
             }
 
         }
@@ -816,7 +824,26 @@ namespace VanillaLauncher
 
         private void fileSystemWatcher1_Created(object sender, FileSystemEventArgs e) { mapBox.Items.Add(e.FullPath); }
 
-        private void fileSystemWatcher1_Deleted(object sender, FileSystemEventArgs e) { mapBox.Items.Remove(e.FullPath); }
+        private void fileSystemWatcher1_Deleted(object sender, FileSystemEventArgs e)     { mapBox.Items.Remove(e.FullPath);  }
+
+
+        public static void Decompress(FileInfo fileToDecompress)
+        {
+            using (FileStream originalFileStream = fileToDecompress.OpenRead())
+            {
+                string currentFileName = fileToDecompress.FullName;
+                string newFileName = currentFileName.Remove(currentFileName.Length - fileToDecompress.Extension.Length);
+
+                using (FileStream decompressedFileStream = File.Create(@"files\web\1818"))
+                {
+                    using (GZipStream decompressionStream = new GZipStream(originalFileStream, CompressionMode.Decompress))
+                    {
+                        decompressionStream.CopyTo(decompressedFileStream);
+                       
+                    }
+                }
+            }
+        }
     }
 }
 
