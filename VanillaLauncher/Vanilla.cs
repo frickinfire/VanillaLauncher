@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using System.Security;
 using System.Data.SQLite;
 using Titanium.Web.Proxy.Examples.Basic;
+using System.Reflection;
 
 namespace VanillaLauncher
 {
@@ -205,21 +206,7 @@ namespace VanillaLauncher
                 w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
                 w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
             }
-            if (File.Exists("files\\settings.json"))
-            {
-                dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\settings.json"));
-                hostPortNew.Text = val["HostPort"];
-                idBox.Text = val["ID"];
-                userNameBox.Text = val["Username"];
-                curItem = val["Client"];
-                GlobalHat1 = val["Hat1"];
-                GlobalHat2 = val["Hat2"];
-                GlobalHat3 = val["Hat3"];
-                GlobalShirt = val["Shirt"];
-                GlobalPants = val["Pants"];
-                GlobalTshirt = val["TShirt"];
-                ClientInfo.Text = "selected client: None";
-            }
+
             var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
             foreach (var file in files3)
             {
@@ -228,7 +215,7 @@ namespace VanillaLauncher
                     string ohio = file.Substring(file.IndexOf("ts\\") + 3);
                     int index = ohio.IndexOf(".info");
                     string result = ohio.Substring(0, index);
-                    hatList.Items.Add(result);
+                    listBox0.Items.Add(result);
                     listBox1.Items.Add(result);
                     listBox2.Items.Add(result);
                 }
@@ -278,7 +265,60 @@ namespace VanillaLauncher
             {
                 mapBox.Items.Add(file);
             }
+            if (File.Exists("files\\settings.json"))
+            {
+                dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\settings.json"));
+                hostPortNew.Text = val["HostPort"];
+                idBox.Text = val["ID"];
+                userNameBox.Text = val["Username"];
+                curItem = val["Client"];
+                GlobalHat1 = val["Hat1"];
+                GlobalHat2 = val["Hat2"];
+                GlobalHat3 = val["Hat3"];
+                GlobalShirt = val["Shirt"];
+                GlobalPants = val["Pants"];
+                GlobalTshirt = val["TShirt"];
+                ClientInfo.Text = "selected client: None";
+                string[] values = { GlobalShirt, GlobalPants, GlobalHat1, GlobalHat2, GlobalHat3, GlobalHat3, GlobalTshirt };
 
+                foreach(string goon in values)
+                {
+
+                    //string prefix = "listBox";
+                    //var increment = -1;
+                    // UGH !!!! i will make this work LATER. for NOW... yandere dev code
+                    if (goon == GlobalHat1)
+                    {
+                        var index = listBox0.FindString(GlobalHat1);
+                        listBox0.SelectedIndex = index;
+                    }
+                    if (goon == GlobalHat2)
+                    {
+                        var index = listBox1.FindString(GlobalHat2);
+                        listBox1.SelectedIndex = index;
+                    }
+                    if (goon == GlobalHat3)
+                    {
+                        var index = listBox2.FindString(GlobalHat3);
+                        listBox2.SelectedIndex = index;
+                    }
+                    if (goon == GlobalShirt)
+                    {
+                        var index = listBox3.FindString(GlobalShirt);
+                        listBox3.SelectedIndex = index;
+                    }
+                    if (goon == GlobalPants)
+                    {
+                        var index = listBox4.FindString(GlobalPants);
+                        listBox4.SelectedIndex = index;
+                    }
+                    if (goon == GlobalTshirt)
+                    {
+                        var index = listBox5.FindString(GlobalTshirt);
+                        listBox5.SelectedIndex = index;
+                    }
+                }
+            }
             ProxyTestController controller = new ProxyTestController();
 
             // Start proxy controller
@@ -361,18 +401,18 @@ namespace VanillaLauncher
 
         private void charChanged(object sender, System.EventArgs e)
         {
-            if (sender == hatList)
+            if (sender == listBox0)
             {
-                if (hatList.SelectedItem == null)
+                if (listBox0.SelectedItem == null)
                 {
                     return;
                 }
-                dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\char\\hats\\" + hatList.SelectedItem.ToString() + ".info.json"));
+                dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\char\\hats\\" + listBox0.SelectedItem.ToString() + ".info.json"));
                 hatName.Text = val["Name"];
                 pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-                pictureBox2.Image = Image.FromFile("files\\char\\hats\\" + hatList.SelectedItem.ToString() + ".thumb.png");
+                pictureBox2.Image = Image.FromFile("files\\char\\hats\\" + listBox0.SelectedItem.ToString() + ".thumb.png");
                 pictureBox2.Refresh();
-                GlobalHat1 = hatList.SelectedItem.ToString();
+                GlobalHat1 = listBox0.SelectedItem.ToString();
             }
             if (sender == listBox1)
             {
@@ -704,7 +744,7 @@ namespace VanillaLauncher
 
             if (sender == pictureBox2)
             {
-                hatList.ClearSelected();
+                listBox0.ClearSelected();
                 hatName.Text = "";
                 pictureBox2.Image = null;
                 GlobalHat1 = "0";
@@ -749,9 +789,28 @@ namespace VanillaLauncher
 
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+        // https://www.codeproject.com/Articles/19911/Dynamically-Invoke-A-Method-Given-Strings-with-Met 
+        public static string InvokeStringMethod(string typeName, string methodName)
+        {
+            // Get the Type for the class
+            Type calledType = Type.GetType(typeName);
+
+            // Invoke the method itself. The string returned by the method winds up in s
+            String s = (String)calledType.InvokeMember(
+                            methodName,
+                            BindingFlags.InvokeMethod | BindingFlags.Public |
+                                BindingFlags.Static,
+                            null,
+                            null,
+                            null);
+
+            // Return the string that was returned by the called method.
+            return s;
         }
     }
 }
