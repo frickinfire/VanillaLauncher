@@ -835,6 +835,7 @@ namespace VanillaLauncher
             this.fileSystemWatcher1.Path = "files\\maps";
             this.fileSystemWatcher1.SynchronizingObject = this;
             this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Created);
+            this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Deleted);
             // 
             // Vanilla
             // 

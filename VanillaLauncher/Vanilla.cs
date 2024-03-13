@@ -814,10 +814,9 @@ namespace VanillaLauncher
             return s;
         }
 
-        private void fileSystemWatcher1_Created(object sender, FileSystemEventArgs e)
-        {
-            mapBox.Items.Add(e.FullPath);
-        }
+        private void fileSystemWatcher1_Created(object sender, FileSystemEventArgs e) { mapBox.Items.Add(e.FullPath); }
+
+        private void fileSystemWatcher1_Deleted(object sender, FileSystemEventArgs e) { mapBox.Items.Remove(e.FullPath); }
     }
 }
 
