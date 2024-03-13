@@ -739,6 +739,7 @@ namespace VanillaLauncher
             }
 
         }
+
         private void charRemove(object sender, EventArgs e)
         {
 
@@ -811,6 +812,11 @@ namespace VanillaLauncher
 
             // Return the string that was returned by the called method.
             return s;
+        }
+
+        private void fileSystemWatcher1_Created(object sender, FileSystemEventArgs e)
+        {
+            mapBox.Items.Add(e.FullPath);
         }
     }
 }

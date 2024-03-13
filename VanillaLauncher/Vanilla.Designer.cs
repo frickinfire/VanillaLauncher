@@ -96,6 +96,7 @@ namespace VanillaLauncher
             this.Settings = new System.Windows.Forms.TabPage();
             this.button7 = new System.Windows.Forms.Button();
             this.assetCache = new System.Windows.Forms.CheckBox();
+            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).BeginInit();
@@ -118,6 +119,7 @@ namespace VanillaLauncher
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.tabPage12.SuspendLayout();
             this.Settings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -827,6 +829,13 @@ namespace VanillaLauncher
             this.assetCache.UseVisualStyleBackColor = true;
             this.assetCache.CheckedChanged += new System.EventHandler(this.cacheEnabled);
             // 
+            // fileSystemWatcher1
+            // 
+            this.fileSystemWatcher1.EnableRaisingEvents = true;
+            this.fileSystemWatcher1.Path = "files\\maps";
+            this.fileSystemWatcher1.SynchronizingObject = this;
+            this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Created);
+            // 
             // Vanilla
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -871,6 +880,7 @@ namespace VanillaLauncher
             this.tabPage12.PerformLayout();
             this.Settings.ResumeLayout(false);
             this.Settings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -942,6 +952,7 @@ namespace VanillaLauncher
         private System.Windows.Forms.TextBox IPBox;
         private System.Windows.Forms.TextBox idBox;
         private System.Windows.Forms.TextBox userNameBox;
+        private System.IO.FileSystemWatcher fileSystemWatcher1;
     }
 }
 
