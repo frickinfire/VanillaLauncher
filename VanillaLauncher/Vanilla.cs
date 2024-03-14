@@ -322,9 +322,12 @@ namespace VanillaLauncher
             ProxyTestController controller = new ProxyTestController();
 
             // Start proxy controller
-//controller.StartProxy();
+            //controller.StartProxy();
 
-           
+            var lines = File.ReadAllLines("files\\splashes.txt");
+            var r = new Random();
+            var randomLineNumber = r.Next(0, lines.Length - 1);
+            splash.Text = lines[randomLineNumber];
 
         }
        
@@ -549,7 +552,7 @@ namespace VanillaLauncher
             string hostPortstring = hostPortNew.Text;
             if (isRCCService)
             {
-                if (selectedClient == "2015M")
+                if (selectedClient == "2015M" || selectedClient == "2015E")
                 {
                     Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\RCC\\");
                     Process.Start("CMD.exe", "/C RCCService.exe -console -start -placeid:1818");
@@ -586,7 +589,7 @@ namespace VanillaLauncher
             if (is2007)
             {
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("Roblox.exe", "-no3d -script \"" + Directory.GetCurrentDirectory() + "\\content\\gameserver.lua\" \"" + Directory.GetCurrentDirectory() +"\\..\\..\\..\\" + GlobalMap);
+                Process.Start("Roblox.exe", "-no3d -script \"" + Directory.GetCurrentDirectory() + "\\content\\gameserver.lua\" \"" + Directory.GetCurrentDirectory() + "\\..\\..\\..\\files\\web\\1818");
 
                 Directory.SetCurrentDirectory("..\\..\\..");
             }

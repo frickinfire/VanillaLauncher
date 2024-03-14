@@ -32,10 +32,11 @@ namespace VanillaLauncher
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Vanilla));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.buildNum = new System.Windows.Forms.Label();
             this.hostPortNew = new System.Windows.Forms.TextBox();
             this.PortBox = new System.Windows.Forms.TextBox();
             this.IPBox = new System.Windows.Forms.TextBox();
-            this.splash = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.ClientInfo = new System.Windows.Forms.Label();
             this.ScreenShot = new System.Windows.Forms.PictureBox();
@@ -94,11 +95,12 @@ namespace VanillaLauncher
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.Settings = new System.Windows.Forms.TabPage();
-            this.button7 = new System.Windows.Forms.Button();
             this.assetCache = new System.Windows.Forms.CheckBox();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.splash = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage4.SuspendLayout();
@@ -139,10 +141,11 @@ namespace VanillaLauncher
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.flowLayoutPanel1);
+            this.tabPage1.Controls.Add(this.buildNum);
             this.tabPage1.Controls.Add(this.hostPortNew);
             this.tabPage1.Controls.Add(this.PortBox);
             this.tabPage1.Controls.Add(this.IPBox);
-            this.tabPage1.Controls.Add(this.splash);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.ClientInfo);
             this.tabPage1.Controls.Add(this.ScreenShot);
@@ -158,6 +161,26 @@ namespace VanillaLauncher
             this.tabPage1.Size = new System.Drawing.Size(463, 515);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Play";
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flowLayoutPanel1.Controls.Add(this.splash);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(208, 462);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(243, 100);
+            this.flowLayoutPanel1.TabIndex = 41;
+            // 
+            // buildNum
+            // 
+            this.buildNum.AutoSize = true;
+            this.buildNum.Location = new System.Drawing.Point(394, 193);
+            this.buildNum.Name = "buildNum";
+            this.buildNum.Size = new System.Drawing.Size(54, 15);
+            this.buildNum.TabIndex = 40;
+            this.buildNum.Text = "alpha 0.8";
             // 
             // hostPortNew
             // 
@@ -181,16 +204,6 @@ namespace VanillaLauncher
             this.IPBox.Size = new System.Drawing.Size(180, 23);
             this.IPBox.TabIndex = 37;
             // 
-            // splash
-            // 
-            this.splash.AutoSize = true;
-            this.splash.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.splash.Location = new System.Drawing.Point(311, 467);
-            this.splash.Name = "splash";
-            this.splash.Size = new System.Drawing.Size(132, 21);
-            this.splash.TabIndex = 36;
-            this.splash.Text = "\"I LOVE JELQING\"";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -209,7 +222,7 @@ namespace VanillaLauncher
             this.ClientInfo.BackColor = System.Drawing.Color.Transparent;
             this.ClientInfo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientInfo.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientInfo.Location = new System.Drawing.Point(287, 106);
+            this.ClientInfo.Location = new System.Drawing.Point(302, 106);
             this.ClientInfo.Name = "ClientInfo";
             this.ClientInfo.Size = new System.Drawing.Size(147, 20);
             this.ClientInfo.TabIndex = 30;
@@ -230,7 +243,7 @@ namespace VanillaLauncher
             this.EditButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.EditButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.EditButton.ForeColor = System.Drawing.Color.White;
-            this.EditButton.Location = new System.Drawing.Point(355, 139);
+            this.EditButton.Location = new System.Drawing.Point(373, 139);
             this.EditButton.Name = "EditButton";
             this.EditButton.Size = new System.Drawing.Size(75, 23);
             this.EditButton.TabIndex = 27;
@@ -799,7 +812,6 @@ namespace VanillaLauncher
             // 
             // Settings
             // 
-            this.Settings.Controls.Add(this.button7);
             this.Settings.Controls.Add(this.assetCache);
             this.Settings.Location = new System.Drawing.Point(4, 24);
             this.Settings.Name = "Settings";
@@ -807,16 +819,6 @@ namespace VanillaLauncher
             this.Settings.TabIndex = 4;
             this.Settings.Text = "Settings";
             this.Settings.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(32, 67);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(156, 23);
-            this.button7.TabIndex = 1;
-            this.button7.Text = "Switch 2015 Corescripts";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.earlyCorescripts);
             // 
             // assetCache
             // 
@@ -837,6 +839,16 @@ namespace VanillaLauncher
             this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Created);
             this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Deleted);
             // 
+            // splash
+            // 
+            this.splash.AutoSize = true;
+            this.splash.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.splash.Location = new System.Drawing.Point(149, 0);
+            this.splash.Name = "splash";
+            this.splash.Size = new System.Drawing.Size(91, 17);
+            this.splash.TabIndex = 0;
+            this.splash.Text = "\"AHHHH RIZZ\"";
+            // 
             // Vanilla
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -853,6 +865,8 @@ namespace VanillaLauncher
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScreenShot)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage4.ResumeLayout(false);
@@ -934,8 +948,6 @@ namespace VanillaLauncher
         private System.Windows.Forms.TabPage tabPage12;
         private System.Windows.Forms.TabPage Settings;
         private System.Windows.Forms.CheckBox assetCache;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Label splash;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox rightLeg;
@@ -955,6 +967,9 @@ namespace VanillaLauncher
         private System.Windows.Forms.TextBox idBox;
         private System.Windows.Forms.TextBox userNameBox;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.Label buildNum;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Label splash;
     }
 }
 
