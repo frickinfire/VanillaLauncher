@@ -167,6 +167,18 @@ namespace VanillaLauncher
                 Environment.SetEnvironmentVariable(name, newValue, scope);
             }
             FileInfo fileInfo = new FileInfo(hostsFile);
+            if (!File.Exists(hostsFile))
+            {
+                MessageBox.Show(
+                           "Your HOSTS file does not exist! Vanilla will create one for you. Please restart Vanilla.",
+                           "Warning",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                File.Create(hostsFile);
+                Process.GetCurrentProcess().Kill();
+
+            }  
             if (fileInfo.IsReadOnly)
             {
                 MessageBox.Show(
@@ -186,6 +198,7 @@ namespace VanillaLauncher
 
             //if (File.Exists(hostsFile + ".bak")) {   File.Replace(hostsFile + ".bak", hostsFile, hostsFile + ".bak");   }
             //                                         throws an error, don't use this even if it looks better
+
             if (File.Exists(hostsFile + ".bak"))
             {
                 File.Delete(hostsFile);
@@ -265,6 +278,8 @@ namespace VanillaLauncher
             {
                 mapBox.Items.Add(file);
             }
+            string curDir = Directory.GetCurrentDirectory();
+            webBrowser1.Url = new Uri(String.Format("file:///{0}/files/credits.html", curDir));
             if (File.Exists("files\\settings.json"))
             {
                 dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\settings.json"));
@@ -328,6 +343,13 @@ namespace VanillaLauncher
             var r = new Random();
             var randomLineNumber = r.Next(0, lines.Length - 1);
             splash.Text = lines[randomLineNumber];
+
+            if (!Directory.Exists(@"C:\ProgramData\Roblox\content") && Directory.Exists("clients\\2008M\\RCC"))
+            {
+                Directory.CreateDirectory(@"C:\ProgramData\Roblox\content");
+
+                CopyDirectory(@"clients\2008M\RCC\content", @"C:\ProgramData\Roblox\content", true);
+            }
 
         }
        
@@ -536,6 +558,8 @@ namespace VanillaLauncher
                 try
                 {
                     ScreenShot.Image = Image.FromFile("clients\\" + curItem + "\\photo.png");
+                    ScreenShot.Visible = true;
+                    webBrowser1.Visible = false;
                 }
                 catch
                 {
@@ -552,7 +576,7 @@ namespace VanillaLauncher
             string hostPortstring = hostPortNew.Text;
             if (isRCCService)
             {
-                if (selectedClient == "2015M" || selectedClient == "2015E")
+                if (selectedClient == "2015M" || selectedClient == "2015E" || selectedClient == "2014X")
                 {
                     Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\RCC\\");
                     Process.Start("CMD.exe", "/C RCCService.exe -console -start -placeid:1818");
@@ -643,6 +667,10 @@ namespace VanillaLauncher
                 }
                 if (isRobloxPlayerBeta)
                 {
+
+                        Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
+                        Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
+                        Directory.SetCurrentDirectory("..\\..\\..");
                     if (avatarFetchRequired)
                     {
                         var request = (HttpWebRequest)WebRequest.Create("http://" + ipaddr + ":53642/v1.1/set-avatar/?userid=" + ID + "&headc=null&torsoc=null&rarmc=null&larmc=null&llegc=null&rlegc=null&shirt=" + shirts + "&tshirt=" + tshirts + "&pants=" + pants + "&face=0&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&torsop=0&lap=0&llp=0&rap=0&rlp=0&hp=0");
@@ -656,10 +684,7 @@ namespace VanillaLauncher
                             }
                         }
                     }
-                        Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                        Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
-                        Directory.SetCurrentDirectory("..\\..\\..");
-                    
+
                 }
 
                 if (is2007)
@@ -681,12 +706,7 @@ namespace VanillaLauncher
                     Process.Start("Roblox.exe", "-script \"" + Directory.GetCurrentDirectory() + "\\content\\join.lua\"");
                     Directory.SetCurrentDirectory("..\\..\\..");
                 }
-                if (isRCCService)
-                {
-                    Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                    Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
-                    Directory.SetCurrentDirectory("..\\..\\..");
-                }
+
 
             }
 
@@ -701,7 +721,7 @@ namespace VanillaLauncher
             if (isRobloxApp)
             {
                 string selectedClient = clientBox.SelectedItem.ToString();
-                Process.Start("clients\\" + selectedClient + "\\Player\\RobloxApp.exe", "\"" + Directory.GetCurrentDirectory() + "\\" + GlobalMap + "\"");
+                Process.Start("clients\\" + selectedClient + "\\Player\\RobloxApp.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
             }
         }
         private void cacheEnabled(object sender, EventArgs e)
@@ -798,7 +818,31 @@ namespace VanillaLauncher
 
         }
 
+        static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+        {
+            var dir = new DirectoryInfo(sourceDir);
 
+            if (!dir.Exists)
+                throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            Directory.CreateDirectory(destinationDir);
+
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                string targetFilePath = Path.Combine(destinationDir, file.Name);
+                file.CopyTo(targetFilePath);
+            }
+            if (recursive)
+            {
+                foreach (DirectoryInfo subDir in dirs)
+                {
+                    string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
+                    CopyDirectory(subDir.FullName, newDestinationDir, true);
+                }
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -843,6 +887,11 @@ namespace VanillaLauncher
                     }
                 }
             }
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

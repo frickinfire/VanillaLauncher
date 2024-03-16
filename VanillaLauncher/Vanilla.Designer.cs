@@ -29,10 +29,12 @@ namespace VanillaLauncher
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Vanilla));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.splash = new System.Windows.Forms.Label();
             this.buildNum = new System.Windows.Forms.Label();
             this.hostPortNew = new System.Windows.Forms.TextBox();
             this.PortBox = new System.Windows.Forms.TextBox();
@@ -97,7 +99,8 @@ namespace VanillaLauncher
             this.Settings = new System.Windows.Forms.TabPage();
             this.assetCache = new System.Windows.Forms.CheckBox();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.splash = new System.Windows.Forms.Label();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -155,12 +158,14 @@ namespace VanillaLauncher
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Controls.Add(this.webBrowser1);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(463, 515);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Play";
+            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -172,6 +177,16 @@ namespace VanillaLauncher
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(243, 100);
             this.flowLayoutPanel1.TabIndex = 41;
+            // 
+            // splash
+            // 
+            this.splash.AutoSize = true;
+            this.splash.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.splash.Location = new System.Drawing.Point(149, 0);
+            this.splash.Name = "splash";
+            this.splash.Size = new System.Drawing.Size(91, 17);
+            this.splash.TabIndex = 0;
+            this.splash.Text = "\"AHHHH RIZZ\"";
             // 
             // buildNum
             // 
@@ -222,7 +237,7 @@ namespace VanillaLauncher
             this.ClientInfo.BackColor = System.Drawing.Color.Transparent;
             this.ClientInfo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClientInfo.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientInfo.Location = new System.Drawing.Point(302, 106);
+            this.ClientInfo.Location = new System.Drawing.Point(298, 106);
             this.ClientInfo.Name = "ClientInfo";
             this.ClientInfo.Size = new System.Drawing.Size(147, 20);
             this.ClientInfo.TabIndex = 30;
@@ -230,13 +245,13 @@ namespace VanillaLauncher
             // 
             // ScreenShot
             // 
-            this.ScreenShot.Image = global::VanillaLauncher.Properties.Resources.atti1;
             this.ScreenShot.Location = new System.Drawing.Point(21, 211);
             this.ScreenShot.Name = "ScreenShot";
             this.ScreenShot.Size = new System.Drawing.Size(422, 235);
             this.ScreenShot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ScreenShot.TabIndex = 28;
             this.ScreenShot.TabStop = false;
+            this.ScreenShot.Visible = false;
             // 
             // EditButton
             // 
@@ -414,14 +429,14 @@ namespace VanillaLauncher
             // 
             // hatName
             // 
-            this.hatName.Location = new System.Drawing.Point(218, 208);
+            this.hatName.Location = new System.Drawing.Point(217, 207);
             this.hatName.Name = "hatName";
             this.hatName.Size = new System.Drawing.Size(212, 23);
             this.hatName.TabIndex = 2;
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(218, 0);
+            this.pictureBox2.Location = new System.Drawing.Point(217, -1);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(216, 201);
             this.pictureBox2.TabIndex = 1;
@@ -432,7 +447,7 @@ namespace VanillaLauncher
             // 
             this.listBox0.FormattingEnabled = true;
             this.listBox0.ItemHeight = 15;
-            this.listBox0.Location = new System.Drawing.Point(0, 0);
+            this.listBox0.Location = new System.Drawing.Point(-1, -1);
             this.listBox0.Name = "listBox0";
             this.listBox0.Size = new System.Drawing.Size(218, 274);
             this.listBox0.TabIndex = 0;
@@ -445,7 +460,7 @@ namespace VanillaLauncher
             this.tabPage7.Controls.Add(this.listBox1);
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(430, 272);
+            this.tabPage7.Size = new System.Drawing.Size(430, 231);
             this.tabPage7.TabIndex = 2;
             this.tabPage7.Text = "Hat2";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -483,7 +498,7 @@ namespace VanillaLauncher
             this.tabPage8.Controls.Add(this.listBox2);
             this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(430, 272);
+            this.tabPage8.Size = new System.Drawing.Size(430, 231);
             this.tabPage8.TabIndex = 3;
             this.tabPage8.Text = "Hat3";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -521,7 +536,7 @@ namespace VanillaLauncher
             this.tabPage9.Controls.Add(this.listBox3);
             this.tabPage9.Location = new System.Drawing.Point(4, 24);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(430, 272);
+            this.tabPage9.Size = new System.Drawing.Size(430, 231);
             this.tabPage9.TabIndex = 4;
             this.tabPage9.Text = "Shirts";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -559,7 +574,7 @@ namespace VanillaLauncher
             this.tabPage10.Controls.Add(this.listBox4);
             this.tabPage10.Location = new System.Drawing.Point(4, 24);
             this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(430, 272);
+            this.tabPage10.Size = new System.Drawing.Size(430, 231);
             this.tabPage10.TabIndex = 5;
             this.tabPage10.Text = "Pants";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -597,7 +612,7 @@ namespace VanillaLauncher
             this.tabPage11.Controls.Add(this.listBox5);
             this.tabPage11.Location = new System.Drawing.Point(4, 24);
             this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Size = new System.Drawing.Size(430, 272);
+            this.tabPage11.Size = new System.Drawing.Size(430, 231);
             this.tabPage11.TabIndex = 6;
             this.tabPage11.Text = "T-Shirt";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -645,7 +660,7 @@ namespace VanillaLauncher
             this.tabPage12.Controls.Add(this.label6);
             this.tabPage12.Location = new System.Drawing.Point(4, 24);
             this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Size = new System.Drawing.Size(430, 272);
+            this.tabPage12.Size = new System.Drawing.Size(430, 231);
             this.tabPage12.TabIndex = 7;
             this.tabPage12.Text = "BodyColors";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -698,7 +713,7 @@ namespace VanillaLauncher
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label10.Location = new System.Drawing.Point(112, 191);
+            this.label10.Location = new System.Drawing.Point(339, 152);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(62, 20);
             this.label10.TabIndex = 33;
@@ -744,7 +759,7 @@ namespace VanillaLauncher
             // 
             this.leftLegColor.BackColor = System.Drawing.Color.Black;
             this.leftLegColor.ForeColor = System.Drawing.SystemColors.Window;
-            this.leftLegColor.Location = new System.Drawing.Point(21, 188);
+            this.leftLegColor.Location = new System.Drawing.Point(248, 149);
             this.leftLegColor.Name = "leftLegColor";
             this.leftLegColor.Size = new System.Drawing.Size(85, 23);
             this.leftLegColor.TabIndex = 29;
@@ -839,15 +854,20 @@ namespace VanillaLauncher
             this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Created);
             this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Deleted);
             // 
-            // splash
+            // webBrowser1
             // 
-            this.splash.AutoSize = true;
-            this.splash.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.splash.Location = new System.Drawing.Point(149, 0);
-            this.splash.Name = "splash";
-            this.splash.Size = new System.Drawing.Size(91, 17);
-            this.splash.TabIndex = 0;
-            this.splash.Text = "\"AHHHH RIZZ\"";
+            this.webBrowser1.Location = new System.Drawing.Point(13, 211);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.ScrollBarsEnabled = false;
+            this.webBrowser1.Size = new System.Drawing.Size(430, 235);
+            this.webBrowser1.TabIndex = 42;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // Vanilla
             // 
@@ -856,6 +876,7 @@ namespace VanillaLauncher
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(463, 542);
             this.Controls.Add(this.tabControl1);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -970,6 +991,8 @@ namespace VanillaLauncher
         private System.Windows.Forms.Label buildNum;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label splash;
+        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 
