@@ -46,6 +46,7 @@ namespace VanillaLauncher
             public string Pants { get; set; }
 
             public string TShirt { get; set; }
+            public string AvatarType { get; set; }
         }
         string curItem { get; set; }
         bool is2007 { get; set; }
@@ -64,7 +65,7 @@ namespace VanillaLauncher
         string GlobalShirt { get; set; }
         string GlobalPants { get; set; }
         string GlobalTshirt{ get; set; }
-
+        string AvatarTypeStr { get; set; }
 
         public Vanilla()
         {
@@ -120,7 +121,7 @@ namespace VanillaLauncher
                 using (var sqlite2 = new SQLiteConnection(@"Data Source=" + Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite"))
                 {
                     sqlite2.Open();
-                    string sql = "create table characterappearance (torsocolor text, leftlegcolor text, leftarmcolor text, rightlegcolor text, rightarmcolor text, headcolor text, asset1 text, asset2 text, asset3 text, asset4 text, asset5 text, asset6 text, asset7 text, asset8 text, asset9 text, asset10 text, asset11 text, asset12 text, asset13 text, userid text)";
+                    string sql = "create table characterappearance (torsocolor text, leftlegcolor text, leftarmcolor text, rightlegcolor text, rightarmcolor text, headcolor text, asset1 text, asset2 text, asset3 text, asset4 text, asset5 text, asset6 text, asset7 text, asset8 text, asset9 text, asset10 text, asset11 text, asset12 text, asset13 text, avatartype text, userid text)";
                     SQLiteCommand command = new SQLiteCommand(sql, sqlite2);
                     command.ExecuteNonQuery();
                     string sql2 = "create table badges (badgeId text, obtainedBy text)";
@@ -294,6 +295,10 @@ namespace VanillaLauncher
                 GlobalPants = val["Pants"];
                 GlobalTshirt = val["TShirt"];
                 ClientInfo.Text = "selected client: None";
+                if (val["AvatarType"] == "R15")
+                    AvatarTypeStr = "R15";
+                if (val["AvatarType"] == "R6")
+                    AvatarTypeStr = "R6";
                 string[] values = { GlobalShirt, GlobalPants, GlobalHat1, GlobalHat2, GlobalHat3, GlobalHat3, GlobalTshirt };
 
                 foreach(string goon in values)
@@ -350,9 +355,16 @@ namespace VanillaLauncher
 
                 CopyDirectory(@"clients\2008M\RCC\content", @"C:\ProgramData\Roblox\content", true);
             }
+            if (String.IsNullOrEmpty(AvatarTypeStr)) { AvatarTypeStr = "R6"; }
 
         }
-       
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (AvatarTypeStr == "R15") { AvatarTypeStr = "R6"; return; };
+            
+            if (AvatarTypeStr == "R6") { AvatarTypeStr = "R15"; return; };
+           
+        }
         public void setglobal(object sender, EventArgs e)
         {
             if (sender == hostPortNew)
@@ -387,7 +399,8 @@ namespace VanillaLauncher
                 Hat3 = GlobalHat3,
                 Shirt = GlobalShirt,
                 Pants = GlobalPants,
-                TShirt = GlobalTshirt
+                TShirt = GlobalTshirt,
+                AvatarType = AvatarTypeStr
             };
             File.WriteAllText(@"files\\settings.json", JsonConvert.SerializeObject(jsonfile));
             using (StreamWriter file = File.CreateText(@"files\\settings.json"))
@@ -543,6 +556,8 @@ namespace VanillaLauncher
                 {
                     File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
 
+                    File.Replace("files\\webroot\\api\\asset\\cacher.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\nocache.php");
+
                 }
                 ClientInfo.Text = "selected client: " + curItem;
                 if (File.Exists("clients\\" + curItem + "\\client.json"))
@@ -673,7 +688,7 @@ namespace VanillaLauncher
                         Directory.SetCurrentDirectory("..\\..\\..");
                     if (avatarFetchRequired)
                     {
-                        var request = (HttpWebRequest)WebRequest.Create("http://" + ipaddr + ":53642/v1.1/set-avatar/?userid=" + ID + "&headc=null&torsoc=null&rarmc=null&larmc=null&llegc=null&rlegc=null&shirt=" + shirts + "&tshirt=" + tshirts + "&pants=" + pants + "&face=0&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&torsop=0&lap=0&llp=0&rap=0&rlp=0&hp=0");
+                        var request = (HttpWebRequest)WebRequest.Create("http://" + ipaddr + ":53642/v1.1/set-avatar/?userid=" + ID + "&headc=null&torsoc=null&rarmc=null&larmc=null&llegc=null&rlegc=null&shirt=" + shirts + "&tshirt=" + tshirts + "&pants=" + pants + "&face=0&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&torsop=0&lap=0&llp=0&rap=0&rlp=0&hp=0&avatartype=" + AvatarTypeStr);
                         var response = (HttpWebResponse)request.GetResponse();
                         string responseString;
                         using (var stream = response.GetResponseStream())
@@ -734,6 +749,12 @@ namespace VanillaLauncher
 
                     File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
                 }
+                if (File.Exists("files\\webroot\\api\\asset\\nocache.php")) { File.Delete("files\\webroot\\api\\asset\\nocache.php"); };
+                if (File.Exists("files\\webroot\\api\\asset\\cacher.php"))
+                {
+
+                    File.Replace("files\\webroot\\api\\asset\\cacher.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\nocache.php");
+                }
             }
             else
             {
@@ -741,31 +762,11 @@ namespace VanillaLauncher
                 {
                     File.Replace("files\\webroot\\asset\\nocache.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\cacher.php");
                 }
-            }
-        }
-        private void earlyCorescripts(object sender, EventArgs e)
-        {
-            if (File.Exists("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json"))
-            {
-                if (Directory.Exists("clients\\2015M"))
+                if (File.Exists("files\\webroot\\api\\asset\\nocache.php"))
                 {
-                    if (File.Exists("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json"))
-                    {
-                        File.Replace("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsEarly.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettings.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettingsMid.json");
-                    }
+                    File.Replace("files\\webroot\\api\\asset\\nocache.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\cacher.php");
                 }
             }
-            else
-            {
-                if (Directory.Exists("clients\\2015M"))
-                {
-                    if (File.Exists("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsMid.json"))
-                    {
-                        File.Replace("clients\\2015M\\Player\\ClientSettings\\ClientAppSettingsMid.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettings.json", "clients\\2015M\\player\\ClientSettings\\ClientAppSettingsEarly.json");
-                    }
-                }
-            }
-
         }
 
         private void charRemove(object sender, EventArgs e)
@@ -893,6 +894,13 @@ namespace VanillaLauncher
         {
 
         }
+
+        private void Settings_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }
 

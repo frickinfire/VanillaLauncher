@@ -99,8 +99,9 @@ namespace VanillaLauncher
             this.Settings = new System.Windows.Forms.TabPage();
             this.assetCache = new System.Windows.Forms.CheckBox();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.avatarSwitch = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -158,7 +159,6 @@ namespace VanillaLauncher
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.pictureBox1);
-            this.tabPage1.Controls.Add(this.webBrowser1);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -245,7 +245,7 @@ namespace VanillaLauncher
             // 
             // ScreenShot
             // 
-            this.ScreenShot.Location = new System.Drawing.Point(21, 211);
+            this.ScreenShot.Location = new System.Drawing.Point(21, 213);
             this.ScreenShot.Name = "ScreenShot";
             this.ScreenShot.Size = new System.Drawing.Size(422, 235);
             this.ScreenShot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -371,6 +371,7 @@ namespace VanillaLauncher
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.avatarSwitch);
             this.tabPage3.Controls.Add(this.idBox);
             this.tabPage3.Controls.Add(this.userNameBox);
             this.tabPage3.Controls.Add(this.tabControl2);
@@ -385,7 +386,7 @@ namespace VanillaLauncher
             // 
             // idBox
             // 
-            this.idBox.Location = new System.Drawing.Point(266, 98);
+            this.idBox.Location = new System.Drawing.Point(18, 96);
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(178, 23);
             this.idBox.TabIndex = 31;
@@ -393,7 +394,7 @@ namespace VanillaLauncher
             // 
             // userNameBox
             // 
-            this.userNameBox.Location = new System.Drawing.Point(266, 69);
+            this.userNameBox.Location = new System.Drawing.Point(18, 67);
             this.userNameBox.Name = "userNameBox";
             this.userNameBox.Size = new System.Drawing.Size(178, 23);
             this.userNameBox.TabIndex = 30;
@@ -460,7 +461,7 @@ namespace VanillaLauncher
             this.tabPage7.Controls.Add(this.listBox1);
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(430, 231);
+            this.tabPage7.Size = new System.Drawing.Size(430, 272);
             this.tabPage7.TabIndex = 2;
             this.tabPage7.Text = "Hat2";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -498,7 +499,7 @@ namespace VanillaLauncher
             this.tabPage8.Controls.Add(this.listBox2);
             this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(430, 231);
+            this.tabPage8.Size = new System.Drawing.Size(430, 272);
             this.tabPage8.TabIndex = 3;
             this.tabPage8.Text = "Hat3";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -536,7 +537,7 @@ namespace VanillaLauncher
             this.tabPage9.Controls.Add(this.listBox3);
             this.tabPage9.Location = new System.Drawing.Point(4, 24);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(430, 231);
+            this.tabPage9.Size = new System.Drawing.Size(430, 272);
             this.tabPage9.TabIndex = 4;
             this.tabPage9.Text = "Shirts";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -574,7 +575,7 @@ namespace VanillaLauncher
             this.tabPage10.Controls.Add(this.listBox4);
             this.tabPage10.Location = new System.Drawing.Point(4, 24);
             this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(430, 231);
+            this.tabPage10.Size = new System.Drawing.Size(430, 272);
             this.tabPage10.TabIndex = 5;
             this.tabPage10.Text = "Pants";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -612,7 +613,7 @@ namespace VanillaLauncher
             this.tabPage11.Controls.Add(this.listBox5);
             this.tabPage11.Location = new System.Drawing.Point(4, 24);
             this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Size = new System.Drawing.Size(430, 231);
+            this.tabPage11.Size = new System.Drawing.Size(430, 272);
             this.tabPage11.TabIndex = 6;
             this.tabPage11.Text = "T-Shirt";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -660,7 +661,7 @@ namespace VanillaLauncher
             this.tabPage12.Controls.Add(this.label6);
             this.tabPage12.Location = new System.Drawing.Point(4, 24);
             this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Size = new System.Drawing.Size(430, 231);
+            this.tabPage12.Size = new System.Drawing.Size(430, 272);
             this.tabPage12.TabIndex = 7;
             this.tabPage12.Text = "BodyColors";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -807,7 +808,7 @@ namespace VanillaLauncher
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Location = new System.Drawing.Point(420, 121);
+            this.label4.Location = new System.Drawing.Point(14, 122);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 20);
             this.label4.TabIndex = 28;
@@ -819,7 +820,7 @@ namespace VanillaLauncher
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(372, 46);
+            this.label3.Location = new System.Drawing.Point(14, 44);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(75, 20);
             this.label3.TabIndex = 26;
@@ -827,13 +828,15 @@ namespace VanillaLauncher
             // 
             // Settings
             // 
+            this.Settings.BackColor = System.Drawing.Color.White;
+            this.Settings.Controls.Add(this.webBrowser1);
             this.Settings.Controls.Add(this.assetCache);
             this.Settings.Location = new System.Drawing.Point(4, 24);
             this.Settings.Name = "Settings";
             this.Settings.Size = new System.Drawing.Size(463, 515);
             this.Settings.TabIndex = 4;
             this.Settings.Text = "Settings";
-            this.Settings.UseVisualStyleBackColor = true;
+            this.Settings.Click += new System.EventHandler(this.Settings_Click);
             // 
             // assetCache
             // 
@@ -854,20 +857,30 @@ namespace VanillaLauncher
             this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Created);
             this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Deleted);
             // 
-            // webBrowser1
-            // 
-            this.webBrowser1.Location = new System.Drawing.Point(13, 211);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.ScrollBarsEnabled = false;
-            this.webBrowser1.Size = new System.Drawing.Size(430, 235);
-            this.webBrowser1.TabIndex = 42;
-            // 
             // imageList1
             // 
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // webBrowser1
+            // 
+            this.webBrowser1.Location = new System.Drawing.Point(13, 268);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.ScrollBarsEnabled = false;
+            this.webBrowser1.Size = new System.Drawing.Size(439, 235);
+            this.webBrowser1.TabIndex = 43;
+            // 
+            // avatarSwitch
+            // 
+            this.avatarSwitch.Location = new System.Drawing.Point(312, 96);
+            this.avatarSwitch.Name = "avatarSwitch";
+            this.avatarSwitch.Size = new System.Drawing.Size(135, 23);
+            this.avatarSwitch.TabIndex = 32;
+            this.avatarSwitch.Text = "Switch Avatar Type";
+            this.avatarSwitch.UseVisualStyleBackColor = true;
+            this.avatarSwitch.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // Vanilla
             // 
@@ -991,8 +1004,9 @@ namespace VanillaLauncher
         private System.Windows.Forms.Label buildNum;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label splash;
-        private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.Button avatarSwitch;
     }
 }
 
