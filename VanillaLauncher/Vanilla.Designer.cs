@@ -53,6 +53,7 @@ namespace VanillaLauncher
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.mapBox = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.avatarSwitch = new System.Windows.Forms.Button();
             this.idBox = new System.Windows.Forms.TextBox();
             this.userNameBox = new System.Windows.Forms.TextBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -97,11 +98,10 @@ namespace VanillaLauncher
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.Settings = new System.Windows.Forms.TabPage();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.assetCache = new System.Windows.Forms.CheckBox();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.avatarSwitch = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -224,7 +224,6 @@ namespace VanillaLauncher
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label5.Location = new System.Drawing.Point(18, 488);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(80, 20);
@@ -236,7 +235,6 @@ namespace VanillaLauncher
             this.ClientInfo.AutoSize = true;
             this.ClientInfo.BackColor = System.Drawing.Color.Transparent;
             this.ClientInfo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClientInfo.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientInfo.Location = new System.Drawing.Point(298, 106);
             this.ClientInfo.Name = "ClientInfo";
             this.ClientInfo.Size = new System.Drawing.Size(147, 20);
@@ -297,7 +295,6 @@ namespace VanillaLauncher
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label2.Location = new System.Drawing.Point(18, 30);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(78, 20);
@@ -309,7 +306,6 @@ namespace VanillaLauncher
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Location = new System.Drawing.Point(18, 101);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 20);
@@ -384,9 +380,19 @@ namespace VanillaLauncher
             this.tabPage3.Text = "User";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // avatarSwitch
+            // 
+            this.avatarSwitch.Location = new System.Drawing.Point(316, 73);
+            this.avatarSwitch.Name = "avatarSwitch";
+            this.avatarSwitch.Size = new System.Drawing.Size(135, 23);
+            this.avatarSwitch.TabIndex = 32;
+            this.avatarSwitch.Text = "Switch Avatar Type";
+            this.avatarSwitch.UseVisualStyleBackColor = true;
+            this.avatarSwitch.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // idBox
             // 
-            this.idBox.Location = new System.Drawing.Point(18, 96);
+            this.idBox.Location = new System.Drawing.Point(18, 73);
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(178, 23);
             this.idBox.TabIndex = 31;
@@ -394,7 +400,7 @@ namespace VanillaLauncher
             // 
             // userNameBox
             // 
-            this.userNameBox.Location = new System.Drawing.Point(18, 67);
+            this.userNameBox.Location = new System.Drawing.Point(18, 44);
             this.userNameBox.Name = "userNameBox";
             this.userNameBox.Size = new System.Drawing.Size(178, 23);
             this.userNameBox.TabIndex = 30;
@@ -807,8 +813,7 @@ namespace VanillaLauncher
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Location = new System.Drawing.Point(14, 122);
+            this.label4.Location = new System.Drawing.Point(14, 99);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 20);
             this.label4.TabIndex = 28;
@@ -819,8 +824,7 @@ namespace VanillaLauncher
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(14, 44);
+            this.label3.Location = new System.Drawing.Point(14, 21);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(75, 20);
             this.label3.TabIndex = 26;
@@ -837,6 +841,15 @@ namespace VanillaLauncher
             this.Settings.TabIndex = 4;
             this.Settings.Text = "Settings";
             this.Settings.Click += new System.EventHandler(this.Settings_Click);
+            // 
+            // webBrowser1
+            // 
+            this.webBrowser1.Location = new System.Drawing.Point(13, 268);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.ScrollBarsEnabled = false;
+            this.webBrowser1.Size = new System.Drawing.Size(439, 235);
+            this.webBrowser1.TabIndex = 43;
             // 
             // assetCache
             // 
@@ -862,25 +875,6 @@ namespace VanillaLauncher
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // webBrowser1
-            // 
-            this.webBrowser1.Location = new System.Drawing.Point(13, 268);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.ScrollBarsEnabled = false;
-            this.webBrowser1.Size = new System.Drawing.Size(439, 235);
-            this.webBrowser1.TabIndex = 43;
-            // 
-            // avatarSwitch
-            // 
-            this.avatarSwitch.Location = new System.Drawing.Point(312, 96);
-            this.avatarSwitch.Name = "avatarSwitch";
-            this.avatarSwitch.Size = new System.Drawing.Size(135, 23);
-            this.avatarSwitch.TabIndex = 32;
-            this.avatarSwitch.Text = "Switch Avatar Type";
-            this.avatarSwitch.UseVisualStyleBackColor = true;
-            this.avatarSwitch.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // Vanilla
             // 

@@ -22,6 +22,7 @@ using System.Security;
 using System.Data.SQLite;
 using Titanium.Web.Proxy.Examples.Basic;
 using System.Reflection;
+using BlueMystic;
 
 namespace VanillaLauncher
 {
@@ -66,7 +67,7 @@ namespace VanillaLauncher
         string GlobalPants { get; set; }
         string GlobalTshirt{ get; set; }
         string AvatarTypeStr { get; set; }
-
+        private DarkModeCS DM = null;
         public Vanilla()
         {
             InitializeComponent();
@@ -132,6 +133,7 @@ namespace VanillaLauncher
                     command3.ExecuteNonQuery();
                 }
             }
+            DM = new DarkModeCS(this);
             Application.ApplicationExit += new EventHandler(onshutdown);
             string pathfile = Environment.GetEnvironmentVariable("PATH");
             if (!pathfile.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\php"))
@@ -220,7 +222,7 @@ namespace VanillaLauncher
                 w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
                 w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
             }
-
+            
             var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
             foreach (var file in files3)
             {

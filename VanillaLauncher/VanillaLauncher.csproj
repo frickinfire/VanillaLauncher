@@ -128,6 +128,12 @@
     <Compile Include="Classes\ColorLoader.cs" />
     <Compile Include="Classes\RichPresence.cs" />
     <Compile Include="Classes\SOAP.cs" />
+    <Compile Include="DarkMode\DarkModeCS.cs" />
+    <Compile Include="DarkMode\FlatComboBox.cs" />
+    <Compile Include="DarkMode\FlatTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DarkMode\Messenger.cs" />
     <Compile Include="MobileProxy\Helpers\ConsoleHelper.cs" />
     <Compile Include="MobileProxy\Main.cs" />
     <Compile Include="MobileProxy\ProxyEventArgsBaseExtensions.cs" />
