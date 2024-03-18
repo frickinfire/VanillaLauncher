@@ -49,6 +49,7 @@ namespace VanillaLauncher
             public string TShirt { get; set; }
             public string AvatarType { get; set; }
             public string HeadColor { get; set; }
+            public string TorsoColor { get; set; }
             public string LeftArmColor { get; set; }
             public string LeftLegColor { get; set; }
             public string RightArmColor { get; set; }
