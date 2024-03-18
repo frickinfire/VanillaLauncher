@@ -98,10 +98,11 @@ namespace VanillaLauncher
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.Settings = new System.Windows.Forms.TabPage();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.assetCache = new System.Windows.Forms.CheckBox();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox7 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -243,13 +244,13 @@ namespace VanillaLauncher
             // 
             // ScreenShot
             // 
+            this.ScreenShot.Image = global::VanillaLauncher.Properties.Resources.ipmbgqr1e8mc1;
             this.ScreenShot.Location = new System.Drawing.Point(21, 213);
             this.ScreenShot.Name = "ScreenShot";
             this.ScreenShot.Size = new System.Drawing.Size(422, 235);
             this.ScreenShot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ScreenShot.TabIndex = 28;
             this.ScreenShot.TabStop = false;
-            this.ScreenShot.Visible = false;
             // 
             // EditButton
             // 
@@ -677,7 +678,6 @@ namespace VanillaLauncher
             this.label11.AutoSize = true;
             this.label11.BackColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label11.Location = new System.Drawing.Point(339, 102);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(72, 20);
@@ -689,7 +689,6 @@ namespace VanillaLauncher
             this.label12.AutoSize = true;
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label12.Location = new System.Drawing.Point(339, 63);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(76, 20);
@@ -704,6 +703,7 @@ namespace VanillaLauncher
             this.rightLeg.Name = "rightLeg";
             this.rightLeg.Size = new System.Drawing.Size(85, 23);
             this.rightLeg.TabIndex = 35;
+            this.rightLeg.TextChanged += new System.EventHandler(this.bodyColorsChanged);
             // 
             // rightArm
             // 
@@ -713,13 +713,13 @@ namespace VanillaLauncher
             this.rightArm.Name = "rightArm";
             this.rightArm.Size = new System.Drawing.Size(85, 23);
             this.rightArm.TabIndex = 34;
+            this.rightArm.TextChanged += new System.EventHandler(this.bodyColorsChanged);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label10.Location = new System.Drawing.Point(339, 152);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(62, 20);
@@ -731,7 +731,6 @@ namespace VanillaLauncher
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label9.Location = new System.Drawing.Point(112, 152);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(66, 20);
@@ -743,7 +742,6 @@ namespace VanillaLauncher
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.Transparent;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label8.Location = new System.Drawing.Point(112, 109);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(49, 20);
@@ -755,7 +753,6 @@ namespace VanillaLauncher
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label7.Location = new System.Drawing.Point(112, 63);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(45, 20);
@@ -770,6 +767,7 @@ namespace VanillaLauncher
             this.leftLegColor.Name = "leftLegColor";
             this.leftLegColor.Size = new System.Drawing.Size(85, 23);
             this.leftLegColor.TabIndex = 29;
+            this.leftLegColor.TextChanged += new System.EventHandler(this.bodyColorsChanged);
             // 
             // leftArmColor
             // 
@@ -779,6 +777,7 @@ namespace VanillaLauncher
             this.leftArmColor.Name = "leftArmColor";
             this.leftArmColor.Size = new System.Drawing.Size(85, 23);
             this.leftArmColor.TabIndex = 28;
+            this.leftArmColor.TextChanged += new System.EventHandler(this.bodyColorsChanged);
             // 
             // torsoColor
             // 
@@ -788,6 +787,7 @@ namespace VanillaLauncher
             this.torsoColor.Name = "torsoColor";
             this.torsoColor.Size = new System.Drawing.Size(85, 23);
             this.torsoColor.TabIndex = 27;
+            this.torsoColor.TextChanged += new System.EventHandler(this.bodyColorsChanged);
             // 
             // headColor
             // 
@@ -797,6 +797,7 @@ namespace VanillaLauncher
             this.headColor.Name = "headColor";
             this.headColor.Size = new System.Drawing.Size(85, 23);
             this.headColor.TabIndex = 26;
+            this.headColor.TextChanged += new System.EventHandler(this.bodyColorsChanged);
             // 
             // label6
             // 
@@ -833,7 +834,6 @@ namespace VanillaLauncher
             // Settings
             // 
             this.Settings.BackColor = System.Drawing.Color.White;
-            this.Settings.Controls.Add(this.webBrowser1);
             this.Settings.Controls.Add(this.assetCache);
             this.Settings.Location = new System.Drawing.Point(4, 24);
             this.Settings.Name = "Settings";
@@ -841,15 +841,6 @@ namespace VanillaLauncher
             this.Settings.TabIndex = 4;
             this.Settings.Text = "Settings";
             this.Settings.Click += new System.EventHandler(this.Settings_Click);
-            // 
-            // webBrowser1
-            // 
-            this.webBrowser1.Location = new System.Drawing.Point(13, 268);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.ScrollBarsEnabled = false;
-            this.webBrowser1.Size = new System.Drawing.Size(439, 235);
-            this.webBrowser1.TabIndex = 43;
             // 
             // assetCache
             // 
@@ -875,6 +866,20 @@ namespace VanillaLauncher
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 0;
+            // 
+            // textBox7
+            // 
+            this.textBox7.Location = new System.Drawing.Point(0, 0);
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(100, 20);
+            this.textBox7.TabIndex = 0;
             // 
             // Vanilla
             // 
@@ -999,8 +1004,9 @@ namespace VanillaLauncher
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label splash;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.Button avatarSwitch;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
