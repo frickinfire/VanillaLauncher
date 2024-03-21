@@ -1,6 +1,8 @@
 .vs/
 AssetDownloader/bin/
 AssetDownloader/obj/
+Planifolia/bin/
+Planifolia/obj/
 packages/
 VanillaLauncher/bin/
 VanillaLauncher/obj/
