@@ -133,7 +133,6 @@ namespace VanillaLauncher
                     Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + "\\files\\webserver\\");
                     Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
                     Directory.SetCurrentDirectory("..\\..");
-                    Process.Start(startInfo);
                 }
                 catch
                 {
