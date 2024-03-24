@@ -105,10 +105,8 @@ namespace VanillaLauncher
                 {
                     File.Delete("files\\webserver\\conf\\nginx.conf");
                     File.Copy("files\\webserver\\conf\\nginx.conf.bak", "files\\webserver\\conf\\nginx.conf");
-                }
-                if (httpdconf.Contains(@"C:/Vanilla/files/webroot"))
-                {
-                    string fixedconf = httpdconf.Replace(@"C:/Vanilla/files/webroot", CurrentDirFixed + @"/files/webroot");
+                    string newconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
+                    string fixedconf = newconf.Replace(@"C:/Vanilla/files/webroot", CurrentDirFixed + @"/files/webroot");
                     File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
                 }
             }
@@ -205,60 +203,7 @@ namespace VanillaLauncher
                 var newValue = Directory.GetCurrentDirectory() + @"\files\webserver\php\extras\ssl\openssl.cnf";
                 Environment.SetEnvironmentVariable(name, newValue, scope);
             }
-            FileInfo fileInfo = new FileInfo(hostsFile);
-            if (!File.Exists(hostsFile))
-            {
-                MessageBox.Show(
-                           "Your HOSTS file does not exist! Vanilla will create one for you. Please restart Vanilla.",
-                           "Warning",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
-
-                File.Create(hostsFile);
-                Process.GetCurrentProcess().Kill();
-
-            }  
-            if (fileInfo.IsReadOnly)
-            {
-                MessageBox.Show(
-                         "Vanilla will not work until you have disabled 'Read-Only' on your HOSTS file! Do this in C:\\Windows\\System32\\drivers\\etc.",
-                         "Warning",
-                          MessageBoxButtons.OK,
-                          MessageBoxIcon.Warning);
-
-            }
-            if (File.ReadAllText(hostsFile).Contains("# BEGIN VANILLA HOSTS"))
-            {
-                string str = File.ReadAllText(hostsFile);
-                int index = str.IndexOf("# BEGIN VANILLA HOSTS");
-                string result = str.Substring(0, index);
-                File.WriteAllText(hostsFile, result);
-            }
-
-            //if (File.Exists(hostsFile + ".bak")) {   File.Replace(hostsFile + ".bak", hostsFile, hostsFile + ".bak");   }
-            //                                         throws an error, don't use this even if it looks better
-
-            if (File.Exists(hostsFile + ".bak"))
-            {
-                File.Delete(hostsFile);
-                File.Copy(hostsFile + ".bak", hostsFile);
-                File.Delete(hostsFile + ".bak");
-            }
-            File.Copy(hostsFile, hostsFile + ".bak");
-            using (StreamWriter w = File.AppendText(hostsFile))
-            {
-                w.WriteLine("");
-                w.WriteLine("# BEGIN VANILLA HOSTS");
-                w.WriteLine("127.0.0.1 www.roblox.com");
-                w.WriteLine("127.0.0.1 roblox.com");
-                w.WriteLine("127.0.0.1 api.roblox.com");
-                w.WriteLine("127.0.0.1 assetgame.roblox.com");
-                w.WriteLine("127.0.0.1 clientsettings.api.roblox.com");
-                w.WriteLine("127.0.0.1 versioncompatibility.api.roblox.com");
-                w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
-                w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
-            }
-            
+           
             var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
             foreach (var file in files3)
             {
@@ -476,9 +421,7 @@ namespace VanillaLauncher
                 serializer.Serialize(file, jsonfile);
             }
             string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
-            // don't use file.replace here or it'll cause issues
-            File.Delete(hostsFile);
-            File.Copy(hostsFile + ".bak", hostsFile);
+ 
             Process.Start("CMD.exe", "/C taskkill /f /im RunHiddenConsole.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
@@ -622,8 +565,8 @@ namespace VanillaLauncher
                 if (assetCache.Checked)
                 {
                     File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
-
-                    File.Replace("files\\webroot\\api\\asset\\cacher.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\nocache.php");
+                    if (Directory.Exists("files\\webroot\\api\\asset")) { File.Replace("files\\webroot\\api\\asset\\cacher.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\nocache.php"); }
+                    if (Directory.Exists("files\\webroot\\api\\v1\\asset\\")) { File.Replace("files\\webroot\\api\\v1\\asset\\cacher.php", "files\\webroot\\api\\v1\\asset\\index.php", "files\\webroot\\api\\v1\\asset\\nocache.php"); }
 
                 }
                 ClientInfo.Text = "selected client: " + curItem;
@@ -702,7 +645,7 @@ namespace VanillaLauncher
             //Process.GetCurrentProcess().Kill();
 
         }
-
+        
         private void JoinButton_Click_1(object sender, EventArgs e)
         {
             try
@@ -801,10 +744,21 @@ namespace VanillaLauncher
 
             private void EditButton_Click(object sender, EventArgs e)
         {
+            if (is2007)
+            {
+                Process.Start("clients\\" + curItem + "\\Player\\Roblox.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
+            }
             if (isRobloxApp)
             {
-                string selectedClient = clientBox.SelectedItem.ToString();
-                Process.Start("clients\\" + selectedClient + "\\Player\\RobloxApp.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
+                Process.Start("clients\\" + curItem + "\\Player\\RobloxApp.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
+            }
+            if (isRobloxPlayer && curItem != "2013M")
+            {
+                Process.Start("clients\\" + curItem + "\\Player\\RobloxPlayer.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
+            }
+            if (isRobloxPlayerBeta || curItem == "2013M")
+            {
+                Process.Start("clients\\" + curItem + "\\Studio\\RobloxStudioBeta.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
             }
         }
         private void cacheEnabled(object sender, EventArgs e)

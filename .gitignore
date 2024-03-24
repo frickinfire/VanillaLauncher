@@ -4,3 +4,8 @@ AssetDownloader/obj/
 packages/
 VanillaLauncher/bin/
 VanillaLauncher/obj/
+HostsModifier.exe/obj/Debug/HostsModifier.exe.exe
+HostsModifier.exe/obj/Debug/HostsModifier.exe.pdb
+HostsModifier.exe/bin/Debug/HostsModifier.exe.exe
+HostsModifier.exe/bin/Debug/HostsModifier.exe.pdb
+HostsModifier.exe/bin/Debug/HostsModifier.exe.exe.config
