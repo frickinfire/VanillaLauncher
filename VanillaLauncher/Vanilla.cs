@@ -87,34 +87,25 @@ namespace VanillaLauncher
             InitializeComponent();
 
 
-            string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
-
-            WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-            bool administrativeMode = principal.IsInRole(WindowsBuiltInRole.Administrator);
-            // this sucks but it doesnt launch if we don't do this
-            bool administrativeMode2 = principal.IsInRole(WindowsBuiltInRole.Administrator);
-            if (!administrativeMode2)
-            {
                 Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
                 Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
                 Process.Start("CMD.exe", "/C taskkill /F /IM RunHiddenConsole.exe");
 
                 string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
                 string CurrentDirFixed = Directory.GetCurrentDirectory().Replace(@"\", @"/");
-                if (!httpdconf.Contains(CurrentDirFixed))
-                {
-                    File.Delete("files\\webserver\\conf\\nginx.conf");
-                    File.Copy("files\\webserver\\conf\\nginx.conf.bak", "files\\webserver\\conf\\nginx.conf");
-                    string newconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
-                    string fixedconf = newconf.Replace(@"C:/Vanilla/files/webroot", CurrentDirFixed + @"/files/webroot");
-                    File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
-                }
-            }
-            if (!administrativeMode)
+            if (!httpdconf.Contains(CurrentDirFixed))
             {
+                File.Delete("files\\webserver\\conf\\nginx.conf");
+                File.Copy("files\\webserver\\conf\\nginx.conf.bak", "files\\webserver\\conf\\nginx.conf");
+                string newconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
+                string fixedconf = newconf.Replace(@"C:/Vanilla/files/webroot", CurrentDirFixed + @"/files/webroot");
+                File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
+            }
+            
+         
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.Verb = "runas";
-                startInfo.FileName = Application.ExecutablePath;
+                startInfo.FileName = Application.ExecutablePath + "\\files\\HostsModifier.exe";
                 try
                 {
 
@@ -148,7 +139,7 @@ namespace VanillaLauncher
                     return;
                 }
                 return;
-            }
+            
             if (!File.Exists(Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite"))
             {
                 SQLiteConnection.CreateFile(Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite");
@@ -196,14 +187,7 @@ namespace VanillaLauncher
                 Environment.SetEnvironmentVariable(name, newValue, scope);
 
             }
-            else
-            {
-                var name = "OPENSSL_CONF";
-                var scope = EnvironmentVariableTarget.Machine;
-                var newValue = Directory.GetCurrentDirectory() + @"\files\webserver\php\extras\ssl\openssl.cnf";
-                Environment.SetEnvironmentVariable(name, newValue, scope);
-            }
-           
+
             var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
             foreach (var file in files3)
             {
