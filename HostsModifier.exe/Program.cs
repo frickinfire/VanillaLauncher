@@ -50,6 +50,32 @@ namespace HostsModifier
                     w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
                     w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
                 }
+                string pathfile = Environment.GetEnvironmentVariable("PATH");
+                if (!pathfile.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\php"))
+                {
+                    var name = "PATH";
+                    var scope = EnvironmentVariableTarget.Machine;
+                    var oldValue = Environment.GetEnvironmentVariable(name, scope);
+                    var newValue = oldValue + @";" + Directory.GetCurrentDirectory() + @"\files\webserver\php";
+                    Environment.SetEnvironmentVariable(name, newValue, scope);
+                }
+                if (!pathfile.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\openssl"))
+                {
+                    var name = "PATH";
+                    var scope = EnvironmentVariableTarget.Machine;
+                    var oldValue = Environment.GetEnvironmentVariable(name, scope);
+                    var newValue = oldValue + @";" + Directory.GetCurrentDirectory() + @"\files\webserver\openssl";
+                    Environment.SetEnvironmentVariable(name, newValue, scope);
+                }
+                string pathfile3 = Environment.GetEnvironmentVariable("OPENSSL_CONF");
+                if (pathfile3 != null)
+                {
+                    var name = "OPENSSL_CONF";
+                    var scope = EnvironmentVariableTarget.Machine;
+                    var newValue = Directory.GetCurrentDirectory() + @"\files\webserver\php\extras\ssl\openssl.cnf";
+                    Environment.SetEnvironmentVariable(name, newValue, scope);
+
+                }
 
             }
             else

@@ -106,6 +106,8 @@ namespace VanillaLauncher
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.Verb = "runas";
                 startInfo.FileName = Application.ExecutablePath + "\\files\\HostsModifier.exe";
+                  startInfo.Arguments = "/m";
+            Process.Start(startInfo);
                 try
                 {
 
@@ -160,34 +162,7 @@ namespace VanillaLauncher
             }
             DM = new DarkModeCS(this);
             Application.ApplicationExit += new EventHandler(onshutdown);
-            string pathfile = Environment.GetEnvironmentVariable("PATH");
-            if (!pathfile.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\php"))
-            {
-                var name = "PATH";
-                var scope = EnvironmentVariableTarget.Machine;
-                var oldValue = Environment.GetEnvironmentVariable(name, scope);
-                var newValue = oldValue + @";" + Directory.GetCurrentDirectory() + @"\files\webserver\php";
-                Environment.SetEnvironmentVariable(name, newValue, scope);
-            }
-            string pathfile2 = Environment.GetEnvironmentVariable("PATH");
-            if (!pathfile2.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\openssl"))
-            {
-                var name = "PATH";
-                var scope = EnvironmentVariableTarget.Machine;
-                var oldValue = Environment.GetEnvironmentVariable(name, scope);
-                var newValue = oldValue + @";" + Directory.GetCurrentDirectory() + @"\files\webserver\openssl";
-                Environment.SetEnvironmentVariable(name, newValue, scope);
-            }
-            string pathfile3 = Environment.GetEnvironmentVariable("OPENSSL_CONF");
-            if (pathfile3 != null)
-            {
-                var name = "OPENSSL_CONF";
-                var scope = EnvironmentVariableTarget.Machine;
-                var newValue = Directory.GetCurrentDirectory() + @"\files\webserver\php\extras\ssl\openssl.cnf";
-                Environment.SetEnvironmentVariable(name, newValue, scope);
-
-            }
-
+           
             var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
             foreach (var file in files3)
             {
@@ -409,7 +384,11 @@ namespace VanillaLauncher
             Process.Start("CMD.exe", "/C taskkill /f /im RunHiddenConsole.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
-
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.Verb = "runas";
+            startInfo.FileName = Application.ExecutablePath + "\\files\\HostsModifier.exe";
+            startInfo.Arguments = "/m";
+            Process.Start(startInfo);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
