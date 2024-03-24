@@ -105,7 +105,7 @@ namespace VanillaLauncher
          
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.Verb = "runas";
-                startInfo.FileName = Application.ExecutablePath + "\\files\\HostsModifier.exe";
+                startInfo.FileName = Directory.GetCurrentDirectory() + "\\files\\HostsModifier.exe";
                   startInfo.Arguments = "/m";
             Process.Start(startInfo);
                 try
@@ -134,7 +134,6 @@ namespace VanillaLauncher
                     Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
                     Directory.SetCurrentDirectory("..\\..");
                     Process.Start(startInfo);
-                    Process.GetCurrentProcess().Kill();
                 }
                 catch
                 {
@@ -386,8 +385,7 @@ namespace VanillaLauncher
             Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.Verb = "runas";
-            startInfo.FileName = Application.ExecutablePath + "\\files\\HostsModifier.exe";
-            startInfo.Arguments = "/m";
+            startInfo.FileName = Directory.GetCurrentDirectory() + "\\files\\HostsModifier.exe";
             Process.Start(startInfo);
         }
         private void Form1_Load(object sender, EventArgs e)
