@@ -82,10 +82,28 @@ namespace VanillaLauncher
         public string RightLegColor { get; set; }
 
         private DarkModeCS DM = null;
+        
+        private Timer timer = new Timer { Interval = 100 };
+        private Process phpCGIProcess = new Process
+        {
+            StartInfo =
+            {
+                FileName = "php-cgi.exe",
+                WorkingDirectory = Directory.GetCurrentDirectory() + "\\files\\webserver\\php",
+                Arguments = "-b 127.0.0.1:9123",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            }
+        };
+
+        private void Vanilla_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            timer.Stop();
+        }
+        
         public Vanilla()
         {
             InitializeComponent();
-
 
             string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
 
@@ -109,14 +127,13 @@ namespace VanillaLauncher
                     File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
                 }
             Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + "\\files\\webserver\\");
-            Process.Start(new ProcessStartInfo
+            timer.Tick += (object sender, EventArgs e) =>
             {
-                FileName = "php-cgi.exe",
-                WorkingDirectory = Directory.GetCurrentDirectory() + "\\php",
-                Arguments = "-b 127.0.0.1:9123",
-                UseShellExecute = false,
-                CreateNoWindow = true
-            });
+                if (phpCGIProcess.HasExited)
+                    phpCGIProcess.Start();
+            };
+            phpCGIProcess.Start();
+            timer.Start();
             Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
             Directory.SetCurrentDirectory("..\\..");
             if (!administrativeMode)
