@@ -82,10 +82,23 @@ namespace VanillaLauncher
         public string RightLegColor { get; set; }
 
         private DarkModeCS DM = null;
+        
+        private Timer timer = new Timer { Interval = 100 }; // valley: this needs debating... for now it works
+        private Process phpCGIProcess = new Process
+        {
+            StartInfo =
+            {
+                FileName = "php-cgi.exe",
+                WorkingDirectory = Directory.GetCurrentDirectory() + "\\files\\webserver\\php",
+                Arguments = "-b 127.0.0.1:9123",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            }
+        };
+        
         public Vanilla()
         {
             InitializeComponent();
-
 
             string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
 
@@ -95,7 +108,6 @@ namespace VanillaLauncher
             bool administrativeMode2 = principal.IsInRole(WindowsBuiltInRole.Administrator);
                 Process.Start("taskkill.exe", "/F /IM nginx.exe");
                 Process.Start("taskkill.exe", "/F /IM php-cgi.exe");
-                Process.Start("taskkill.exe", "/F /IM RunHiddenConsole.exe");
                 System.Threading.Thread.Sleep(3000);
                 string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
                 string CurrentDirFixed = Directory.GetCurrentDirectory().Replace(@"\", @"/");
@@ -109,8 +121,14 @@ namespace VanillaLauncher
                     string fixedconf = httpdconf.Replace(@"C:/Vanilla/files/webroot", CurrentDirFixed + @"/files/webroot");
                     File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
                 }
-            Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", "/r " + Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
             Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + "\\files\\webserver\\");
+            timer.Tick += (object sender, EventArgs e) =>
+            {
+                if (phpCGIProcess.HasExited)
+                    phpCGIProcess.Start();
+            };
+            phpCGIProcess.Start();
+            timer.Start();
             Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
             Directory.SetCurrentDirectory("..\\..");
             if (!administrativeMode)
@@ -410,7 +428,7 @@ namespace VanillaLauncher
         }
         public void onshutdown(object sender, EventArgs e)
         {
-
+            timer.Stop();
             if (File.Exists("files\\settings.json"))
             {
                 File.Delete("files\\settings.json");
@@ -446,7 +464,6 @@ namespace VanillaLauncher
             // don't use file.replace here or it'll cause issues
             File.Delete(hostsFile);
             File.Copy(hostsFile + ".bak", hostsFile);
-            Process.Start("CMD.exe", "/C taskkill /f /im RunHiddenConsole.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
 
