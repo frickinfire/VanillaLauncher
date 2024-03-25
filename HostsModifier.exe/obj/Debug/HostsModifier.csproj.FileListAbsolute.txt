@@ -1,7 +1,0 @@
-C:\Users\beaup\OneDrive\Documents\GitHub\VanillaLauncher\HostsModifier.exe\bin\Debug\HostsModifier.exe.exe.config
-C:\Users\beaup\OneDrive\Documents\GitHub\VanillaLauncher\HostsModifier.exe\bin\Debug\HostsModifier.exe.exe
-C:\Users\beaup\OneDrive\Documents\GitHub\VanillaLauncher\HostsModifier.exe\bin\Debug\HostsModifier.exe.pdb
-C:\Users\beaup\OneDrive\Documents\GitHub\VanillaLauncher\HostsModifier.exe\obj\Debug\HostsModifier.csproj.AssemblyReference.cache
-C:\Users\beaup\OneDrive\Documents\GitHub\VanillaLauncher\HostsModifier.exe\obj\Debug\HostsModifier.csproj.CoreCompileInputs.cache
-C:\Users\beaup\OneDrive\Documents\GitHub\VanillaLauncher\HostsModifier.exe\obj\Debug\HostsModifier.exe.exe
-C:\Users\beaup\OneDrive\Documents\GitHub\VanillaLauncher\HostsModifier.exe\obj\Debug\HostsModifier.exe.pdb
