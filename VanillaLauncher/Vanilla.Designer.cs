@@ -895,7 +895,6 @@ namespace VanillaLauncher
             this.Name = "Vanilla";
             this.Text = "Vanilla";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Vanilla_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
