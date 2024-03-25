@@ -95,7 +95,6 @@ namespace VanillaLauncher
             bool administrativeMode2 = principal.IsInRole(WindowsBuiltInRole.Administrator);
                 Process.Start("taskkill.exe", "/F /IM nginx.exe");
                 Process.Start("taskkill.exe", "/F /IM php-cgi.exe");
-                Process.Start("taskkill.exe", "/F /IM RunHiddenConsole.exe");
                 System.Threading.Thread.Sleep(3000);
                 string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
                 string CurrentDirFixed = Directory.GetCurrentDirectory().Replace(@"\", @"/");
@@ -109,8 +108,14 @@ namespace VanillaLauncher
                     string fixedconf = httpdconf.Replace(@"C:/Vanilla/files/webroot", CurrentDirFixed + @"/files/webroot");
                     File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
                 }
-            Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", "/r " + Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
             Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + "\\files\\webserver\\");
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "php-cgi.exe",
+                WorkingDirectory = Directory.GetCurrentDirectory() + "\\php",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            });
             Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
             Directory.SetCurrentDirectory("..\\..");
             if (!administrativeMode)
@@ -446,7 +451,6 @@ namespace VanillaLauncher
             // don't use file.replace here or it'll cause issues
             File.Delete(hostsFile);
             File.Copy(hostsFile + ".bak", hostsFile);
-            Process.Start("CMD.exe", "/C taskkill /f /im RunHiddenConsole.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
 
