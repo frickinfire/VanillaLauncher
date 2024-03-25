@@ -113,6 +113,7 @@ namespace VanillaLauncher
             {
                 FileName = "php-cgi.exe",
                 WorkingDirectory = Directory.GetCurrentDirectory() + "\\php",
+                Arguments = "-b 127.0.0.1:9123",
                 UseShellExecute = false,
                 CreateNoWindow = true
             });
