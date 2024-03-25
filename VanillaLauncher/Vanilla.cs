@@ -83,7 +83,7 @@ namespace VanillaLauncher
 
         private DarkModeCS DM = null;
         
-        private Timer timer = new Timer { Interval = 10 };
+        private Timer timer = new Timer { Interval = 100 }; // valley: this needs debating... for now it works
         private Process phpCGIProcess = new Process
         {
             StartInfo =
@@ -95,11 +95,6 @@ namespace VanillaLauncher
                 CreateNoWindow = true
             }
         };
-
-        private void Vanilla_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            timer.Stop();
-        }
         
         public Vanilla()
         {
@@ -433,7 +428,7 @@ namespace VanillaLauncher
         }
         public void onshutdown(object sender, EventArgs e)
         {
-
+            timer.Stop();
             if (File.Exists("files\\settings.json"))
             {
                 File.Delete("files\\settings.json");
