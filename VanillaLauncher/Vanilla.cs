@@ -83,7 +83,7 @@ namespace VanillaLauncher
 
         private DarkModeCS DM = null;
         
-        private Timer timer = new Timer { Interval = 100 };
+        private Timer timer = new Timer { Interval = 10 };
         private Process phpCGIProcess = new Process
         {
             StartInfo =
