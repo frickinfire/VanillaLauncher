@@ -87,59 +87,41 @@ namespace VanillaLauncher
             InitializeComponent();
 
 
-                Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
-                Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
-                Process.Start("CMD.exe", "/C taskkill /F /IM RunHiddenConsole.exe");
+            string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
 
+            WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            bool administrativeMode = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            // this sucks but it doesnt launch if we don't do this
+            bool administrativeMode2 = principal.IsInRole(WindowsBuiltInRole.Administrator);
+                Process.Start("taskkill.exe", "/F /IM nginx.exe");
+                Process.Start("taskkill.exe", "/F /IM php-cgi.exe");
+                Process.Start("taskkill.exe", "/F /IM RunHiddenConsole.exe");
+                System.Threading.Thread.Sleep(3000);
                 string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
                 string CurrentDirFixed = Directory.GetCurrentDirectory().Replace(@"\", @"/");
-            if (!httpdconf.Contains(CurrentDirFixed))
+                if (!httpdconf.Contains(CurrentDirFixed))
+                {
+                    File.Delete("files\\webserver\\conf\\nginx.conf");
+                    File.Copy("files\\webserver\\conf\\nginx.conf.bak", "files\\webserver\\conf\\nginx.conf");
+                }
+                if (httpdconf.Contains(@"C:/Vanilla/files/webroot"))
+                {
+                    string fixedconf = httpdconf.Replace(@"C:/Vanilla/files/webroot", CurrentDirFixed + @"/files/webroot");
+                    File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
+                }
+            Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", "/r " + Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
+            Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + "\\files\\webserver\\");
+            Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
+            Directory.SetCurrentDirectory("..\\..");
+            if (!administrativeMode)
             {
-                File.Delete("files\\webserver\\conf\\nginx.conf");
-                File.Copy("files\\webserver\\conf\\nginx.conf.bak", "files\\webserver\\conf\\nginx.conf");
-                string newconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
-                string fixedconf = newconf.Replace(@"C:/Vanilla/files/webroot", CurrentDirFixed + @"/files/webroot");
-                File.WriteAllText("files\\webserver\\conf\\nginx.conf", fixedconf);
-            }
-            
-         
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.Verb = "runas";
-                startInfo.FileName = Directory.GetCurrentDirectory() + "\\files\\HostsModifier.exe";
-                  startInfo.Arguments = "/m";
-            Process.Start(startInfo);
-                try
-                {
-
-                    System.Threading.Thread.Sleep(3000);
-                    int port = 80;
-
-                    IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
-                    TcpConnectionInformation[] tcpConnInfoArray = ipGlobalProperties.GetActiveTcpConnections();
-
-                    foreach (TcpConnectionInformation tcpi in tcpConnInfoArray)
-                    {
-                        if (tcpi.LocalEndPoint.Port == port)
-                        {
-                            MessageBox.Show(
-                               "WARNING! Something is using port 80, meaning Vanilla will NOT WORK! Make sure to kill any webservers you may have running.",
-                               "Warning",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-
-                        }
-                    }
-                    Process.Start("files\\webserver\\php\\RunHiddenConsole.exe", "/r " + Directory.GetCurrentDirectory() + "\\files\\webserver\\php\\php-cgi.exe -b 127.0.0.1:9123");
-                    Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + "\\files\\webserver\\");
-                    Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
-                    Directory.SetCurrentDirectory("..\\..");
-                }
-                catch
-                {
-                    return;
-                }
-                return;
-            
+                startInfo.FileName = Application.ExecutablePath;
+                Process.Start(startInfo);
+                Process.GetCurrentProcess().Kill();
+                
+            }
             if (!File.Exists(Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite"))
             {
                 SQLiteConnection.CreateFile(Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite");
@@ -160,7 +142,90 @@ namespace VanillaLauncher
             }
             DM = new DarkModeCS(this);
             Application.ApplicationExit += new EventHandler(onshutdown);
-           
+            string pathfile = Environment.GetEnvironmentVariable("PATH");
+            if (!pathfile.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\php"))
+            {
+                var name = "PATH";
+                var scope = EnvironmentVariableTarget.Machine;
+                var oldValue = Environment.GetEnvironmentVariable(name, scope);
+                var newValue = oldValue + @";" + Directory.GetCurrentDirectory() + @"\files\webserver\php";
+                Environment.SetEnvironmentVariable(name, newValue, scope);
+            }
+            string pathfile2 = Environment.GetEnvironmentVariable("PATH");
+            if (!pathfile2.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\openssl"))
+            {
+                var name = "PATH";
+                var scope = EnvironmentVariableTarget.Machine;
+                var oldValue = Environment.GetEnvironmentVariable(name, scope);
+                var newValue = oldValue + @";" + Directory.GetCurrentDirectory() + @"\files\webserver\openssl";
+                Environment.SetEnvironmentVariable(name, newValue, scope);
+            }
+            string pathfile3 = Environment.GetEnvironmentVariable("OPENSSL_CONF");
+            if (pathfile3 != null)
+            {
+                var name = "OPENSSL_CONF";
+                var scope = EnvironmentVariableTarget.Machine;
+                var newValue = Directory.GetCurrentDirectory() + @"\files\webserver\php\extras\ssl\openssl.cnf";
+                Environment.SetEnvironmentVariable(name, newValue, scope);
+
+            }
+            FileInfo fileInfo = new FileInfo(hostsFile);
+            if (!File.Exists(hostsFile))
+            {
+                MessageBox.Show(
+                           "Your HOSTS file does not exist! Vanilla will create one for you. Please restart Vanilla.",
+                           "Warning",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning);
+
+                File.Create(hostsFile);
+                Process.GetCurrentProcess().Kill();
+
+            }  
+            if (fileInfo.IsReadOnly)
+            {
+                MessageBox.Show(
+                         "Vanilla will not work until you have disabled 'Read-Only' on your HOSTS file! Do this in C:\\Windows\\System32\\drivers\\etc.",
+                         "Warning",
+                          MessageBoxButtons.OK,
+                          MessageBoxIcon.Warning);
+
+            }
+            if (File.ReadAllText(hostsFile).Contains("# BEGIN VANILLA HOSTS"))
+            {
+                string str = File.ReadAllText(hostsFile);
+                int index = str.IndexOf("# BEGIN VANILLA HOSTS");
+                string result = str.Substring(0, index);
+                File.WriteAllText(hostsFile, result);
+            }
+
+            //if (File.Exists(hostsFile + ".bak")) {   File.Replace(hostsFile + ".bak", hostsFile, hostsFile + ".bak");   }
+            //                                         throws an error, don't use this even if it looks better
+
+            if (File.Exists(hostsFile + ".bak"))
+            {
+                File.Delete(hostsFile);
+                File.Copy(hostsFile + ".bak", hostsFile);
+                File.Delete(hostsFile + ".bak");
+            }
+            File.Copy(hostsFile, hostsFile + ".bak");
+            using (StreamWriter w = File.AppendText(hostsFile))
+            {
+                w.WriteLine("");
+                w.WriteLine("# BEGIN VANILLA HOSTS");
+                w.WriteLine("127.0.0.1 www.roblox.com");
+                w.WriteLine("127.0.0.1 roblox.com");
+                w.WriteLine("127.0.0.1 api.roblox.com");
+                w.WriteLine("127.0.0.1 assetgame.roblox.com");
+                w.WriteLine("127.0.0.1 clientsettings.api.roblox.com");
+                w.WriteLine("127.0.0.1 versioncompatibility.api.roblox.com");
+                w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
+                w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
+                w.WriteLine("127.0.0.1 gamejoin.roblox.com");
+                w.WriteLine("127.0.0.1 apis.roblox.com");
+                w.WriteLine("127.0.0.1 auth.roblox.com");
+            }
+            
             var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
             foreach (var file in files3)
             {
@@ -378,14 +443,13 @@ namespace VanillaLauncher
                 serializer.Serialize(file, jsonfile);
             }
             string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
- 
+            // don't use file.replace here or it'll cause issues
+            File.Delete(hostsFile);
+            File.Copy(hostsFile + ".bak", hostsFile);
             Process.Start("CMD.exe", "/C taskkill /f /im RunHiddenConsole.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM nginx.exe");
             Process.Start("CMD.exe", "/C taskkill /F /IM php-cgi.exe");
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.Verb = "runas";
-            startInfo.FileName = Directory.GetCurrentDirectory() + "\\files\\HostsModifier.exe";
-            Process.Start(startInfo);
+
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -525,8 +589,8 @@ namespace VanillaLauncher
                 if (assetCache.Checked)
                 {
                     File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
-                    if (Directory.Exists("files\\webroot\\api\\asset")) { File.Replace("files\\webroot\\api\\asset\\cacher.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\nocache.php"); }
-                    if (Directory.Exists("files\\webroot\\api\\v1\\asset\\")) { File.Replace("files\\webroot\\api\\v1\\asset\\cacher.php", "files\\webroot\\api\\v1\\asset\\index.php", "files\\webroot\\api\\v1\\asset\\nocache.php"); }
+
+                    File.Replace("files\\webroot\\api\\asset\\cacher.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\nocache.php");
 
                 }
                 ClientInfo.Text = "selected client: " + curItem;
@@ -570,7 +634,7 @@ namespace VanillaLauncher
                     Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\RCC\\");
                     Process.Start("CMD.exe", "/C RCCService.exe -console -start -verbose");
                     Directory.SetCurrentDirectory("..\\..\\..");
-                    System.Threading.Thread.Sleep(9000);
+                    System.Threading.Thread.Sleep(11000);
                     Classes.SOAP.Execute(selectedClient);
                 }
 
@@ -605,7 +669,7 @@ namespace VanillaLauncher
             //Process.GetCurrentProcess().Kill();
 
         }
-        
+
         private void JoinButton_Click_1(object sender, EventArgs e)
         {
             try
@@ -654,7 +718,7 @@ namespace VanillaLauncher
                     {
 
                         Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                        Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818" + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
+                        Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818" + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "&avatartype=" + AvatarTypeStr + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
                         Directory.SetCurrentDirectory("..\\..\\..");
                         if (avatarFetchRequired)
                         {
@@ -704,21 +768,10 @@ namespace VanillaLauncher
 
             private void EditButton_Click(object sender, EventArgs e)
         {
-            if (is2007)
-            {
-                Process.Start("clients\\" + curItem + "\\Player\\Roblox.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
-            }
             if (isRobloxApp)
             {
-                Process.Start("clients\\" + curItem + "\\Player\\RobloxApp.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
-            }
-            if (isRobloxPlayer && curItem != "2013M")
-            {
-                Process.Start("clients\\" + curItem + "\\Player\\RobloxPlayer.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
-            }
-            if (isRobloxPlayerBeta || curItem == "2013M")
-            {
-                Process.Start("clients\\" + curItem + "\\Studio\\RobloxStudioBeta.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
+                string selectedClient = clientBox.SelectedItem.ToString();
+                Process.Start("clients\\" + selectedClient + "\\Player\\RobloxApp.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
             }
         }
         private void cacheEnabled(object sender, EventArgs e)

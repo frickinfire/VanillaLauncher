@@ -192,11 +192,11 @@ namespace VanillaLauncher
             // buildNum
             // 
             this.buildNum.AutoSize = true;
-            this.buildNum.Location = new System.Drawing.Point(357, 195);
+            this.buildNum.Location = new System.Drawing.Point(349, 195);
             this.buildNum.Name = "buildNum";
-            this.buildNum.Size = new System.Drawing.Size(90, 15);
+            this.buildNum.Size = new System.Drawing.Size(99, 15);
             this.buildNum.TabIndex = 40;
-            this.buildNum.Text = "public beta | 0.9";
+            this.buildNum.Text = "public beta | 0.9.1";
             // 
             // hostPortNew
             // 
