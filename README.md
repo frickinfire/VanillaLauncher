@@ -3,8 +3,8 @@
    <h4>A launcher for an old brick-building game.</h4>
    <p>
       <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/frickinfire/VanillaLauncher">
-      <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/frickinfire/VanillaLauncher">
-      <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues-pr/frickinfire/VanillaLauncher">
+      <a href="https://github.com/frickinfire/VanillaLauncher/issues"><img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/frickinfire/VanillaLauncher"></a>
+      <a href="https://github.com/frickinfire/VanillaLauncher/pulls"><img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues-pr/frickinfire/VanillaLauncher"></a>
       <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/frickinfire/VanillaLauncher">
       <a href="https://github.com/frickinfire/VanillaLauncher/blob/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/frickinfire/VanillaLauncher"></a>
    </p>
@@ -54,6 +54,3 @@ By downloading or using this program, you acknowledge that you are solely respon
 ```
 
 Download clients from our [Discord server](https://discord.com/invite/cE23bqYdbM).
-
-## License
-This project is licensed under [GPL v3 license](LICENSE).
