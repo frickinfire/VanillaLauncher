@@ -26,6 +26,16 @@ namespace VanillaLauncher.Extensions
             {
                 xmlDocument.Save(outStream);
             }
+            try
+            {
+                using (WebResponse webResponse = httpWebRequest.GetResponse())
+                {
+                }
+            }
+            catch
+            {
+                return;
+            }
         }
 
         public static HttpWebRequest CreateWebRequest()

@@ -11,6 +11,8 @@ using System.IO.Compression;
 using Newtonsoft.Json;
 using System.Data.SQLite;
 using BlueMystic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Menu;
+using Titanium.Web.Proxy.Examples.Basic;
 
 namespace VanillaLauncher.ContentView
 {
@@ -32,7 +34,6 @@ namespace VanillaLauncher.ContentView
 
             public string Shirt { get; set; }
             public string Pants { get; set; }
-
             public string TShirt { get; set; }
             public string AvatarType { get; set; }
             public string HeadColor { get; set; }
@@ -49,7 +50,7 @@ namespace VanillaLauncher.ContentView
         bool IsRobloxPlayerBeta { get; set; }
         bool IsRCCService { get; set; }
         bool AvatarFetchRequired { get; set; }
-        bool isRobloxPlayer { get; set; }
+        bool IsRobloxPlayer { get; set; }
         string GlobalMap { get; set; }
         string GlobalUsername { get; set; }
         string GlobalID { get; set; }
@@ -70,10 +71,11 @@ namespace VanillaLauncher.ContentView
 
         private DarkModeCS DarkMode = null;
 
-        private Timer timer = new Timer { Interval = 100 }; // This needs debating, for now it works.
+        private Timer timer = new Timer { Interval = 100 }; // valley: this needs debating... for now it works
         private Process phpCGIProcess = new Process
         {
-            StartInfo = {
+            StartInfo =
+            {
                 FileName = "php-cgi.exe",
                 WorkingDirectory = Directory.GetCurrentDirectory() + "\\files\\webserver\\php",
                 Arguments = "-b 127.0.0.1:9123",
@@ -90,14 +92,15 @@ namespace VanillaLauncher.ContentView
 
             WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             bool administrativeMode = principal.IsInRole(WindowsBuiltInRole.Administrator);
-
-            bool administrativeMode2 = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            
+            // this sucks but it doesnt launch if we don't do this
             Process.Start("taskkill.exe", "/F /IM nginx.exe");
             Process.Start("taskkill.exe", "/F /IM php-cgi.exe");
             System.Threading.Thread.Sleep(3000);
 
             string httpdconf = File.ReadAllText("files\\webserver\\conf\\nginx.conf");
             string currentDirFixed = Directory.GetCurrentDirectory().Replace(@"\", @"/");
+
             if (!httpdconf.Contains(currentDirFixed))
             {
                 File.Delete("files\\webserver\\conf\\nginx.conf");
@@ -111,7 +114,8 @@ namespace VanillaLauncher.ContentView
             }
 
             Directory.SetCurrentDirectory(Directory.GetCurrentDirectory() + "\\files\\webserver\\");
-            timer.Tick += (object sender, EventArgs e) => {
+            timer.Tick += (object sender, EventArgs e) =>
+            {
                 if (phpCGIProcess.HasExited)
                 {
                     phpCGIProcess.Start();
@@ -123,6 +127,7 @@ namespace VanillaLauncher.ContentView
 
             Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
             Directory.SetCurrentDirectory("..\\..");
+
             if (!administrativeMode)
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -130,8 +135,8 @@ namespace VanillaLauncher.ContentView
                 startInfo.FileName = Application.ExecutablePath;
                 Process.Start(startInfo);
                 Process.GetCurrentProcess().Kill();
-
             }
+
             if (!File.Exists(Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite"))
             {
                 SQLiteConnection.CreateFile(Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite");
@@ -139,17 +144,17 @@ namespace VanillaLauncher.ContentView
                 using (var sqlite2 = new SQLiteConnection(@"Data Source=" + Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite"))
                 {
                     sqlite2.Open();
-
+                    
                     string sql = "create table characterappearance (torsocolor text, leftlegcolor text, leftarmcolor text, rightlegcolor text, rightarmcolor text, headcolor text, asset1 text, asset2 text, asset3 text, asset4 text, asset5 text, asset6 text, asset7 text, asset8 text, asset9 text, asset10 text, asset11 text, asset12 text, asset13 text, avatartype text, userid text)";
-                    SQLiteCommand command = new SQLiteCommand(sql, sqlite2);
+                    var command = new SQLiteCommand(sql, sqlite2);
                     command.ExecuteNonQuery();
-
+                    
                     string sql2 = "create table badges (badgeId text, obtainedBy text)";
-                    SQLiteCommand command2 = new SQLiteCommand(sql2, sqlite2);
+                    var command2 = new SQLiteCommand(sql2, sqlite2);
                     command2.ExecuteNonQuery();
-
+                    
                     string sql3 = "create table gamepasses (passId text, boughtBy text)";
-                    SQLiteCommand command3 = new SQLiteCommand(sql3, sqlite2);
+                    var command3 = new SQLiteCommand(sql3, sqlite2);
                     command3.ExecuteNonQuery();
                 }
             }
@@ -157,8 +162,8 @@ namespace VanillaLauncher.ContentView
             DarkMode = new DarkModeCS(this);
             Application.ApplicationExit += new EventHandler(onshutdown);
 
-            string pathFile = Environment.GetEnvironmentVariable("PATH");
-            if (!pathFile.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\php"))
+            string pathLocation = Environment.GetEnvironmentVariable("PATH");
+            if (!pathLocation.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\php"))
             {
                 var name = "PATH";
                 var scope = EnvironmentVariableTarget.Machine;
@@ -167,7 +172,7 @@ namespace VanillaLauncher.ContentView
                 Environment.SetEnvironmentVariable(name, newValue, scope);
             }
 
-            if (!pathFile.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\openssl"))
+            if (!pathLocation.Contains(Directory.GetCurrentDirectory() + @"\files\webserver\openssl"))
             {
                 var name = "PATH";
                 var scope = EnvironmentVariableTarget.Machine;
@@ -175,8 +180,8 @@ namespace VanillaLauncher.ContentView
                 var newValue = oldValue + @";" + Directory.GetCurrentDirectory() + @"\files\webserver\openssl";
                 Environment.SetEnvironmentVariable(name, newValue, scope);
             }
-            string openSslConf = Environment.GetEnvironmentVariable("OPENSSL_CONF");
-            if (openSslConf != null)
+
+            if (Environment.GetEnvironmentVariable("OPENSSL_CONF") != null)
             {
                 var name = "OPENSSL_CONF";
                 var scope = EnvironmentVariableTarget.Machine;
@@ -184,7 +189,7 @@ namespace VanillaLauncher.ContentView
                 Environment.SetEnvironmentVariable(name, newValue, scope);
 
             }
-            FileInfo fileInfo = new FileInfo(hostsFile);
+            var fileInfo = new FileInfo(hostsFile);
             if (!File.Exists(hostsFile))
             {
                 MessageBox.Show("Your HOSTS file does not exist! Vanilla will create one for you. Please restart Vanilla.",
@@ -192,20 +197,20 @@ namespace VanillaLauncher.ContentView
 
                 File.Create(hostsFile);
                 Process.GetCurrentProcess().Kill();
-            }
 
+            }
             if (fileInfo.IsReadOnly)
             {
                 MessageBox.Show("Vanilla will not work until you have disabled 'Read-Only' on your HOSTS file! Do this in C:\\Windows\\System32\\drivers\\etc.",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
 
+            }
             if (File.ReadAllText(hostsFile).Contains("# BEGIN VANILLA HOSTS"))
             {
                 string str = File.ReadAllText(hostsFile);
                 int index = str.IndexOf("# BEGIN VANILLA HOSTS");
-
-                File.WriteAllText(hostsFile, str.Substring(0, index));
+                string result = str.Substring(0, index);
+                File.WriteAllText(hostsFile, result);
             }
 
             if (File.Exists(hostsFile + ".bak"))
@@ -214,9 +219,7 @@ namespace VanillaLauncher.ContentView
                 File.Copy(hostsFile + ".bak", hostsFile);
                 File.Delete(hostsFile + ".bak");
             }
-
             File.Copy(hostsFile, hostsFile + ".bak");
-
             using (StreamWriter w = File.AppendText(hostsFile))
             {
                 w.WriteLine(string.Empty);
@@ -234,8 +237,7 @@ namespace VanillaLauncher.ContentView
                 w.WriteLine("127.0.0.1 auth.roblox.com");
             }
 
-            var files3 = from file in Directory.EnumerateFiles("files\\char\\hats") select file;
-            foreach (var file in files3)
+            foreach (var file in Directory.EnumerateFiles("files\\char\\hats"))
             {
                 if (file.Contains(".json"))
                 {
@@ -248,8 +250,7 @@ namespace VanillaLauncher.ContentView
                 }
             }
 
-            var files4 = from file in Directory.EnumerateFiles("files\\char\\shirts") select file;
-            foreach (var file in files4)
+            foreach (var file in Directory.EnumerateFiles("files\\char\\shirts"))
             {
                 if (file.Contains(".json"))
                 {
@@ -260,8 +261,7 @@ namespace VanillaLauncher.ContentView
                 }
             }
 
-            var files5 = from file in Directory.EnumerateFiles("files\\char\\pants") select file;
-            foreach (var file in files5)
+            foreach (var file in Directory.EnumerateFiles("files\\char\\pants"))
             {
                 if (file.Contains(".json"))
                 {
@@ -272,8 +272,7 @@ namespace VanillaLauncher.ContentView
                 }
             }
 
-            var files6 = from file in Directory.EnumerateFiles("files\\char\\t-shirts") select file;
-            foreach (var file in files6)
+            foreach (var file in Directory.EnumerateFiles("files\\char\\t-shirts"))
             {
                 if (file.Contains(".json"))
                 {
@@ -284,21 +283,18 @@ namespace VanillaLauncher.ContentView
                 }
             }
 
-            var files2 = from file2 in Directory.EnumerateDirectories("clients\\") select file2;
-            foreach (var file2 in files2)
+            foreach (var file in Directory.EnumerateDirectories("clients\\"))
             {
-                string ohio = file2.Substring(file2.IndexOf("\\") + 1);
+                string ohio = file.Substring(file.IndexOf("\\") + 1);
                 clientBox.Items.Add(ohio);
 
             }
 
-            var files = from file in Directory.EnumerateFiles("files\\maps", "*", SearchOption.AllDirectories) select file;
-            foreach (var file in files)
+            foreach (var file in Directory.EnumerateFiles("files\\maps", "*", SearchOption.AllDirectories))
             {
                 mapBox.Items.Add(file);
             }
 
-            string curDir = Directory.GetCurrentDirectory();
             if (File.Exists("files\\settings.json"))
             {
                 dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\settings.json"));
@@ -324,54 +320,46 @@ namespace VanillaLauncher.ContentView
 
                 string[] values = { GlobalShirt, GlobalPants, GlobalHat1, GlobalHat2, GlobalHat3, GlobalHat3, GlobalTshirt, CurrentItem, GlobalMap };
 
-                foreach (string goon in values)
+                foreach (string value in values)
                 {
-                    if (goon == CurrentItem)
+                    if (value == CurrentItem)
                     {
-                        var index = clientBox.FindString(CurrentItem);
-                        clientBox.SelectedIndex = index;
+                        clientBox.SelectedIndex = clientBox.FindString(CurrentItem);
                     }
 
-                    if (goon == GlobalMap)
+                    if (value == GlobalMap)
                     {
-                        var index = mapBox.FindString(GlobalMap);
-                        mapBox.SelectedIndex = index;
+                        mapBox.SelectedIndex = mapBox.FindString(GlobalMap);
                     }
 
-                    if (goon == GlobalHat1)
+                    if (value == GlobalHat1)
                     {
-                        var index = listBox0.FindString(GlobalHat1);
-                        listBox0.SelectedIndex = index;
+                        listBox0.SelectedIndex = listBox0.FindString(GlobalHat1);
                     }
 
-                    if (goon == GlobalHat2)
+                    if (value == GlobalHat2)
                     {
-                        var index = listBox1.FindString(GlobalHat2);
-                        listBox1.SelectedIndex = index;
+                        listBox1.SelectedIndex = listBox1.FindString(GlobalHat2);
                     }
 
-                    if (goon == GlobalHat3)
+                    if (value == GlobalHat3)
                     {
-                        var index = listBox2.FindString(GlobalHat3);
-                        listBox2.SelectedIndex = index;
+                        listBox2.SelectedIndex = listBox2.FindString(GlobalHat3);
                     }
 
-                    if (goon == GlobalShirt)
+                    if (value == GlobalShirt)
                     {
-                        var index = listBox3.FindString(GlobalShirt);
-                        listBox3.SelectedIndex = index;
+                        listBox3.SelectedIndex = listBox3.FindString(GlobalShirt);
                     }
 
-                    if (goon == GlobalPants)
+                    if (value == GlobalPants)
                     {
-                        var index = listBox4.FindString(GlobalPants);
-                        listBox4.SelectedIndex = index;
+                        listBox4.SelectedIndex = listBox4.FindString(GlobalPants);
                     }
 
-                    if (goon == GlobalTshirt)
+                    if (value == GlobalTshirt)
                     {
-                        var index = listBox5.FindString(GlobalTshirt);
-                        listBox5.SelectedIndex = index;
+                        listBox5.SelectedIndex = listBox5.FindString(GlobalTshirt);
                     }
 
                     headColor.Text = val["HeadColor"];
@@ -405,14 +393,13 @@ namespace VanillaLauncher.ContentView
             {
                 AvatarTypeStr = "R6";
                 return;
-            };
+            }
 
             if (AvatarTypeStr == "R6")
             {
                 AvatarTypeStr = "R15";
                 return;
-            };
-
+            }
         }
 
         public void SetGlobal(object sender, EventArgs e)
@@ -642,8 +629,10 @@ namespace VanillaLauncher.ContentView
 
                 if (assetCache.Checked)
                 {
-                    File.Replace("files\\webroot\\asset\\cacher.php", "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
-                    File.Replace("files\\webroot\\api\\asset\\cacher.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\nocache.php");
+                    File.Replace("files\\webroot\\asset\\cacher.php", 
+                        "files\\webroot\\asset\\index.php", "files\\webroot\\asset\\nocache.php");
+                    File.Replace("files\\webroot\\api\\asset\\cacher.php", 
+                        "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\nocache.php");
                 }
 
                 ClientInfo.Text = "selected client: " + CurrentItem;
@@ -655,7 +644,7 @@ namespace VanillaLauncher.ContentView
                     IsRCCService = val["isRCCService"] == "true";
                     Is2007 = val["is2007"] == "true";
                     AvatarFetchRequired = val["avatarFetchRequired"] == "true";
-                    isRobloxPlayer = val["isRobloxPlayer"] == "true";
+                    IsRobloxPlayer = val["isRobloxPlayer"] == "true";
                 }
 
                 try
@@ -673,7 +662,8 @@ namespace VanillaLauncher.ContentView
         private void HostButton_Click_1(object sender, EventArgs e)
         {
             string selectedClient = CurrentItem;
-            string hostPortstring = hostPortNew.Text;
+            string hostPortString = hostPortNew.Text;
+
             if (IsRCCService)
             {
                 if (selectedClient == "2015M" || selectedClient == "2015E" || selectedClient == "2014X")
@@ -688,21 +678,23 @@ namespace VanillaLauncher.ContentView
                     Process.Start("CMD.exe", "/C RCCService.exe -console -start -verbose");
                     Directory.SetCurrentDirectory("..\\..\\..");
                     System.Threading.Thread.Sleep(11000);
+
                     Extensions.NetworkingEx.Execute(selectedClient);
                 }
+
             }
 
-            if (isRobloxPlayer)
+            if (IsRobloxPlayer)
             {
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("RobloxPlayer.exe", "-joinScriptUrl \"http://www.roblox.com/game/gameserver.ashx?port=" + hostPortstring + "\"");
+                Process.Start("RobloxPlayer.exe", "-joinScriptUrl \"http://www.roblox.com/game/gameserver.ashx?port=" + hostPortString + "\"");
                 Directory.SetCurrentDirectory("..\\..\\..");
             }
 
             if (IsRobloxApp && !IsRCCService)
             {
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                Process.Start("RobloxApp.exe", "-no3d -script \"loadfile('http://www.roblox.com/game/gameserver.ashx?port=" + hostPortstring + "')()\"");
+                Process.Start("RobloxApp.exe", "-no3d -script \"loadfile('http://www.roblox.com/game/gameserver.ashx?port=" + hostPortString + "')()\"");
                 Directory.SetCurrentDirectory("..\\..\\..");
             }
 
@@ -717,7 +709,6 @@ namespace VanillaLauncher.ContentView
             {
                 Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
                 Process.Start("Roblox.exe", "-no3d -script \"" + Directory.GetCurrentDirectory() + "\\content\\gameserver.lua\" \"" + Directory.GetCurrentDirectory() + "\\..\\..\\..\\files\\web\\1818");
-
                 Directory.SetCurrentDirectory("..\\..\\..");
             }
         }
@@ -733,7 +724,7 @@ namespace VanillaLauncher.ContentView
                 else
                 {
                     string selectedClient = clientBox.SelectedItem.ToString();
-                    string ipaddr = IPBox.Text;
+                    string ipAddr = IPBox.Text;
                     string port = PortBox.Text;
                     string userName = userNameBox.Text;
                     string ID = idBox.Text;
@@ -744,7 +735,7 @@ namespace VanillaLauncher.ContentView
                     string pants = GlobalPants;
                     string tshirts = GlobalTshirt;
 
-                    if (IsRobloxApp && !isRobloxPlayer)
+                    if (IsRobloxApp && !IsRobloxPlayer)
                     {
                         string[] values = { shirts, pants, hat1, hat2s, hat3s, tshirts };
                         for (int i = 0; i < values.Length; i++)
@@ -756,25 +747,26 @@ namespace VanillaLauncher.ContentView
                         }
 
                         Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                        Process.Start("RobloxApp.exe", "-build -script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "')()\"");
+                        Process.Start("RobloxApp.exe", "-build -script \"loadfile('http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipAddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "')()\"");
                         Directory.SetCurrentDirectory("..\\..\\..");
                     }
 
-                    if (isRobloxPlayer)
+                    if (IsRobloxPlayer)
                     {
                         Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                        Process.Start("RobloxPlayer.exe", "-joinScriptUrl \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "\"");
+                        Process.Start("RobloxPlayer.exe", "-joinScriptUrl \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipAddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "\"");
                         Directory.SetCurrentDirectory("..\\..\\..");
                     }
+
                     if (IsRobloxPlayerBeta)
                     {
 
                         Directory.SetCurrentDirectory("clients\\" + selectedClient + "\\Player\\");
-                        Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818" + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "&avatartype=" + AvatarTypeStr + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
+                        Process.Start("RobloxPlayerBeta.exe", "-j \"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipAddr + "&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&shirt=" + shirts + "&pants=" + pants + "&tshirt=" + tshirts + "&port=" + port + "&PlaceId=1818" + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "&avatartype=" + AvatarTypeStr + "\" -t \"0\" -a \"http://www.roblox.com/Login/Negotiate.ashx\"");
                         Directory.SetCurrentDirectory("..\\..\\..");
                         if (AvatarFetchRequired)
                         {
-                            var request = (HttpWebRequest)WebRequest.Create("http://" + ipaddr + ":53642/v1.1/set-avatar/?userid=" + ID + "&headc=" + HeadColor + "&torsoc=" + TorsoColor + "&rarmc=" + RightArmColor + "&larmc=" + LeftArmColor + "&llegc=" + LeftLegColor + "&rlegc=" + RightLegColor + "&shirt=" + shirts + "&tshirt=" + tshirts + "&pants=" + pants + "&face=0&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&torsop=&lap=0&llp=0&rap=0&rlp=0&hp=0&avatartype=" + AvatarTypeStr);
+                            var request = (HttpWebRequest)WebRequest.Create("http://" + ipAddr + ":53642/v1.1/set-avatar/?userid=" + ID + "&headc=" + HeadColor + "&torsoc=" + TorsoColor + "&rarmc=" + RightArmColor + "&larmc=" + LeftArmColor + "&llegc=" + LeftLegColor + "&rlegc=" + RightLegColor + "&shirt=" + shirts + "&tshirt=" + tshirts + "&pants=" + pants + "&face=0&hat1=" + hat1 + "&hat2=" + hat2s + "&hat3=" + hat3s + "&torsop=&lap=0&llp=0&rap=0&rlp=0&hp=0&avatartype=" + AvatarTypeStr);
                             var response = (HttpWebResponse)request.GetResponse();
                             string responseString;
                             using (var stream = response.GetResponseStream())
@@ -798,7 +790,7 @@ namespace VanillaLauncher.ContentView
                             }
                         }
 
-                        string someText = "loadfile(\"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipaddr + "&hat1=" + GlobalHat1 + "&hat2=" + GlobalHat2 + "&hat3=" + GlobalHat3 + "&tshirt=" + GlobalTshirt + "&port=" + port + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "\")()";
+                        string someText = "loadfile(\"http://www.roblox.com/game/join.ashx?username=" + userName + "&id=" + ID + "&ip=" + ipAddr + "&hat1=" + GlobalHat1 + "&hat2=" + GlobalHat2 + "&hat3=" + GlobalHat3 + "&tshirt=" + GlobalTshirt + "&port=" + port + "&hc=" + HeadColor + "&tc=" + TorsoColor + "&la=" + LeftArmColor + "&ll=" + LeftLegColor + "&ra=" + RightArmColor + "&rl=" + RightLegColor + "\")()";
                         someText = someText.Replace("=0&", "=86487700&");
                         File.WriteAllText(@"clients\\" + selectedClient + "\\Player\\content\\join.lua", someText);
 
@@ -810,7 +802,7 @@ namespace VanillaLauncher.ContentView
             }
             catch
             {
-                MessageBox.Show("something went wrong.");
+                MessageBox.Show("An error occured, please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -819,7 +811,8 @@ namespace VanillaLauncher.ContentView
             if (IsRobloxApp)
             {
                 string selectedClient = clientBox.SelectedItem.ToString();
-                Process.Start("clients\\" + selectedClient + "\\Player\\RobloxApp.exe", "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
+                Process.Start("clients\\" + selectedClient + "\\Player\\RobloxApp.exe",
+                    "\"" + Directory.GetCurrentDirectory() + "\\files\\web\\1818");
             }
         }
         private void cacheEnabled(object sender, EventArgs e)
@@ -839,7 +832,7 @@ namespace VanillaLauncher.ContentView
                 if (File.Exists("files\\webroot\\api\\asset\\nocache.php"))
                 {
                     File.Delete("files\\webroot\\api\\asset\\nocache.php");
-                };
+                }
 
                 if (File.Exists("files\\webroot\\api\\asset\\cacher.php"))
                 {
@@ -943,9 +936,11 @@ namespace VanillaLauncher.ContentView
             }
         }
 
-        private void fileSystemWatcher1_Created(object sender, FileSystemEventArgs e) { mapBox.Items.Add(e.FullPath); }
+        private void fileSystemWatcher1_Created(object sender, FileSystemEventArgs e)
+            => mapBox.Items.Add(e.FullPath);
 
-        private void fileSystemWatcher1_Deleted(object sender, FileSystemEventArgs e) { mapBox.Items.Remove(e.FullPath); }
+        private void fileSystemWatcher1_Deleted(object sender, FileSystemEventArgs e)
+            => mapBox.Items.Remove(e.FullPath);
 
         public static void Decompress(FileInfo fileToDecompress)
         {
