@@ -1,55 +1,29 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Security;
-using System.Threading;
 using System.Threading.Tasks;
 using Titanium.Web.Proxy;
 using Titanium.Web.Proxy.EventArguments;
-using Titanium.Web.Proxy.Exceptions;
-using Titanium.Web.Proxy.Helpers;
 using Titanium.Web.Proxy.Http;
 using Titanium.Web.Proxy.Models;
-using Titanium.Web.Proxy.StreamExtended.Network;
-
 
 namespace VanillaLauncher.MobileProxy
 {
     public class Main
     {
-
-     
-        public void startProxy()
-        {
-
-            var explicitEndPoint = new ExplicitProxyEndPoint(IPAddress.Any, 8000, true);
+        public void StartProxy()
+        {            
             var proxyServer = new ProxyServer();
             proxyServer.CertificateManager.CertificateEngine = Titanium.Web.Proxy.Network.CertificateEngine.DefaultWindows; 
             proxyServer.CertificateManager.EnsureRootCertificate();
-            // locally trust root certificate used by this proxy 
-            //proxyServer.CertificateManager.TrustRootCertificate(true);
 
-            // optionally set the Certificate Engine
-            // Under Mono only BouncyCastle will be supported
-            //proxyServer.CertificateManager.CertificateEngine = Network.CertificateEngine.BouncyCastle;
-             //proxyServer.BeforeRequest += OnRequest;
-            //proxyServer.BeforeResponse += OnResponse;
-
-            //proxyServer.ServerCertificateValidationCallback += OnCertificateValidation;
-            //proxyServer.ClientCertificateSelectionCallback += OnCertificateSelection;
-
-            //proxyServer.EnableWinAuth = true;
-
+            var explicitEndPoint = new ExplicitProxyEndPoint(IPAddress.Any, 8000, true);
             explicitEndPoint = new ExplicitProxyEndPoint(IPAddress.Any, 8000);
+            explicitEndPoint.BeforeTunnelConnectRequest += OnBeforeTunnelConnectRequest; // Fired when a CONNECT request is received.
 
-            // Fired when a CONNECT request is received
-            explicitEndPoint.BeforeTunnelConnectRequest += OnBeforeTunnelConnectRequest;
-
-
-            // An explicit endpoint is where the client knows about the existence of a proxy
-            // So client sends request in a proxy friendly manner
+            /*
+                An explicit endpoint is where the client knows about the existence of a proxy,
+                so client sends request in a proxy friendly manner.
+            */
             proxyServer.AddEndPoint(explicitEndPoint);
             proxyServer.Start();
 
@@ -57,14 +31,11 @@ namespace VanillaLauncher.MobileProxy
     
         private async Task OnBeforeTunnelConnectRequest(object sender, TunnelConnectSessionEventArgs e)
         {
-            string hostname = e.HttpClient.Request.RequestUri.Host;
+            string hostName = e.HttpClient.Request.RequestUri.Host;
 
-            if (hostname.Contains("dropbox.com"))
+            if (hostName.Contains("dropbox.com"))
             {
-                // Exclude Https addresses you don't want to proxy
-                // Useful for clients that use certificate pinning
-                // for example dropbox.com
-                e.DecryptSsl = false;
+                e.DecryptSsl = false; // // Excludes addresses that you don't want to proxy.
             }
         }
 
@@ -72,27 +43,19 @@ namespace VanillaLauncher.MobileProxy
         {
             Console.WriteLine(e.HttpClient.Request.Url);
 
-            // read request headers
             var requestHeaders = e.HttpClient.Request.Headers;
-
             var method = e.HttpClient.Request.Method.ToUpper();
             if ((method == "POST" || method == "PUT" || method == "PATCH"))
             {
-                // Get/Set request body bytes
                 byte[] bodyBytes = await e.GetRequestBody();
                 e.SetRequestBody(bodyBytes);
 
-                // Get/Set request body as string
                 string bodyString = await e.GetRequestBodyAsString();
                 e.SetRequestBodyString(bodyString);
 
-                // store request 
-                // so that you can find it from response handler 
                 e.UserData = e.HttpClient.Request;
             }
 
-            // To cancel a request with a custom HTML content
-            // Filter URL
             if (e.HttpClient.Request.RequestUri.AbsoluteUri.Contains("google.com"))
             {
                 e.Ok("<!DOCTYPE html>" +
@@ -104,20 +67,16 @@ namespace VanillaLauncher.MobileProxy
                     "</html>");
             }
 
-            // Redirect example
             if (e.HttpClient.Request.RequestUri.AbsoluteUri.Contains("wikipedia.org"))
             {
                 e.Redirect("https://www.paypal.com");
             }
         }
 
-        // Modify response
         public async Task OnResponse(object sender, SessionEventArgs e)
         {
-            // read response headers
             var responseHeaders = e.HttpClient.Response.Headers;
 
-            //if (!e.ProxySession.Request.Host.Equals("medeczane.sgk.gov.tr")) return;
             if (e.HttpClient.Request.Method == "GET" || e.HttpClient.Request.Method == "POST")
             {
                 if (e.HttpClient.Response.StatusCode == 200)
@@ -135,26 +94,23 @@ namespace VanillaLauncher.MobileProxy
 
             if (e.UserData != null)
             {
-                // access request from UserData property where we stored it in RequestHandler
-                var request = (Request)e.UserData;
+                var request = (Request)e.UserData; // Access request from UserData property where we stored it in RequestHandler.
             }
         }
 
-        // Allows overriding default certificate validation logic
+        // Allows overriding default certificate validation logic.
         public Task OnCertificateValidation(object sender, CertificateValidationEventArgs e)
         {
-            // set IsValid to true/false based on Certificate Errors
+            // Set IsValid to true/false based on certificate errors.
             if (e.SslPolicyErrors == System.Net.Security.SslPolicyErrors.None)
+            {
                 e.IsValid = true;
-
+            }
             return Task.CompletedTask;
         }
 
-        // Allows overriding default client certificate selection logic during mutual authentication
+        // Allows overriding default client certificate selection logic during mutual authentication.
         public Task OnCertificateSelection(object sender, CertificateSelectionEventArgs e)
-        {
-            // set e.clientCertificate to override
-            return Task.CompletedTask;
-        }
+            => Task.CompletedTask; // Set e.clientCertificate to override.
     }
 }

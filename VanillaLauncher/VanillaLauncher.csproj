@@ -10,7 +10,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>VanillaLauncher</RootNamespace>
     <AssemblyName>VanillaLauncher</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -39,7 +39,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -49,7 +49,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -176,34 +176,34 @@
       <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
     </Reference>
     <Reference Include="Titanium.Web.Proxy, Version=1.0.1.0, Culture=neutral, PublicKeyToken=8e41e1f1c790d7cf, processorArchitecture=MSIL">
-      <HintPath>..\packages\Titanium.Web.Proxy.3.2.0\lib\net451\Titanium.Web.Proxy.dll</HintPath>
+      <HintPath>..\packages\Titanium.Web.Proxy.3.2.0\lib\net461\Titanium.Web.Proxy.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ColorLoader.cs" />
-    <Compile Include="Classes\RichPresence.cs" />
-    <Compile Include="Classes\SOAP.cs" />
-    <Compile Include="DarkMode\DarkModeCS.cs" />
-    <Compile Include="DarkMode\FlatComboBox.cs" />
-    <Compile Include="DarkMode\FlatTabControl.cs">
+    <Compile Include="Extensions\ColorLoaderEx.cs" />
+    <Compile Include="Extensions\RichPresenceEx.cs" />
+    <Compile Include="Extensions\NetworkingEx.cs" />
+    <Compile Include="Integrations\DarkMode\DarkModeCS.cs" />
+    <Compile Include="Integrations\DarkMode\FlatComboBox.cs" />
+    <Compile Include="Integrations\DarkMode\FlatTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DarkMode\Messenger.cs" />
-    <Compile Include="MobileProxy\Helpers\ConsoleHelper.cs" />
-    <Compile Include="MobileProxy\Main.cs" />
-    <Compile Include="MobileProxy\ProxyEventArgsBaseExtensions.cs" />
-    <Compile Include="MobileProxy\ProxyTestController.cs" />
-    <Compile Include="MobileProxy\SampleClientState.cs" />
-    <Compile Include="Vanilla.cs">
+    <Compile Include="Integrations\DarkMode\Messenger.cs" />
+    <Compile Include="Integrations\MobileProxy\Helpers\ConsoleHelper.cs" />
+    <Compile Include="Integrations\MobileProxy\Main.cs" />
+    <Compile Include="Integrations\MobileProxy\ProxyEventArgsBaseExtensions.cs" />
+    <Compile Include="Integrations\MobileProxy\ProxyTestController.cs" />
+    <Compile Include="Integrations\MobileProxy\SampleClientState.cs" />
+    <Compile Include="ContentView\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vanilla.Designer.cs">
-      <DependentUpon>Vanilla.cs</DependentUpon>
+    <Compile Include="ContentView\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Vanilla.resx">
-      <DependentUpon>Vanilla.cs</DependentUpon>
+    <EmbeddedResource Include="ContentView\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -215,7 +215,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="Classes\App.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

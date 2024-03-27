@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VanillaLauncher.Classes
+namespace VanillaLauncher.Extensions
 {
-    class ColorLoader
+    class ColorLoaderEx
     {
-        void loadFile()
+        void LoadFile()
         {
-            var filepath = "files\\colors.txt";
+            var filePath = "files\\colors.txt";
         }
-
     }
 }
