@@ -5,19 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using DiscordRPC;
 
-namespace VanillaLauncher.Classes
+namespace VanillaLauncher.Extensions
 {
    
     class RichPresence
     {
-        public DiscordRpcClient client;
+        public DiscordRpcClient RpcClient;
 
         public string Details { get; private set; }
         public string State { get; private set; }
 
-        void Start()
-        {
-        
-        }
+        void Start() {}
     }
 }

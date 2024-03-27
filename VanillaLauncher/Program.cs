@@ -8,15 +8,12 @@ namespace VanillaLauncher
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Vanilla());
+            Application.Run(new ContentView.Vanilla());
         }
     }
 }

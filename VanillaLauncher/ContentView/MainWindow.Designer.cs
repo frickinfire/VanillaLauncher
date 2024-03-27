@@ -1,5 +1,5 @@
 ﻿
-namespace VanillaLauncher
+namespace VanillaLauncher.ContentView
 {
     partial class Vanilla
     {
@@ -59,27 +59,27 @@ namespace VanillaLauncher
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.hatName = new System.Windows.Forms.TextBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.Hat1Box = new System.Windows.Forms.PictureBox();
             this.listBox0 = new System.Windows.Forms.ListBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.Hat2Box = new System.Windows.Forms.PictureBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.Hat3Box = new System.Windows.Forms.PictureBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.textBox4 = new System.Windows.Forms.TextBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.ShirtBox = new System.Windows.Forms.PictureBox();
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.textBox5 = new System.Windows.Forms.TextBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.PantsBox = new System.Windows.Forms.PictureBox();
             this.listBox4 = new System.Windows.Forms.ListBox();
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.textBox6 = new System.Windows.Forms.TextBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.TShirtBox = new System.Windows.Forms.PictureBox();
             this.listBox5 = new System.Windows.Forms.ListBox();
             this.tabPage12 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
@@ -113,17 +113,17 @@ namespace VanillaLauncher
             this.tabPage3.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Hat1Box)).BeginInit();
             this.tabPage7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Hat2Box)).BeginInit();
             this.tabPage8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Hat3Box)).BeginInit();
             this.tabPage9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ShirtBox)).BeginInit();
             this.tabPage10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PantsBox)).BeginInit();
             this.tabPage11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TShirtBox)).BeginInit();
             this.tabPage12.SuspendLayout();
             this.Settings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
@@ -204,7 +204,7 @@ namespace VanillaLauncher
             this.hostPortNew.Name = "hostPortNew";
             this.hostPortNew.Size = new System.Drawing.Size(180, 23);
             this.hostPortNew.TabIndex = 39;
-            this.hostPortNew.TextChanged += new System.EventHandler(this.setglobal);
+            this.hostPortNew.TextChanged += new System.EventHandler(this.SetGlobal);
             // 
             // PortBox
             // 
@@ -397,7 +397,7 @@ namespace VanillaLauncher
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(178, 23);
             this.idBox.TabIndex = 31;
-            this.idBox.TextChanged += new System.EventHandler(this.setglobal);
+            this.idBox.TextChanged += new System.EventHandler(this.SetGlobal);
             // 
             // userNameBox
             // 
@@ -405,7 +405,7 @@ namespace VanillaLauncher
             this.userNameBox.Name = "userNameBox";
             this.userNameBox.Size = new System.Drawing.Size(178, 23);
             this.userNameBox.TabIndex = 30;
-            this.userNameBox.TextChanged += new System.EventHandler(this.setglobal);
+            this.userNameBox.TextChanged += new System.EventHandler(this.SetGlobal);
             // 
             // tabControl2
             // 
@@ -425,14 +425,14 @@ namespace VanillaLauncher
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.hatName);
-            this.tabPage5.Controls.Add(this.pictureBox2);
+            this.tabPage5.Controls.Add(this.Hat1Box);
             this.tabPage5.Controls.Add(this.listBox0);
             this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(430, 272);
             this.tabPage5.TabIndex = 0;
-            this.tabPage5.Text = "Hat1";
+            this.tabPage5.Text = "Hat1Box";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // hatName
@@ -442,14 +442,14 @@ namespace VanillaLauncher
             this.hatName.Size = new System.Drawing.Size(212, 23);
             this.hatName.TabIndex = 2;
             // 
-            // pictureBox2
+            // Hat1Box
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(217, -1);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.charRemove);
+            this.Hat1Box.Location = new System.Drawing.Point(217, -1);
+            this.Hat1Box.Name = "Hat1Box";
+            this.Hat1Box.Size = new System.Drawing.Size(216, 201);
+            this.Hat1Box.TabIndex = 1;
+            this.Hat1Box.TabStop = false;
+            this.Hat1Box.Click += new System.EventHandler(this.charRemove);
             // 
             // listBox0
             // 
@@ -464,13 +464,13 @@ namespace VanillaLauncher
             // tabPage7
             // 
             this.tabPage7.Controls.Add(this.textBox2);
-            this.tabPage7.Controls.Add(this.pictureBox3);
+            this.tabPage7.Controls.Add(this.Hat2Box);
             this.tabPage7.Controls.Add(this.listBox1);
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(430, 272);
             this.tabPage7.TabIndex = 2;
-            this.tabPage7.Text = "Hat2";
+            this.tabPage7.Text = "Hat2Box";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
             // textBox2
@@ -480,14 +480,14 @@ namespace VanillaLauncher
             this.textBox2.Size = new System.Drawing.Size(212, 23);
             this.textBox2.TabIndex = 5;
             // 
-            // pictureBox3
+            // Hat2Box
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox3.TabIndex = 4;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.charRemove);
+            this.Hat2Box.Location = new System.Drawing.Point(216, -1);
+            this.Hat2Box.Name = "Hat2Box";
+            this.Hat2Box.Size = new System.Drawing.Size(216, 201);
+            this.Hat2Box.TabIndex = 4;
+            this.Hat2Box.TabStop = false;
+            this.Hat2Box.Click += new System.EventHandler(this.charRemove);
             // 
             // listBox1
             // 
@@ -502,13 +502,13 @@ namespace VanillaLauncher
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.textBox3);
-            this.tabPage8.Controls.Add(this.pictureBox4);
+            this.tabPage8.Controls.Add(this.Hat3Box);
             this.tabPage8.Controls.Add(this.listBox2);
             this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Size = new System.Drawing.Size(430, 272);
             this.tabPage8.TabIndex = 3;
-            this.tabPage8.Text = "Hat3";
+            this.tabPage8.Text = "Hat3Box";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
             // textBox3
@@ -518,14 +518,14 @@ namespace VanillaLauncher
             this.textBox3.Size = new System.Drawing.Size(212, 23);
             this.textBox3.TabIndex = 5;
             // 
-            // pictureBox4
+            // Hat3Box
             // 
-            this.pictureBox4.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox4.TabIndex = 4;
-            this.pictureBox4.TabStop = false;
-            this.pictureBox4.Click += new System.EventHandler(this.charRemove);
+            this.Hat3Box.Location = new System.Drawing.Point(216, -1);
+            this.Hat3Box.Name = "Hat3Box";
+            this.Hat3Box.Size = new System.Drawing.Size(216, 201);
+            this.Hat3Box.TabIndex = 4;
+            this.Hat3Box.TabStop = false;
+            this.Hat3Box.Click += new System.EventHandler(this.charRemove);
             // 
             // listBox2
             // 
@@ -540,13 +540,13 @@ namespace VanillaLauncher
             // tabPage9
             // 
             this.tabPage9.Controls.Add(this.textBox4);
-            this.tabPage9.Controls.Add(this.pictureBox5);
+            this.tabPage9.Controls.Add(this.ShirtBox);
             this.tabPage9.Controls.Add(this.listBox3);
             this.tabPage9.Location = new System.Drawing.Point(4, 24);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Size = new System.Drawing.Size(430, 272);
             this.tabPage9.TabIndex = 4;
-            this.tabPage9.Text = "Shirts";
+            this.tabPage9.Text = "ShirtBoxs";
             this.tabPage9.UseVisualStyleBackColor = true;
             // 
             // textBox4
@@ -556,14 +556,14 @@ namespace VanillaLauncher
             this.textBox4.Size = new System.Drawing.Size(212, 23);
             this.textBox4.TabIndex = 5;
             // 
-            // pictureBox5
+            // ShirtBox
             // 
-            this.pictureBox5.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox5.TabIndex = 4;
-            this.pictureBox5.TabStop = false;
-            this.pictureBox5.Click += new System.EventHandler(this.charRemove);
+            this.ShirtBox.Location = new System.Drawing.Point(216, -1);
+            this.ShirtBox.Name = "ShirtBox";
+            this.ShirtBox.Size = new System.Drawing.Size(216, 201);
+            this.ShirtBox.TabIndex = 4;
+            this.ShirtBox.TabStop = false;
+            this.ShirtBox.Click += new System.EventHandler(this.charRemove);
             // 
             // listBox3
             // 
@@ -578,13 +578,13 @@ namespace VanillaLauncher
             // tabPage10
             // 
             this.tabPage10.Controls.Add(this.textBox5);
-            this.tabPage10.Controls.Add(this.pictureBox6);
+            this.tabPage10.Controls.Add(this.PantsBox);
             this.tabPage10.Controls.Add(this.listBox4);
             this.tabPage10.Location = new System.Drawing.Point(4, 24);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Size = new System.Drawing.Size(430, 272);
             this.tabPage10.TabIndex = 5;
-            this.tabPage10.Text = "Pants";
+            this.tabPage10.Text = "PantsBox";
             this.tabPage10.UseVisualStyleBackColor = true;
             // 
             // textBox5
@@ -594,14 +594,14 @@ namespace VanillaLauncher
             this.textBox5.Size = new System.Drawing.Size(212, 23);
             this.textBox5.TabIndex = 5;
             // 
-            // pictureBox6
+            // PantsBox
             // 
-            this.pictureBox6.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox6.TabIndex = 4;
-            this.pictureBox6.TabStop = false;
-            this.pictureBox6.Click += new System.EventHandler(this.charRemove);
+            this.PantsBox.Location = new System.Drawing.Point(216, -1);
+            this.PantsBox.Name = "PantsBox";
+            this.PantsBox.Size = new System.Drawing.Size(216, 201);
+            this.PantsBox.TabIndex = 4;
+            this.PantsBox.TabStop = false;
+            this.PantsBox.Click += new System.EventHandler(this.charRemove);
             // 
             // listBox4
             // 
@@ -616,13 +616,13 @@ namespace VanillaLauncher
             // tabPage11
             // 
             this.tabPage11.Controls.Add(this.textBox6);
-            this.tabPage11.Controls.Add(this.pictureBox7);
+            this.tabPage11.Controls.Add(this.TShirtBox);
             this.tabPage11.Controls.Add(this.listBox5);
             this.tabPage11.Location = new System.Drawing.Point(4, 24);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Size = new System.Drawing.Size(430, 272);
             this.tabPage11.TabIndex = 6;
-            this.tabPage11.Text = "T-Shirt";
+            this.tabPage11.Text = "T-ShirtBox";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
             // textBox6
@@ -632,14 +632,14 @@ namespace VanillaLauncher
             this.textBox6.Size = new System.Drawing.Size(212, 23);
             this.textBox6.TabIndex = 5;
             // 
-            // pictureBox7
+            // TShirtBox
             // 
-            this.pictureBox7.Location = new System.Drawing.Point(216, -1);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(216, 201);
-            this.pictureBox7.TabIndex = 4;
-            this.pictureBox7.TabStop = false;
-            this.pictureBox7.Click += new System.EventHandler(this.charRemove);
+            this.TShirtBox.Location = new System.Drawing.Point(216, -1);
+            this.TShirtBox.Name = "TShirtBox";
+            this.TShirtBox.Size = new System.Drawing.Size(216, 201);
+            this.TShirtBox.TabIndex = 4;
+            this.TShirtBox.TabStop = false;
+            this.TShirtBox.Click += new System.EventHandler(this.charRemove);
             // 
             // listBox5
             // 
@@ -894,7 +894,6 @@ namespace VanillaLauncher
             this.MaximizeBox = false;
             this.Name = "Vanilla";
             this.Text = "Vanilla";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -909,22 +908,22 @@ namespace VanillaLauncher
             this.tabControl2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Hat1Box)).EndInit();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Hat2Box)).EndInit();
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Hat3Box)).EndInit();
             this.tabPage9.ResumeLayout(false);
             this.tabPage9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ShirtBox)).EndInit();
             this.tabPage10.ResumeLayout(false);
             this.tabPage10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PantsBox)).EndInit();
             this.tabPage11.ResumeLayout(false);
             this.tabPage11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TShirtBox)).EndInit();
             this.tabPage12.ResumeLayout(false);
             this.tabPage12.PerformLayout();
             this.Settings.ResumeLayout(false);
@@ -955,28 +954,28 @@ namespace VanillaLauncher
         private System.Windows.Forms.ListBox clientBox;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox Hat1Box;
         private System.Windows.Forms.ListBox listBox0;
         private System.Windows.Forms.TextBox hatName;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox Hat2Box;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox Hat3Box;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox ShirtBox;
         private System.Windows.Forms.ListBox listBox3;
         private System.Windows.Forms.TabPage tabPage10;
         private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox PantsBox;
         private System.Windows.Forms.ListBox listBox4;
         private System.Windows.Forms.TabPage tabPage11;
         private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.PictureBox TShirtBox;
         private System.Windows.Forms.ListBox listBox5;
         private System.Windows.Forms.TabPage tabPage12;
         private System.Windows.Forms.TabPage Settings;
