@@ -582,8 +582,15 @@ namespace VanillaLauncher.ContentView
             {
                 if (file.EndsWith(".json"))
                 {
-                    string fileName = Path.GetFileNameWithoutExtension(file);
-                    listBox.Items.Add(fileName);
+                    var retro = Path.GetFileNameWithoutExtension(file);
+                    int index2 = retro.IndexOf(".info");
+                    if (index2 != -1)
+                    {
+                        string result = retro.Substring(0, index2);
+                        listBox.Items.Add(result);
+
+                    }
+
                 }
             }
         }

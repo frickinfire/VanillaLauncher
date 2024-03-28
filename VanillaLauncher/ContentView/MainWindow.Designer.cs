@@ -166,7 +166,6 @@ namespace VanillaLauncher.ContentView
             this.tabPage1.Size = new System.Drawing.Size(463, 515);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Play";
-           // this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -432,7 +431,7 @@ namespace VanillaLauncher.ContentView
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(430, 272);
             this.tabPage5.TabIndex = 0;
-            this.tabPage5.Text = "Hat1Box";
+            this.tabPage5.Text = "Hat1";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // hatName
@@ -470,7 +469,7 @@ namespace VanillaLauncher.ContentView
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(430, 272);
             this.tabPage7.TabIndex = 2;
-            this.tabPage7.Text = "Hat2Box";
+            this.tabPage7.Text = "Hat2";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
             // textBox2
@@ -508,7 +507,7 @@ namespace VanillaLauncher.ContentView
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Size = new System.Drawing.Size(430, 272);
             this.tabPage8.TabIndex = 3;
-            this.tabPage8.Text = "Hat3Box";
+            this.tabPage8.Text = "Hat3";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
             // textBox3
@@ -546,7 +545,7 @@ namespace VanillaLauncher.ContentView
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Size = new System.Drawing.Size(430, 272);
             this.tabPage9.TabIndex = 4;
-            this.tabPage9.Text = "ShirtBoxs";
+            this.tabPage9.Text = "Shirt";
             this.tabPage9.UseVisualStyleBackColor = true;
             // 
             // textBox4
@@ -584,7 +583,7 @@ namespace VanillaLauncher.ContentView
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Size = new System.Drawing.Size(430, 272);
             this.tabPage10.TabIndex = 5;
-            this.tabPage10.Text = "PantsBox";
+            this.tabPage10.Text = "Pants";
             this.tabPage10.UseVisualStyleBackColor = true;
             // 
             // textBox5
@@ -622,7 +621,7 @@ namespace VanillaLauncher.ContentView
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Size = new System.Drawing.Size(430, 272);
             this.tabPage11.TabIndex = 6;
-            this.tabPage11.Text = "T-ShirtBox";
+            this.tabPage11.Text = "T-Shirt";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
             // textBox6
@@ -840,7 +839,6 @@ namespace VanillaLauncher.ContentView
             this.Settings.Size = new System.Drawing.Size(463, 515);
             this.Settings.TabIndex = 4;
             this.Settings.Text = "Settings";
-           // this.Settings.Click += new System.EventHandler(this.Settings_Click);
             // 
             // assetCache
             // 
