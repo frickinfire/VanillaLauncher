@@ -92,7 +92,7 @@ namespace VanillaLauncher.ContentView
 
             WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             bool administrativeMode = principal.IsInRole(WindowsBuiltInRole.Administrator);
-            
+
             // this sucks but it doesnt launch if we don't do this
             Process.Start("taskkill.exe", "/F /IM nginx.exe");
             Process.Start("taskkill.exe", "/F /IM php-cgi.exe");
@@ -144,15 +144,15 @@ namespace VanillaLauncher.ContentView
                 using (var sqlite2 = new SQLiteConnection(@"Data Source=" + Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite"))
                 {
                     sqlite2.Open();
-                    
+
                     string sql = "create table characterappearance (torsocolor text, leftlegcolor text, leftarmcolor text, rightlegcolor text, rightarmcolor text, headcolor text, asset1 text, asset2 text, asset3 text, asset4 text, asset5 text, asset6 text, asset7 text, asset8 text, asset9 text, asset10 text, asset11 text, asset12 text, asset13 text, avatartype text, userid text)";
                     var command = new SQLiteCommand(sql, sqlite2);
                     command.ExecuteNonQuery();
-                    
+
                     string sql2 = "create table badges (badgeId text, obtainedBy text)";
                     var command2 = new SQLiteCommand(sql2, sqlite2);
                     command2.ExecuteNonQuery();
-                    
+
                     string sql3 = "create table gamepasses (passId text, boughtBy text)";
                     var command3 = new SQLiteCommand(sql3, sqlite2);
                     command3.ExecuteNonQuery();
@@ -237,51 +237,15 @@ namespace VanillaLauncher.ContentView
                 w.WriteLine("127.0.0.1 auth.roblox.com");
             }
 
-            foreach (var file in Directory.EnumerateFiles("files\\char\\hats"))
-            {
-                if (file.Contains(".json"))
-                {
-                    string ohio = file.Substring(file.IndexOf("ts\\") + 3);
-                    int index = ohio.IndexOf(".info");
-                    string result = ohio.Substring(0, index);
-                    listBox0.Items.Add(result);
-                    listBox1.Items.Add(result);
-                    listBox2.Items.Add(result);
-                }
-            }
 
-            foreach (var file in Directory.EnumerateFiles("files\\char\\shirts"))
-            {
-                if (file.Contains(".json"))
-                {
-                    string ohio = file.Substring(file.IndexOf("ts\\") + 3);
-                    int index = ohio.IndexOf(".info");
-                    string result = ohio.Substring(0, index);
-                    listBox3.Items.Add(result);
-                }
-            }
 
-            foreach (var file in Directory.EnumerateFiles("files\\char\\pants"))
-            {
-                if (file.Contains(".json"))
-                {
-                    string ohio = file.Substring(file.IndexOf("ts\\") + 3);
-                    int index = ohio.IndexOf(".info");
-                    string result = ohio.Substring(0, index);
-                    listBox4.Items.Add(result);
-                }
-            }
 
-            foreach (var file in Directory.EnumerateFiles("files\\char\\t-shirts"))
-            {
-                if (file.Contains(".json"))
-                {
-                    string ohio = file.Substring(file.IndexOf("ts\\") + 3);
-                    int index = ohio.IndexOf(".info");
-                    string result = ohio.Substring(0, index);
-                    listBox5.Items.Add(result);
-                }
-            }
+            AddItemsToListBox("files\\char\\hats", listBox0);
+            AddItemsToListBox("files\\char\\hats", listBox1);
+            AddItemsToListBox("files\\char\\hats", listBox2);
+            AddItemsToListBox("files\\char\\shirts", listBox3);
+            AddItemsToListBox("files\\char\\pants", listBox4);
+            AddItemsToListBox("files\\char\\t-shirts", listBox5);
 
             foreach (var file in Directory.EnumerateDirectories("clients\\"))
             {
@@ -490,119 +454,73 @@ namespace VanillaLauncher.ContentView
 
             }
         }
+        void UpdateSelectedItem(ListBox listBox, string basePath, Control nameTextBox, PictureBox pictureBox)
+        {
+            if (listBox.SelectedItem == null)
+            {
+                return;
+            }
+
+            string selectedItem = listBox.SelectedItem.ToString();
+            dynamic val = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(basePath, selectedItem + ".info.json")));
+            nameTextBox.Text = val["Name"];
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox.Image = Image.FromFile(Path.Combine(basePath, selectedItem + ".thumb.png"));
+            pictureBox.Refresh();
+            pictureBox.Visible = true;   
+            if (listBox.Name == "listBox0")
+            {
+                GlobalHat1 = selectedItem;
+            }
+            else if (listBox.Name == "listBox1")
+            {
+               GlobalHat2 = selectedItem;
+            }
+            else if (listBox.Name == "listBox2")
+            {
+                GlobalHat3 = selectedItem;
+            }
+            else if (listBox.Name == "listBox3")
+            {
+               GlobalShirt = selectedItem;
+            }
+            else if (listBox.Name == "listBox4")
+            {
+               GlobalPants = selectedItem;
+            }
+            else if (listBox.Name == "listBox5")
+            {
+               GlobalTshirt = selectedItem;
+            }
+        }
 
         private void charChanged(object sender, System.EventArgs e)
         {
             var listBox = ((ListBox)sender);
-
+ 
             switch (listBox.Name)
             {
                 case "listBox0":
-                    {
-                        if (listBox.SelectedItem == null)
-                        {
-                            return;
-                        }
-
-                        dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\char\\hats\\" + listBox.SelectedItem.ToString() + ".info.json"));
-                        hatName.Text = val["Name"];
-
-                        Hat1Box.SizeMode = PictureBoxSizeMode.StretchImage;
-                        Hat1Box.Image = Image.FromFile("files\\char\\hats\\" + listBox.SelectedItem.ToString() + ".thumb.png");
-                        Hat1Box.Refresh();
-
-                        GlobalHat1 = listBox.SelectedItem.ToString();
-                    }
+                    UpdateSelectedItem(listBox, "files\\char\\hats", hatName, Hat1Box);
                     break;
                 case "listBox1":
-                    {
-                        if (listBox.SelectedItem == null)
-                        {
-                            return;
-                        }
-
-                        dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\char\\hats\\" + listBox.SelectedItem.ToString() + ".info.json"));
-                        textBox2.Text = val["Name"];
-
-                        Hat2Box.SizeMode = PictureBoxSizeMode.StretchImage;
-                        Hat2Box.Image = Image.FromFile("files\\char\\hats\\" + listBox.SelectedItem.ToString() + ".thumb.png");
-                        Hat2Box.Refresh();
-
-                        Hat2Box.Visible = true;
-                        GlobalHat2 = listBox.SelectedItem.ToString();
-                    }
+                    UpdateSelectedItem(listBox, "files\\char\\hats", textBox2, Hat2Box);
                     break;
                 case "listBox2":
-                    {
-                        if (listBox.SelectedItem == null)
-                        {
-                            return;
-                        }
-
-                        dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\char\\hats\\" + listBox.SelectedItem.ToString() + ".info.json"));
-                        textBox3.Text = val["Name"];
-
-                        Hat3Box.SizeMode = PictureBoxSizeMode.StretchImage;
-                        Hat3Box.Image = Image.FromFile("files\\char\\hats\\" + listBox.SelectedItem.ToString() + ".thumb.png");
-                        Hat3Box.Refresh();
-
-                        Hat3Box.Visible = true;
-                        GlobalHat3 = listBox.SelectedItem.ToString();
-                    }
+                    UpdateSelectedItem(listBox, "files\\char\\hats", textBox3, Hat3Box);
                     break;
                 case "listBox3":
-                    {
-                        if (listBox.SelectedItem == null)
-                        {
-                            return;
-                        }
-
-                        dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\char\\shirts\\" + listBox.SelectedItem.ToString() + ".info.json"));
-                        textBox4.Text = val["Name"];
-                        ShirtBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                        ShirtBox.Image = Image.FromFile("files\\char\\shirts\\" + listBox.SelectedItem.ToString() + ".thumb.png");
-                        ShirtBox.Refresh();
-
-                        ShirtBox.Visible = true;
-                        GlobalShirt = listBox.SelectedItem.ToString();
-                    }
+                    UpdateSelectedItem(listBox, "files\\char\\shirts", textBox4, ShirtBox);
                     break;
                 case "listBox4":
-                    {
-                        if (listBox.SelectedItem == null)
-                        {
-                            return;
-                        }
-
-                        dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\char\\pants\\" + listBox.SelectedItem.ToString() + ".info.json"));
-                        textBox5.Text = val["Name"];
-                        PantsBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                        PantsBox.Image = Image.FromFile("files\\char\\pants\\" + listBox.SelectedItem.ToString() + ".thumb.png");
-                        PantsBox.Refresh();
-
-                        PantsBox.Visible = true;
-                        GlobalPants = listBox.SelectedItem.ToString();
-                    }
+                    UpdateSelectedItem(listBox, "files\\char\\pants", textBox5, PantsBox);
                     break;
                 case "listBox5":
-                    {
-                        if (listBox.SelectedItem == null)
-                        {
-                            return;
-                        }
-
-                        dynamic val = JsonConvert.DeserializeObject(File.ReadAllText("files\\char\\t-shirts\\" + listBox.SelectedItem.ToString() + ".info.json"));
-                        textBox5.Text = val["Name"];
-                        TShirtBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                        TShirtBox.Image = Image.FromFile("files\\char\\t-shirts\\" + listBox.SelectedItem.ToString() + ".thumb.png");
-                        TShirtBox.Refresh();
-
-                        TShirtBox.Visible = true;
-                        GlobalTshirt = listBox.SelectedItem.ToString();
-                    }
+                    UpdateSelectedItem(listBox, "files\\char\\t-shirts", textBox5, TShirtBox);
                     break;
             }
-        }
+
+        } 
 
         private void clientChanged(object Sender, EventArgs e)
         {
@@ -658,7 +576,17 @@ namespace VanillaLauncher.ContentView
             }
 
         }
-
+        void AddItemsToListBox(string directoryPath, ListBox listBox)
+        {
+            foreach (var file in Directory.EnumerateFiles(directoryPath))
+            {
+                if (file.EndsWith(".json"))
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(file);
+                    listBox.Items.Add(fileName);
+                }
+            }
+        }
         private void HostButton_Click_1(object sender, EventArgs e)
         {
             string selectedClient = CurrentItem;
@@ -958,11 +886,6 @@ namespace VanillaLauncher.ContentView
                 }
             }
         }
-
-        private void tabPage1_Click(object sender, EventArgs e) { }
-
-        private void Settings_Click(object sender, EventArgs e) { }
-
         private void bodyColorsChanged(object sender, EventArgs e)
         {
             var textBox = (TextBox)sender;

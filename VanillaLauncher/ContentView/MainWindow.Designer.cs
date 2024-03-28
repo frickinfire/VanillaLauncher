@@ -166,7 +166,7 @@ namespace VanillaLauncher.ContentView
             this.tabPage1.Size = new System.Drawing.Size(463, 515);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Play";
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+           // this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -840,7 +840,7 @@ namespace VanillaLauncher.ContentView
             this.Settings.Size = new System.Drawing.Size(463, 515);
             this.Settings.TabIndex = 4;
             this.Settings.Text = "Settings";
-            this.Settings.Click += new System.EventHandler(this.Settings_Click);
+           // this.Settings.Click += new System.EventHandler(this.Settings_Click);
             // 
             // assetCache
             // 
