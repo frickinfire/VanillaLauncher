@@ -42,6 +42,9 @@ namespace VanillaLauncher.ContentView
             public string LeftLegColor { get; set; }
             public string RightArmColor { get; set; }
             public string RightLegColor { get; set; }
+            public string isCaching { get; set; }
+            // made this a string instead of bool because it was fighting me and im sick of it
+
         }
 
         string CurrentItem { get; set; }
@@ -51,6 +54,7 @@ namespace VanillaLauncher.ContentView
         bool IsRCCService { get; set; }
         bool AvatarFetchRequired { get; set; }
         bool IsRobloxPlayer { get; set; }
+        string isCachingG { get; set; }
         string GlobalMap { get; set; }
         string GlobalUsername { get; set; }
         string GlobalID { get; set; }
@@ -61,6 +65,7 @@ namespace VanillaLauncher.ContentView
         string GlobalShirt { get; set; }
         string GlobalPants { get; set; }
         string GlobalTshirt { get; set; }
+        string GlobRobloSecurity { get; set; }
         string AvatarTypeStr { get; set; }
         public string HeadColor { get; set; }
         public string TorsoColor { get; set; }
@@ -88,10 +93,10 @@ namespace VanillaLauncher.ContentView
         {
             InitializeComponent();
 
-            //string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
+            string hostsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "drivers/etc/hosts");
 
-            //WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-            //bool administrativeMode = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            bool administrativeMode = principal.IsInRole(WindowsBuiltInRole.Administrator);
 
             // this sucks but it doesnt launch if we don't do this
             Process.Start("taskkill.exe", "/F /IM nginx.exe");
@@ -128,14 +133,14 @@ namespace VanillaLauncher.ContentView
             Process.Start(Directory.GetCurrentDirectory() + "\\nginx.exe");
             Directory.SetCurrentDirectory("..\\..");
 
-            //if (!administrativeMode)
-            //{
-            //    ProcessStartInfo startInfo = new ProcessStartInfo();
-            //    startInfo.Verb = "runas";
-            //    startInfo.FileName = Application.ExecutablePath;
-            //    Process.Start(startInfo);
-            //    Process.GetCurrentProcess().Kill();
-            //}
+            if (!administrativeMode)
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.Verb = "runas";
+                startInfo.FileName = Application.ExecutablePath;
+                Process.Start(startInfo);
+                Process.GetCurrentProcess().Kill();
+            }
 
             if (!File.Exists(Directory.GetCurrentDirectory() + @"\files\vanilla.sqlite"))
             {
@@ -189,6 +194,56 @@ namespace VanillaLauncher.ContentView
                 Environment.SetEnvironmentVariable(name, newValue, scope);
 
             }
+            // fire: i am very aware this is terrible--as with the rest of the launcher--but i do not care
+            var fileInfo = new FileInfo(hostsFile);
+            if (!File.Exists(hostsFile))
+            {
+                MessageBox.Show("Your HOSTS file does not exist! Vanilla will create one for you. Please restart Vanilla.",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                File.Create(hostsFile);
+                Process.GetCurrentProcess().Kill();
+
+            }
+            if (fileInfo.IsReadOnly)
+            {
+                MessageBox.Show("Vanilla will not work until you have disabled 'Read-Only' on your HOSTS file! Do this in C:\\Windows\\System32\\drivers\\etc.",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
+            if (File.ReadAllText(hostsFile).Contains("# BEGIN VANILLA HOSTS"))
+            {
+                string str = File.ReadAllText(hostsFile);
+                int index = str.IndexOf("# BEGIN VANILLA HOSTS");
+                string result = str.Substring(0, index);
+                File.WriteAllText(hostsFile, result);
+            }
+
+            if (File.Exists(hostsFile + ".bak"))
+            {
+                File.Delete(hostsFile);
+                File.Copy(hostsFile + ".bak", hostsFile);
+                File.Delete(hostsFile + ".bak");
+            }
+            File.Copy(hostsFile, hostsFile + ".bak");
+            using (StreamWriter w = File.AppendText(hostsFile))
+            {
+                w.WriteLine(string.Empty);
+                w.WriteLine("# BEGIN VANILLA HOSTS");
+                w.WriteLine("127.0.0.1 www.roblox.com");
+                w.WriteLine("127.0.0.1 roblox.com");
+                w.WriteLine("127.0.0.1 api.roblox.com");
+                w.WriteLine("127.0.0.1 assetgame.roblox.com");
+                w.WriteLine("127.0.0.1 clientsettings.api.roblox.com");
+                w.WriteLine("127.0.0.1 versioncompatibility.api.roblox.com");
+                w.WriteLine("127.0.0.1 ephemeralcounters.api.roblox.com");
+                w.WriteLine("127.0.0.1 clientsettingscdn.roblox.com");
+                w.WriteLine("127.0.0.1 gamejoin.roblox.com");
+                w.WriteLine("127.0.0.1 apis.roblox.com");
+                w.WriteLine("127.0.0.1 auth.roblox.com");
+            }
+
+
             AddItemsToListBox("files\\char\\hats", listBox0);
             AddItemsToListBox("files\\char\\hats", listBox1);
             AddItemsToListBox("files\\char\\hats", listBox2);
@@ -230,6 +285,8 @@ namespace VanillaLauncher.ContentView
                 LeftLegColor = val["LeftLegColor"];
                 RightArmColor = val["RightArmColor"];
                 RightLegColor = val["RightLegColor"];
+                isCachingG = val["isCaching"];
+                
 
                 string[] values = { GlobalShirt, GlobalPants, GlobalHat1, GlobalHat2, GlobalHat3, GlobalHat3, GlobalTshirt, CurrentItem, GlobalMap };
 
@@ -281,6 +338,15 @@ namespace VanillaLauncher.ContentView
                     leftLegColor.Text = val["LeftLegColor"];
                     rightArm.Text = val["RightArmColor"];
                     rightLeg.Text = val["RightLegColor"];
+                    if (val["isCaching"] == "true")
+                    {
+                        assetCache.Checked = true;
+                    }
+                    else
+                    {
+                        assetCache.Checked = false;
+                    }
+                    roblosecurity.Text = File.ReadAllText("cookie.txt");
                 }
             }
 
@@ -325,6 +391,10 @@ namespace VanillaLauncher.ContentView
                 case "idBox":
                     GlobalID = textBox.Text;
                     break;
+                case "roblosecurity":
+                    GlobRobloSecurity = textBox.Text;
+                    File.WriteAllText("cookie.txt", GlobRobloSecurity);
+                    break;
             }
         }
 
@@ -356,7 +426,8 @@ namespace VanillaLauncher.ContentView
                 LeftArmColor = LeftArmColor,
                 LeftLegColor = LeftLegColor,
                 RightArmColor = RightArmColor,
-                RightLegColor = RightLegColor
+                RightLegColor = RightLegColor,
+                isCaching = isCachingG
             };
 
             File.WriteAllText(@"files\\settings.json", JsonConvert.SerializeObject(jsonFile));
@@ -714,6 +785,7 @@ namespace VanillaLauncher.ContentView
                 {
                     File.Replace("files\\webroot\\api\\asset\\cacher.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\nocache.php");
                 }
+                isCachingG = "true";
             }
             else
             {
@@ -726,6 +798,7 @@ namespace VanillaLauncher.ContentView
                 {
                     File.Replace("files\\webroot\\api\\asset\\nocache.php", "files\\webroot\\api\\asset\\index.php", "files\\webroot\\api\\asset\\cacher.php");
                 }
+                isCachingG = "false";
             }
         }
 
@@ -860,6 +933,8 @@ namespace VanillaLauncher.ContentView
                 break;
             }
         }
+
+ 
     }
 }
 

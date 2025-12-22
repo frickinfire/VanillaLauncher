@@ -53,6 +53,7 @@ namespace VanillaLauncher.ContentView
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.mapBox = new System.Windows.Forms.ListBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
             this.avatarSwitch = new System.Windows.Forms.Button();
             this.idBox = new System.Windows.Forms.TextBox();
             this.userNameBox = new System.Windows.Forms.TextBox();
@@ -98,6 +99,8 @@ namespace VanillaLauncher.ContentView
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.Settings = new System.Windows.Forms.TabPage();
+            this.roblosecurity = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.assetCache = new System.Windows.Forms.CheckBox();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -191,11 +194,11 @@ namespace VanillaLauncher.ContentView
             // buildNum
             // 
             this.buildNum.AutoSize = true;
-            this.buildNum.Location = new System.Drawing.Point(349, 195);
+            this.buildNum.Location = new System.Drawing.Point(382, 195);
             this.buildNum.Name = "buildNum";
-            this.buildNum.Size = new System.Drawing.Size(99, 15);
+            this.buildNum.Size = new System.Drawing.Size(63, 15);
             this.buildNum.TabIndex = 40;
-            this.buildNum.Text = "public beta | 0.9.1";
+            this.buildNum.Text = "final | 0.9.2";
             // 
             // hostPortNew
             // 
@@ -367,6 +370,7 @@ namespace VanillaLauncher.ContentView
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label14);
             this.tabPage3.Controls.Add(this.avatarSwitch);
             this.tabPage3.Controls.Add(this.idBox);
             this.tabPage3.Controls.Add(this.userNameBox);
@@ -379,6 +383,16 @@ namespace VanillaLauncher.ContentView
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "User";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label14.Location = new System.Drawing.Point(381, 52);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(66, 15);
+            this.label14.TabIndex = 33;
+            this.label14.Text = "Avatar: R15";
             // 
             // avatarSwitch
             // 
@@ -804,7 +818,7 @@ namespace VanillaLauncher.ContentView
             this.label6.ForeColor = System.Drawing.Color.Red;
             this.label6.Location = new System.Drawing.Point(81, 10);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(253, 30);
+            this.label6.Size = new System.Drawing.Size(254, 30);
             this.label6.TabIndex = 0;
             this.label6.Text = "TEMPORARY SYSTEM!\r\ni would prefer NOT to add 128 colors right now\r\n";
             // 
@@ -833,12 +847,32 @@ namespace VanillaLauncher.ContentView
             // Settings
             // 
             this.Settings.BackColor = System.Drawing.Color.White;
+            this.Settings.Controls.Add(this.roblosecurity);
+            this.Settings.Controls.Add(this.label13);
             this.Settings.Controls.Add(this.assetCache);
             this.Settings.Location = new System.Drawing.Point(4, 24);
             this.Settings.Name = "Settings";
             this.Settings.Size = new System.Drawing.Size(463, 515);
             this.Settings.TabIndex = 4;
             this.Settings.Text = "Settings";
+            // 
+            // roblosecurity
+            // 
+            this.roblosecurity.Location = new System.Drawing.Point(32, 83);
+            this.roblosecurity.Name = "roblosecurity";
+            this.roblosecurity.Size = new System.Drawing.Size(402, 23);
+            this.roblosecurity.TabIndex = 2;
+            this.roblosecurity.UseSystemPasswordChar = true;
+            this.roblosecurity.TextChanged += new System.EventHandler(this.SetGlobal);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(29, 64);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(160, 15);
+            this.label13.TabIndex = 1;
+            this.label13.Text = ".ROBLOSECURITY (for assets)";
             // 
             // assetCache
             // 
@@ -1004,6 +1038,9 @@ namespace VanillaLauncher.ContentView
         private System.Windows.Forms.Button avatarSwitch;
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox roblosecurity;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
     }
 }
 
